@@ -199,6 +199,39 @@ def read_trace(logfile_csv):
     return df_trace
 
 
+#------------------------------------------------------------------------------
+# convert metric from original format to the target presentation 
+#------------------------------------------------------------------------------
+def adjust_metric(metricName, metricValue):
+    """
+    Adjust metric from dataframe containing nvprof results.
+    """ 
+    if metricName in Percentage2decimal_Metrics: 
+        #print('{} in Percentage2decimal_Metrics.'.format(local_metric_value))
+        adjustedV = float(str(local_metric_value)[:-1]) * 0.01
+    elif targetmetric in Throughput_Metrics: 
+        local_metric_value_str = str(local_metric_value)
+        if "GB/s" in local_metric_value_str:
+            adjustedV = float(str(local_metric_value)[:-4])
+        elif "MB/s" in local_metric_value_str:
+            adjustedV = float(str(local_metric_value)[:-4]) * 1e-3
+        elif "KB/s" in local_metric_value_str:
+            adjustedV = float(str(local_metric_value)[:-4]) * 1e-6
+        elif "B/s" in local_metric_value_str:
+            adjustedV = float(str(local_metric_value)[:-3]) * 1e-9
+        else:
+            print "Error: unknow throughtput unit!"
+            sys.exit(0)
+        #print('{} in Throughput_Metrics.'.format(local_metric_value))
+    elif targetmetric in Utilization2decimal_Metrics:
+        value_str = str(local_metric_value)
+        adjustedV = float(value_str[value_str.find('(') + 1 : value_str.rfind(')')]) * 0.1
+        #print('{} in Utilization2decimal_Metrics.'.format(local_metric_value))
+
+
+#------------------------------------------------------------------------------
+# 
+#------------------------------------------------------------------------------
 def convert_metrics_with_max(df_app, targetmetric):
     """Convert metrics in the dataframe trace.
     If the dataframe has multiple rows, apply max() to the target metric.
