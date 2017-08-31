@@ -206,27 +206,39 @@ def adjust_metric(metricName, metricValue):
     """
     Adjust metric from dataframe containing nvprof results.
     """ 
+    metricValue_str= str(metricValue)
+
+    adjustedV = float(metricValue)  # apply float as default
+
+    #
+    # update the value if the metric belongs to the following 3 groups
+    # 
+
+    # convert % to decimal
     if metricName in Percentage2decimal_Metrics: 
-        #print('{} in Percentage2decimal_Metrics.'.format(local_metric_value))
-        adjustedV = float(str(local_metric_value)[:-1]) * 0.01
-    elif targetmetric in Throughput_Metrics: 
-        local_metric_value_str = str(local_metric_value)
-        if "GB/s" in local_metric_value_str:
-            adjustedV = float(str(local_metric_value)[:-4])
-        elif "MB/s" in local_metric_value_str:
-            adjustedV = float(str(local_metric_value)[:-4]) * 1e-3
-        elif "KB/s" in local_metric_value_str:
-            adjustedV = float(str(local_metric_value)[:-4]) * 1e-6
-        elif "B/s" in local_metric_value_str:
-            adjustedV = float(str(local_metric_value)[:-3]) * 1e-9
+        adjustedV = float(metricValue_str[:-1]) * 0.01
+    # scale to GB/s
+    elif metricName in Throughput_Metrics: 
+        if "GB/s" in metricValue_str:
+            adjustedV = float(metricValue_str[:-4])
+        elif "MB/s" in metricValue_str:
+            adjustedV = float(metricValue_str[:-4]) * 1e-3
+        elif "KB/s" in metricValue_str:
+            adjustedV = float(metricValue_str[:-4]) * 1e-6
+        elif "B/s" in metricValue_str:
+            adjustedV = float(metricValue_str[:-3]) * 1e-9
         else:
             print "Error: unknow throughtput unit!"
             sys.exit(0)
-        #print('{} in Throughput_Metrics.'.format(local_metric_value))
-    elif targetmetric in Utilization2decimal_Metrics:
-        value_str = str(local_metric_value)
-        adjustedV = float(value_str[value_str.find('(') + 1 : value_str.rfind(')')]) * 0.1
+    # convert util() to decimal
+    elif metricName in Utilization2decimal_Metrics:
+        adjustedV = float(metricValue_str[metricValue_str.find('(') + 1 : metricValue_str.rfind(')')]) * 0.1
         #print('{} in Utilization2decimal_Metrics.'.format(local_metric_value))
+
+    #print('{} : {}'.format(metricName, metricValue))
+    #print('{} : {}'.format(metricName, adjustedV))
+
+    return adjustedV
 
 
 #------------------------------------------------------------------------------
@@ -243,36 +255,7 @@ def convert_metrics_with_max(df_app, targetmetric):
     rowcount = 0
 
     for _, row in df_metric.iterrows():
-        local_metric_value = row['Avg']
-        adjustedV = local_metric_value
-        #print targetmetric
-        #print adjustedV
-
-        if targetmetric in Percentage2decimal_Metrics: 
-            #print('{} in Percentage2decimal_Metrics.'.format(local_metric_value))
-            adjustedV = float(str(local_metric_value)[:-1]) * 0.01
-        elif targetmetric in Throughput_Metrics: 
-            local_metric_value_str = str(local_metric_value)
-            if "GB/s" in local_metric_value_str:
-                adjustedV = float(str(local_metric_value)[:-4])
-            elif "MB/s" in local_metric_value_str:
-                adjustedV = float(str(local_metric_value)[:-4]) * 1e-3
-            elif "KB/s" in local_metric_value_str:
-                adjustedV = float(str(local_metric_value)[:-4]) * 1e-6
-            elif "B/s" in local_metric_value_str:
-                adjustedV = float(str(local_metric_value)[:-3]) * 1e-9
-            else:
-                print "Error: unknow throughtput unit!"
-                sys.exit(0)
-            #print('{} in Throughput_Metrics.'.format(local_metric_value))
-        elif targetmetric in Utilization2decimal_Metrics:
-            value_str = str(local_metric_value)
-            adjustedV = float(value_str[value_str.find('(') + 1 : value_str.rfind(')')]) * 0.1
-            #print('{} in Utilization2decimal_Metrics.'.format(local_metric_value))
-
-        #print maxV
-        #print adjustedV
-
+        adjustedV = adjust_metric(targetmetric, row['Avg'])
         # update maxV
         if rowcount == 0:
             maxV = adjustedV
