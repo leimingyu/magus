@@ -2,9 +2,6 @@
 cd binomialOptions  && \
 	make clean && make EXTRA_NVCCFLAGS=--cudart=shared
 
-cd ../conjugateGradientPrecond && \
-	make clean && make EXTRA_NVCCFLAGS=--cudart=shared
-
 cd ../convolutionFFT2D && \
 	make clean && make EXTRA_NVCCFLAGS=--cudart=shared
 
