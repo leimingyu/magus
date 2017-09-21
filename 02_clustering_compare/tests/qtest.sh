@@ -8,6 +8,7 @@ then
 fi
 
 ITER=10
+#ITER=5
 
 for (( n=1; n<=$ITER; n++ ))
 do
@@ -20,4 +21,7 @@ do
 	echo "$runtime_ms"  >> /tmp/magus_timing_log 
 done
 
+echo ""
+echo ""
+echo ""
 awk '{ total += $1; count++ } END { print total/count }' /tmp/magus_timing_log | tee qtest_timing_ms 
