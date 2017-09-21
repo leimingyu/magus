@@ -48,7 +48,7 @@ keyWord="transpose"
 outFile=$prefix$keyWord
 ./getAvg.sh $keyWord $outFile
 
-keyWord="interval"
+keyWord="matrixMul"
 outFile=$prefix$keyWord
 ./getAvg.sh $keyWord $outFile
 
