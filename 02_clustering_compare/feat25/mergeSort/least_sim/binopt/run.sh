@@ -2,8 +2,8 @@
 
 echo "Start"
 
-#ITER=10
-ITER=3
+ITER=10
+#ITER=3
 
 #------------------------------------------------------------------------------
 # least similar application
