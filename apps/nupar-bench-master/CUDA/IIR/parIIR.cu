@@ -10,18 +10,6 @@
 #include <helper_cuda.h>
 #include <helper_math.h> 
 
-// Provide Debugging Functionality
-#include "cuPrintf.cu"
-
-#if __CUDA_ARCH__ < 200     //Compute capability 1.x architectures
-#define CUPRINTF cuPrintf
-#else                       //Compute capability 2.x architectures
-#define CUPRINTF(fmt, ...) printf("[%d, %d]:\t" fmt, \
-		blockIdx.y*gridDim.x+blockIdx.x,\
-		threadIdx.z*blockDim.x*blockDim.y+threadIdx.y*blockDim.x+threadIdx.x,\
-		__VA_ARGS__)
-#endif
-
 #define ROWS 256  // num of parallel subfilters
 #define DEB 0	  // compare cpu and gpu results
 #define TIMING 1  // measure the kernel execution time
