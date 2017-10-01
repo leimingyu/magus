@@ -19,7 +19,8 @@ ifdef debug
 FLAGS := $(GENCODE_FLAGS) -g -DLSGDEBUG=1 -G
 else
 # including -lineinfo -G causes launches to fail because of lack of resources, pity.
-FLAGS := -O3 $(GENCODE_FLAGS) -g -Xptxas -v  #-lineinfo -G
+#FLAGS := -O3 $(GENCODE_FLAGS) -g -Xptxas -v $(EXTRA_NVCCFLAGS)  #-lineinfo -G
+FLAGS := -O3 $(GENCODE_FLAGS) $(EXTRA_NVCCFLAGS)  #-lineinfo -G
 endif
 INCLUDES := -I $(TOPLEVEL)/include -I $(CUB_DIR)
 LINKS := 
