@@ -8,12 +8,18 @@ else
 endif
 
 CUDA_LIB =	-lcuda -lcudart
-#CUDA_FLAG = -arch sm_20
+##CUDA_FLAG = -arch sm_20
+#
+#SMS ?= 30 35 50 52 60
+#ifeq ($(CUDA_FLAG),)
+#  $(foreach sm,$(SMS),$(eval CUDA_FLAG += -gencode arch=compute_$(sm),code=sm_$(sm)))
+#endif
+
+
+CUDA_FLAG = $(EXTRA_NVCCFLAGS)
 
 SMS ?= 30 35 50 52 60
-ifeq ($(CUDA_FLAG),)
-  $(foreach sm,$(SMS),$(eval CUDA_FLAG += -gencode arch=compute_$(sm),code=sm_$(sm)))
-endif
+$(foreach sm,$(SMS),$(eval CUDA_FLAG += -gencode arch=compute_$(sm),code=sm_$(sm)))
 
 
 C_C = gcc
