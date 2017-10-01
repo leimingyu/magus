@@ -1,0 +1,15 @@
+==27949== NVPROF is profiling process 27949, command: ./backprop 65536
+==27949== Profiling application: ./backprop 65536
+==27949== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,KB,MB,GB/s,,,,
+323.976145,0.045311,,,,,,,,,,0.262148,5.785527,"Tesla K40c (0)","1","7","[CUDA memcpy HtoD]"
+324.290409,1.038887,,,,,,,,,,4.456516,4.289702,"Tesla K40c (0)","1","7","[CUDA memcpy HtoD]"
+325.335535,0.142205,1,4096,1,16,16,1,11,1.088000e+03,0.000000,,,"Tesla K40c (0)","1","7","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int) [190]"
+325.502795,0.041695,,,,,,,,,,0.262144,6.287181,"Tesla K40c (0)","1","7","[CUDA memcpy DtoH]"
+326.170555,1.248000e-03,,,,,,,,,,6.800000e-05,0.054487,"Tesla K40c (0)","1","7","[CUDA memcpy HtoD]"
+326.440468,1.011720,,,,,,,,,,4.456516,4.404891,"Tesla K40c (0)","1","7","[CUDA memcpy HtoD]"
+327.701237,0.958025,,,,,,,,,,4.456516,4.651774,"Tesla K40c (0)","1","7","[CUDA memcpy HtoD]"
+328.665502,0.345399,1,4096,1,16,16,1,21,0,0.000000,,,"Tesla K40c (0)","1","7","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*) [206]"
+329.013717,0.041791,,,,,,,,,,0.262148,6.272834,"Tesla K40c (0)","1","7","[CUDA memcpy DtoH]"
+329.145746,1.119653,,,,,,,,,,4.456516,3.980265,"Tesla K40c (0)","1","7","[CUDA memcpy DtoH]"
