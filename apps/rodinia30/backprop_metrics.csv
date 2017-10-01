@@ -1,0 +1,232 @@
+==8453== NVPROF is profiling process 8453, command: ./backprop 65536
+==8453== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8453== Profiling application: ./backprop 65536
+==8453== Profiling result:
+==8453== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"sm_efficiency","Multiprocessor Activity",99.190053%,99.190053%,99.190053%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"achieved_occupancy","Achieved Occupancy",0.968431,0.968431,0.968431
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"ipc","Executed IPC",3.048736,3.048736,3.048736
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"issued_ipc","Issued IPC",3.049476,3.049476,3.049476
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_per_warp","Instructions per warp",266.750000,266.750000,266.750000
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"branch_efficiency","Branch Efficiency",100.000000%,100.000000%,100.000000%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"warp_execution_efficiency","Warp Execution Efficiency",92.619494%,92.619494%,92.619494%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"warp_nonpred_execution_efficiency","Warp Non-Predicated Execution Efficiency",83.669166%,83.669166%,83.669166%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_replay_overhead","Instruction Replay Overhead",0.000088,0.000088,0.000088
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"issue_slot_utilization","Issue Slot Utilization",71.128699%,71.128699%,71.128699%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"shared_load_transactions_per_request","Shared Memory Load Transactions Per Request",1.000000,1.000000,1.000000
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"shared_store_transactions_per_request","Shared Memory Store Transactions Per Request",1.000000,1.000000,1.000000
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"local_load_transactions_per_request","Local Memory Load Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"local_store_transactions_per_request","Local Memory Store Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"gld_transactions_per_request","Global Load Transactions Per Request",5.750000,5.750000,5.750000
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"gst_transactions_per_request","Global Store Transactions Per Request",3.000000,3.000000,3.000000
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"shared_store_transactions","Shared Store Transactions",159744,159744,159744
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"shared_load_transactions","Shared Load Transactions",221184,221184,221184
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"local_load_transactions","Local Load Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"local_store_transactions","Local Store Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"gld_transactions","Global Load Transactions",376832,376832,376832
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"gst_transactions","Global Store Transactions",196608,196608,196608
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"dram_read_transactions","Device Memory Read Transactions",146461,146461,146461
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"dram_write_transactions","Device Memory Write Transactions",149170,149170,149170
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"global_hit_rate","Global Hit Rate",45.652174%,45.652174%,45.652174%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"local_hit_rate","Local Hit Rate",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"gld_requested_throughput","Requested Global Load Throughput",11.362964GB/s,11.362964GB/s,11.362135GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"gst_requested_throughput","Requested Global Store Throughput",11.362964GB/s,11.362964GB/s,11.362135GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"gld_throughput","Global Load Throughput",16.710241GB/s,16.710241GB/s,16.709790GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"gst_throughput","Global Store Throughput",16.041831GB/s,16.041831GB/s,16.041100GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"dram_read_throughput","Device Memory Read Throughput",11.950188GB/s,11.950188GB/s,11.949800GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"dram_write_throughput","Device Memory Write Throughput",12.171224GB/s,12.171224GB/s,12.170523GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"tex_cache_throughput","Unified Cache Throughput",16.041831GB/s,16.041831GB/s,16.041100GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"local_load_throughput","Local Memory Load Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"local_store_throughput","Local Memory Store Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"shared_load_throughput","Shared Memory Load Throughput",72.188239GB/s,72.188239GB/s,72.187744GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"shared_store_throughput","Shared Memory Store Throughput",52.135951GB/s,52.135951GB/s,52.135438GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"gld_efficiency","Global Memory Load Efficiency",68.000000%,68.000000%,68.000000%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"gst_efficiency","Global Memory Store Efficiency",70.833333%,70.833333%,70.833333%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"tex_cache_transactions","Unified Cache Transactions",196608,196608,196608
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"cf_fu_utilization","Control-Flow Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"tex_fu_utilization","Texture Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"ldst_fu_utilization","Load/Store Function Unit Utilization","Low (2)","Low (2)","Low (2)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"double_precision_fu_utilization","Double-Precision Function Unit Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"special_fu_utilization","Special Function Unit Utilization","Mid (5)","Mid (5)","Mid (5)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"single_precision_fu_utilization","Single-Precision Function Unit Utilization","Mid (6)","Mid (6)","Mid (6)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"flop_count_dp","Floating Point Operations(Double Precision)",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"flop_count_dp_add","Floating Point Operations(Double Precision Add)",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"flop_count_dp_fma","Floating Point Operations(Double Precision FMA)",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"flop_count_dp_mul","Floating Point Operations(Double Precision Mul)",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"flop_count_sp","Floating Point Operations(Single Precision)",6225920,6225920,6225920
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"flop_count_sp_add","Floating Point Operations(Single Precision Add)",983040,983040,983040
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"flop_count_sp_fma","Floating Point Operations(Single Precision FMA)",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"flop_count_sp_mul","Floating Point Operation(Single Precision Mul)",5242880,5242880,5242880
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"flop_count_sp_special","Floating Point Operations(Single Precision Special)",8388608,8388608,8388608
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_executed","Instructions Executed",8740864,8740864,8740864
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_issued","Instructions Issued",8741632,8741632,8741632
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"dram_utilization","Device Memory Utilization","Low (3)","Low (3)","Low (3)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"tex_utilization","Unified Cache Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"shared_efficiency","Shared Memory Efficiency",59.677419%,59.677419%,59.677419%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"shared_utilization","Shared Memory Utilization","Low (2)","Low (2)","Low (2)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_fp_32","FP Instructions(Single)",27197440,27197440,27197440
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_fp_64","FP Instructions(Double)",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_integer","Integer Instructions",124977152,124977152,124977152
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_bit_convert","Bit-Convert Instructions",30408704,30408704,30408704
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_control","Control-Flow Instructions",12582912,12582912,12582912
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_compute_ld_st","Load/Store Instructions",9502720,9502720,9502720
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_misc","Misc Instructions",29360128,29360128,29360128
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"inst_inter_thread_communication","Inter-Thread Instructions",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"issue_slots","Issue Slots",8155904,8155904,8155904
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"cf_issued","Issued Control-Flow Instructions",520192,520192,520192
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"cf_executed","Executed Control-Flow Instructions",520192,520192,520192
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"ldst_issued","Issued Load/Store Instructions",1134592,1134592,1134592
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"ldst_executed","Executed Load/Store Instructions",872448,872448,872448
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"atomic_transactions","Atomic Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"atomic_transactions_per_request","Atomic Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",8.654236%,8.654236%,8.654236%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",22.908298%,22.908298%,22.908298%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"stall_memory_dependency","Issue Stall Reasons (Data Request)",10.990707%,10.990707%,10.990707%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"stall_sync","Issue Stall Reasons (Synchronization)",18.902685%,18.902685%,18.902685%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"stall_other","Issue Stall Reasons (Other)",32.448393%,32.448393%,32.448393%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.084879%,0.084879%,0.084879%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",1.663630%,1.663630%,1.663630%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.434447%,0.434447%,0.434447%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"stall_not_selected","Issue Stall Reasons (Not Selected)",3.912725%,3.912725%,3.912725%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"sysmem_read_transactions","System Memory Read Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"sysmem_write_transactions","System Memory Write Transactions",5,5,5
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_read_transactions","L2 Read Transactions",204951,204951,204951
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_write_transactions","L2 Write Transactions",196614,196614,196614
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"ecc_transactions","ECC Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"local_memory_overhead","Local Memory Overhead",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"tex_cache_hit_rate","Unified Cache Hit Rate",46.739130%,46.739130%,46.739130%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_tex_read_hit_rate","L2 Hit Rate (Texture Reads)",28.530273%,28.530273%,28.530273%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_tex_write_hit_rate","L2 Hit Rate (Texture Writes)",98.958333%,98.958333%,98.958333%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_tex_read_throughput","L2 Throughput (Texture Reads)",16.710241GB/s,16.710241GB/s,16.709790GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_tex_write_throughput","L2 Throughput (Texture Writes)",16.041831GB/s,16.041831GB/s,16.041100GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_tex_read_transactions","L2 Transactions (Texture Reads)",204800,204800,204800
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_tex_write_transactions","L2 Transactions (Texture Writes)",196608,196608,196608
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_read_throughput","L2 Throughput (Reads)",16.722561GB/s,16.722561GB/s,16.721897GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_write_throughput","L2 Throughput (Writes)",16.042320GB/s,16.042320GB/s,16.042031GB/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"sysmem_read_throughput","System Memory Read Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"sysmem_write_throughput","System Memory Write Throughput",427.781250KB/s,427.781250KB/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_utilization","L2 Cache Utilization","Low (2)","Low (2)","Low (2)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_atomic_throughput","L2 Throughput (Atomic requests)",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"l2_atomic_transactions","L2 Transactions (Atomic requests)",0,0,0
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"sysmem_utilization","System Memory Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"ecc_throughput","ECC Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"sysmem_read_utilization","System Memory Read Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"sysmem_write_utilization","System Memory Write Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"eligible_warps_per_cycle","Eligible Warps Per Active Cycle",5.131078,5.131078,5.131078
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"flop_sp_efficiency","FLOP Efficiency(Peak Single)",0.841466%,0.841466%,0.841466%
+"GeForce GTX 950 (0)","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int)",1,"flop_dp_efficiency","FLOP Efficiency(Peak Double)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"sm_efficiency","Multiprocessor Activity",99.341033%,99.341033%,99.341033%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"achieved_occupancy","Achieved Occupancy",0.981631,0.981631,0.981631
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"ipc","Executed IPC",0.433211,0.433211,0.433211
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"issued_ipc","Issued IPC",0.433583,0.433583,0.433583
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_per_warp","Instructions per warp",57.000824,57.000824,57.000824
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"branch_efficiency","Branch Efficiency",100.000000%,100.000000%,100.000000%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"warp_execution_efficiency","Warp Execution Efficiency",99.999277%,99.999277%,99.999277%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"warp_nonpred_execution_efficiency","Warp Non-Predicated Execution Efficiency",99.999250%,99.999250%,99.999250%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_replay_overhead","Instruction Replay Overhead",0.000718,0.000718,0.000718
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"issue_slot_utilization","Issue Slot Utilization",10.077226%,10.077226%,10.077226%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"shared_load_transactions_per_request","Shared Memory Load Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"shared_store_transactions_per_request","Shared Memory Store Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"local_load_transactions_per_request","Local Memory Load Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"local_store_transactions_per_request","Local Memory Store Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"gld_transactions_per_request","Global Load Transactions Per Request",8.071362,8.071362,8.071362
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"gst_transactions_per_request","Global Store Transactions Per Request",4.999939,4.999939,4.999939
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"shared_store_transactions","Shared Store Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"shared_load_transactions","Shared Load Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"local_load_transactions","Local Load Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"local_store_transactions","Local Store Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"gld_transactions","Global Load Transactions",1851417,1851417,1851417
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"gst_transactions","Global Store Transactions",327686,327686,327686
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"dram_read_transactions","Device Memory Read Transactions",286259,286259,286259
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"dram_write_transactions","Device Memory Write Transactions",279644,279644,279644
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"global_hit_rate","Global Hit Rate",58.406831%,58.406831%,58.406831%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"local_hit_rate","Local Hit Rate",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"gld_requested_throughput","Requested Global Load Throughput",29.581887GB/s,29.581887GB/s,29.581599GB/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"gst_requested_throughput","Requested Global Store Throughput",14.342687GB/s,14.342687GB/s,14.342368GB/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"gld_throughput","Global Load Throughput",42.131820GB/s,42.131820GB/s,42.131171GB/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"gst_throughput","Global Store Throughput",17.928413GB/s,17.928413GB/s,17.927960GB/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"dram_read_throughput","Device Memory Read Throughput",15.661852GB/s,15.661852GB/s,15.661120GB/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"dram_write_throughput","Device Memory Write Throughput",15.299931GB/s,15.299931GB/s,15.299767GB/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"tex_cache_throughput","Unified Cache Throughput",50.199185GB/s,50.199185GB/s,50.198287GB/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"local_load_throughput","Local Memory Load Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"local_store_throughput","Local Memory Store Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"shared_load_throughput","Shared Memory Load Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"shared_store_throughput","Shared Memory Store Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"gld_efficiency","Global Memory Load Efficiency",70.212697%,70.212697%,70.212697%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"gst_efficiency","Global Memory Store Efficiency",79.999756%,79.999756%,79.999756%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"tex_cache_transactions","Unified Cache Transactions",917514,917514,917514
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"cf_fu_utilization","Control-Flow Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"tex_fu_utilization","Texture Function Unit Utilization","Low (2)","Low (2)","Low (2)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"ldst_fu_utilization","Load/Store Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"double_precision_fu_utilization","Double-Precision Function Unit Utilization","Max (10)","Max (10)","Max (10)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"special_fu_utilization","Special Function Unit Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"single_precision_fu_utilization","Single-Precision Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"flop_count_dp","Floating Point Operations(Double Precision)",9437296,9437296,9437296
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"flop_count_dp_add","Floating Point Operations(Double Precision Add)",1048592,1048592,1048592
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"flop_count_dp_fma","Floating Point Operations(Double Precision FMA)",2097184,2097184,2097184
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"flop_count_dp_mul","Floating Point Operations(Double Precision Mul)",4194336,4194336,4194336
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"flop_count_sp_add","Floating Point Operations(Single Precision Add)",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"flop_count_sp_fma","Floating Point Operations(Single Precision FMA)",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"flop_count_sp_mul","Floating Point Operation(Single Precision Mul)",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"flop_count_sp_special","Floating Point Operations(Single Precision Special)",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_executed","Instructions Executed",1867803,1867803,1867803
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_issued","Instructions Issued",1869145,1869145,1869145
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"dram_utilization","Device Memory Utilization","Mid (4)","Mid (4)","Mid (4)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"tex_utilization","Unified Cache Utilization","Low (2)","Low (2)","Low (2)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"shared_utilization","Shared Memory Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_fp_32","FP Instructions(Single)",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_fp_64","FP Instructions(Double)",7340112,7340112,7340112
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_integer","Integer Instructions",23068784,23068784,23068784
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_bit_convert","Bit-Convert Instructions",9437296,9437296,9437296
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_control","Control-Flow Instructions",1048576,1048576,1048576
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_compute_ld_st","Load/Store Instructions",9437296,9437296,9437296
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_misc","Misc Instructions",9437184,9437184,9437184
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"inst_inter_thread_communication","Inter-Thread Instructions",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"issue_slots","Issue Slots",1737688,1737688,1737688
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"cf_issued","Issued Control-Flow Instructions",32769,32769,32769
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"cf_executed","Executed Control-Flow Instructions",32769,32769,32769
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"ldst_issued","Issued Load/Store Instructions",1310734,1310734,1310734
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"ldst_executed","Executed Load/Store Instructions",425991,425991,425991
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"atomic_transactions","Atomic Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"atomic_transactions_per_request","Atomic Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",1.199321%,1.199321%,1.199321%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",77.352860%,77.352860%,77.352860%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"stall_memory_dependency","Issue Stall Reasons (Data Request)",11.380399%,11.380399%,11.380399%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"stall_texture","Issue Stall Reasons (Texture)",0.066952%,0.066952%,0.066952%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"stall_sync","Issue Stall Reasons (Synchronization)",8.497610%,8.497610%,8.497610%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"stall_other","Issue Stall Reasons (Other)",1.277131%,1.277131%,1.277131%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.075349%,0.075349%,0.075349%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.049769%,0.049769%,0.049769%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.001550%,0.001550%,0.001550%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"stall_not_selected","Issue Stall Reasons (Not Selected)",0.099059%,0.099059%,0.099059%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"sysmem_read_transactions","System Memory Read Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"sysmem_write_transactions","System Memory Write Transactions",5,5,5
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_read_transactions","L2 Read Transactions",770190,770190,770190
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_write_transactions","L2 Write Transactions",327692,327692,327692
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"ecc_transactions","ECC Transactions",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"local_memory_overhead","Local Memory Overhead",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"tex_cache_hit_rate","Unified Cache Hit Rate",55.628918%,55.628918%,55.628918%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_tex_read_hit_rate","L2 Hit Rate (Texture Reads)",62.836807%,62.836807%,62.836807%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_tex_write_hit_rate","L2 Hit Rate (Texture Writes)",100.000000%,100.000000%,100.000000%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_tex_read_throughput","L2 Throughput (Texture Reads)",42.131820GB/s,42.131820GB/s,42.131171GB/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_tex_write_throughput","L2 Throughput (Texture Writes)",17.928413GB/s,17.928413GB/s,17.927960GB/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_tex_read_transactions","L2 Transactions (Texture Reads)",770063,770063,770063
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_tex_write_transactions","L2 Transactions (Texture Writes)",327686,327686,327686
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_read_throughput","L2 Throughput (Reads)",42.138768GB/s,42.138768GB/s,42.138621GB/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_write_throughput","L2 Throughput (Writes)",17.928741GB/s,17.928741GB/s,17.927960GB/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"sysmem_read_throughput","System Memory Read Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"sysmem_write_throughput","System Memory Write Throughput",286.848633KB/s,286.848633KB/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_utilization","L2 Cache Utilization","Low (2)","Low (2)","Low (2)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_atomic_throughput","L2 Throughput (Atomic requests)",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"l2_atomic_transactions","L2 Transactions (Atomic requests)",0,0,0
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"sysmem_utilization","System Memory Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"ecc_throughput","ECC Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"sysmem_read_utilization","System Memory Read Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"sysmem_write_utilization","System Memory Write Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"eligible_warps_per_cycle","Eligible Warps Per Active Cycle",0.464536,0.464536,0.464536
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"flop_sp_efficiency","FLOP Efficiency(Peak Single)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*)",1,"flop_dp_efficiency","FLOP Efficiency(Peak Double)",27.218003%,27.218003%,27.218003%
