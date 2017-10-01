@@ -1,5 +1,8 @@
 include ../../common/make.config
 
+
+
+
 all: mummergpu
 .SUFFIXES : .cu .cu_dbg_o .c_dbg_o .cpp_dbg_o .cu_rel_o .c_rel_o .cpp_rel_o .cubin
 
@@ -68,6 +71,19 @@ CWARN_FLAGS := $(CXXWARN_FLAGS) \
 NVCCFLAGS := -Xcompiler "-m64"
 CXXFLAGS  := -m64 $(CXXWARN_FLAGS)
 CFLAGS    := -m64 $(CWARN_FLAGS)
+
+NVCCFLAGS += $(EXTRA_NVCCFLAGS)
+
+SMS ?= 30 35 50 52 60
+ifeq ($(GENCODE_FLAGS),)
+  $(foreach sm,$(SMS),$(eval GENCODE_FLAGS += -gencode arch=compute_$(sm),code=sm_$(sm)))
+endif
+
+NVCCFLAGS += $(GENCODE_FLAGS)
+
+
+
+
 
 # Common flags
 COMMONFLAGS ?= 
