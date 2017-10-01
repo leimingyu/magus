@@ -12,6 +12,10 @@ performancetest=1
 
 #NVCCFLAGS += -arch sm_20
 
+
+NVCCFLAGS := $(EXTRA_NVCCFLAGS)
+
+
 SMS ?= 30 35 50 52 60 
 ifeq ($(GENCODE_FLAGS),)                                                        
   $(foreach sm,$(SMS),$(eval GENCODE_FLAGS += -gencode arch=compute_$(sm),code=sm_$(sm)))
