@@ -5,10 +5,13 @@ DEFS += \
 		-DGPU_TIMER \
 		$(SPACE)
 
-SMS ?= 30 35 52                                                                       
-ifeq ($(GENCODE_FLAGS),)                                                        
+
+SMS ?= 30 35 50 52 60
+ifeq ($(GENCODE_FLAGS),)
   $(foreach sm,$(SMS),$(eval GENCODE_FLAGS += -gencode arch=compute_$(sm),code=sm_$(sm)))
 endif
+
+NVCCFLAGS += $(EXTRA_NVCCFLAGS)
 
 NVCCFLAGS += -I../common \
 			 -O3 \
