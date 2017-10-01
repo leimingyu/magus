@@ -57,6 +57,7 @@ void RunBenchmark(ResultDatabase &resultDB, OptionParser &op);
 // ****************************************************************************
 void EnumerateDevicesAndChoose(int chooseDevice, bool verbose)
 {
+	/*
     cudaSetDevice(chooseDevice);
     int actualdevice;
     cudaGetDevice(&actualdevice);
@@ -109,6 +110,19 @@ void EnumerateDevicesAndChoose(int chooseDevice, bool verbose)
          << " name='"<<deviceName<<"'"
          << " index="<<actualdevice
          << endl;
+				 */
+
+	cudaSetDevice(chooseDevice);
+
+	cudaDeviceProp deviceProp;
+	cudaGetDeviceProperties(&deviceProp, chooseDevice);
+
+	cout << "Chose device:"
+		<< " name='"<<deviceProp.name<<"'"
+		<< " index="<<chooseDevice
+		<< endl;
+
+
 }
 
 // ****************************************************************************
