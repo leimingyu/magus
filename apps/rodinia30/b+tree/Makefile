@@ -103,6 +103,5 @@ clean:
 		./kernel/*.o \
 		./util/timer/*.o \
 		./util/num/*.o \
-		./util/cuda/*.o \
-                output.txt
+		./util/cuda/*.o 
 
