@@ -2,11 +2,15 @@ include ../common/make.config
 
 CC := $(CUDA_DIR)/bin/nvcc
 
-SMS ?= 30 35 50 52 60
 
-ifeq ($(CC_FLAGS),)
-  $(foreach sm,$(SMS),$(eval CC_FLAGS += -gencode arch=compute_$(sm),code=sm_$(sm)))
+CC_FLAGS = $(EXTRA_NVCCFLAGS)
+
+SMS ?= 30 35 50 52 60
+ifeq ($(GENCODE_FLAGS),)
+  $(foreach sm,$(SMS),$(eval GENCODE_FLAGS += -gencode arch=compute_$(sm),code=sm_$(sm)))
 endif
+
+CC_FLAGS += $(GENCODE_FLAGS)
 
 
 ifdef VERIFY
