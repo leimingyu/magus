@@ -11,7 +11,9 @@ ifeq ($(shell uname -m), x86_64)
 endif
 
 
-SMS ?= 50 52                                                                       
+CUDA_FLAG = $(EXTRA_NVCCFLAGS)
+
+SMS ?= 30 35 50 52 60
 ifeq ($(GENCODE_FLAGS),)
   $(foreach sm,$(SMS),$(eval GENCODE_FLAGS += -gencode arch=compute_$(sm),code=sm_$(sm)))
 endif
@@ -19,18 +21,17 @@ endif
 all: euler3d  #euler3d_double  pre_euler3d  pre_euler3d_double 
 
 euler3d: euler3d.cu
-	#nvcc $(KERNEL_DIM) -O2 -Xptxas -v $(GENCODE_FLAGS) euler3d.cu -o euler3d -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib $(CUTIL_LIB)
-	nvcc $(KERNEL_DIM) -O2  $(GENCODE_FLAGS) euler3d.cu -o euler3d -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib $(CUTIL_LIB)
+	nvcc $(KERNEL_DIM) -O2 $(CUDA_FLAG) $(GENCODE_FLAGS) euler3d.cu -o euler3d -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib $(CUTIL_LIB)
 
 euler3d_double: euler3d_double.cu
-	nvcc -Xptxas -v -O3 $(GENCODE_FLAGS) euler3d_double.cu -o euler3d_double -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib $(CUTIL_LIB)
+	nvcc -O3 $(CUDA_FLAG) $(GENCODE_FLAGS) euler3d_double.cu -o euler3d_double -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib $(CUTIL_LIB)
 
 
 pre_euler3d: pre_euler3d.cu
-	nvcc -Xptxas -v -O3 $(GENCODE_FLAGS) pre_euler3d.cu -o pre_euler3d -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib $(CUTIL_LIB)
+	nvcc -O3 $(CUDA_FLAG) $(GENCODE_FLAGS) pre_euler3d.cu -o pre_euler3d -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib $(CUTIL_LIB)
 
 pre_euler3d_double: pre_euler3d_double.cu
-	nvcc -Xptxas -v -O3 $(GENCODE_FLAGS) pre_euler3d_double.cu -o pre_euler3d_double -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib $(CUTIL_LIB)
+	nvcc  -O3 $(CUDA_FLAG) $(GENCODE_FLAGS) pre_euler3d_double.cu -o pre_euler3d_double -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib $(CUTIL_LIB)
 
 
 clean:
