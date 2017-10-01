@@ -215,6 +215,6 @@ sc_gpu: streamcluster_cuda_cpu.cpp streamcluster_cuda.cu streamcluster_header.cu
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_LDFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
 
 clean:
-	rm -f sc_gpu 
+	rm -f sc_gpu output.txt
 
 clobber: clean
