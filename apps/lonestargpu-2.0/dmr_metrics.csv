@@ -1,0 +1,232 @@
+==8256== NVPROF is profiling process 8256, command: ./dmr ../../inputs/250k.2 20
+==8256== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8256== Profiling application: ./dmr ../../inputs/250k.2 20
+==8256== Profiling result:
+==8256== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"sm_efficiency","Multiprocessor Activity",18.087711%,99.687945%,48.064282%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"achieved_occupancy","Achieved Occupancy",0.122067,0.249327,0.195799
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"ipc","Executed IPC",0.186113,0.497651,0.275218
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"issued_ipc","Issued IPC",0.203127,0.349612,0.284126
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_per_warp","Instructions per warp",32.000000,373831.656250,8447.319616
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"branch_efficiency","Branch Efficiency",91.205671%,100.000000%,95.473221%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"warp_execution_efficiency","Warp Execution Efficiency",37.591543%,100.000000%,75.907952%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"warp_nonpred_execution_efficiency","Warp Non-Predicated Execution Efficiency",34.376664%,90.722656%,68.804848%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_replay_overhead","Instruction Replay Overhead",0.000012,0.161458,0.069088
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"issue_slot_utilization","Issue Slot Utilization",4.666064%,8.018072%,6.513032%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"shared_load_transactions_per_request","Shared Memory Load Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"shared_store_transactions_per_request","Shared Memory Store Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"local_load_transactions_per_request","Local Memory Load Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"local_store_transactions_per_request","Local Memory Store Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"gld_transactions_per_request","Global Load Transactions Per Request",0.000000,18.576147,14.283133
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"gst_transactions_per_request","Global Store Transactions Per Request",0.000000,2.000000,1.706916
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"shared_store_transactions","Shared Store Transactions",0,0,0
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"shared_load_transactions","Shared Load Transactions",0,0,0
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"local_load_transactions","Local Load Transactions",0,0,0
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"local_store_transactions","Local Store Transactions",0,0,0
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"gld_transactions","Global Load Transactions",0,17704981,540613
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"gst_transactions","Global Store Transactions",0,180159,8636
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"dram_read_transactions","Device Memory Read Transactions",34,8442624,218901
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"dram_write_transactions","Device Memory Write Transactions",49,194849,10152
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"global_hit_rate","Global Hit Rate",0.000000%,30.666667%,20.862640%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"local_hit_rate","Local Hit Rate",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"gld_requested_throughput","Requested Global Load Throughput",0.000000B/s,15.684494GB/s,12.136064GB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"gst_requested_throughput","Requested Global Store Throughput",0.000000B/s,1.011020GB/s,431.060791MB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"gld_throughput","Global Load Throughput",0.000000B/s,56.694284GB/s,44.083223GB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"gst_throughput","Global Store Throughput",0.000000B/s,1.346954GB/s,896.453857MB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"dram_read_throughput","Device Memory Read Throughput",168.687636MB/s,26.787274GB/s,22.210181GB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"dram_write_throughput","Device Memory Write Throughput",243.108653MB/s,12.554278GB/s,1.029111GB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"tex_cache_throughput","Unified Cache Throughput",0.000000B/s,25.469990GB/s,24.276786GB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"local_load_throughput","Local Memory Load Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"local_store_throughput","Local Memory Store Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"shared_load_throughput","Shared Memory Load Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"shared_store_throughput","Shared Memory Store Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"gld_efficiency","Global Memory Load Efficiency",0.000000%,32.932692%,28.201624%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"gst_efficiency","Global Memory Store Efficiency",0.000000%,77.321826%,43.667109%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"tex_cache_transactions","Unified Cache Transactions",0,10828590,239268
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"cf_fu_utilization","Control-Flow Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"tex_fu_utilization","Texture Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"ldst_fu_utilization","Load/Store Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"double_precision_fu_utilization","Double-Precision Function Unit Utilization","Idle (0)","Max (10)","Mid (5)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"special_fu_utilization","Special Function Unit Utilization","Idle (0)","Low (1)","Idle (0)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"single_precision_fu_utilization","Single-Precision Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"flop_count_dp","Floating Point Operations(Double Precision)",0,101294605,3044604
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"flop_count_dp_add","Floating Point Operations(Double Precision Add)",0,28103436,851994
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"flop_count_dp_fma","Floating Point Operations(Double Precision FMA)",0,20054257,601402
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"flop_count_dp_mul","Floating Point Operations(Double Precision Mul)",0,33082655,989805
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"flop_count_sp_add","Floating Point Operations(Single Precision Add)",0,0,0
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"flop_count_sp_fma","Floating Point Operations(Single Precision FMA)",0,0,0
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"flop_count_sp_mul","Floating Point Operation(Single Precision Mul)",0,0,0
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"flop_count_sp_special","Floating Point Operations(Single Precision Special)",0,6514199,194201
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_executed","Instructions Executed",3072,35887839,810942
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_issued","Instructions Issued",3568,35888253,811423
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"dram_utilization","Device Memory Utilization","Low (1)","Low (3)","Low (1)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"tex_utilization","Unified Cache Utilization","Idle (0)","Low (1)","Idle (0)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"shared_utilization","Shared Memory Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_fp_32","FP Instructions(Single)",0,13028398,388403
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_fp_64","FP Instructions(Double)",0,94780406,2850402
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_integer","Integer Instructions",36864,151404342,4364522
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_bit_convert","Bit-Convert Instructions",0,13028398,388403
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_control","Control-Flow Instructions",9216,39363205,917041
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_compute_ld_st","Load/Store Instructions",96,31747800,989346
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_misc","Misc Instructions",24576,51414365,1604865
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"inst_inter_thread_communication","Inter-Thread Instructions",18432,540632,46788
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"issue_slots","Issue Slots",3280,32968731,744554
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"cf_issued","Issued Control-Flow Instructions",384,3894208,85770
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"cf_executed","Executed Control-Flow Instructions",384,3894208,85770
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"ldst_issued","Issued Load/Store Instructions",864,7678799,183818
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"ldst_executed","Executed Load/Store Instructions",960,2168801,55290
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"atomic_transactions","Atomic Transactions",96,26937,1916
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"atomic_transactions_per_request","Atomic Transactions Per Request",0.500000,0.996449,0.643832
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",1.586063%,51.607169%,14.952719%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",13.437515%,74.555031%,42.191123%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"stall_memory_dependency","Issue Stall Reasons (Data Request)",0.000000%,44.259628%,20.131774%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.377389%,0.047657%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"stall_other","Issue Stall Reasons (Other)",1.117095%,5.926432%,2.130599%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.003702%,58.958811%,19.087229%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.002852%,0.060361%,0.034904%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.000238%,4.031712%,1.224462%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"stall_not_selected","Issue Stall Reasons (Not Selected)",0.067065%,0.385534%,0.199532%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"sysmem_read_transactions","System Memory Read Transactions",0,0,0
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"sysmem_write_transactions","System Memory Write Transactions",5,5,5
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_read_transactions","L2 Read Transactions",171,14607386,436508
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_write_transactions","L2 Write Transactions",102,180261,10556
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"ecc_transactions","ECC Transactions",0,0,0
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"local_memory_overhead","Local Memory Overhead",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"tex_cache_hit_rate","Unified Cache Hit Rate",19.349734%,100.000000%,34.371180%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_tex_read_hit_rate","L2 Hit Rate (Texture Reads)",0.000000%,71.114749%,52.792805%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_tex_write_hit_rate","L2 Hit Rate (Texture Writes)",0.000000%,100.000000%,83.068997%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_tex_read_throughput","L2 Throughput (Texture Reads)",0.000000B/s,56.694284GB/s,44.083223GB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_tex_write_throughput","L2 Throughput (Texture Writes)",0.000000B/s,1.347426GB/s,896.453857MB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_tex_read_transactions","L2 Transactions (Texture Reads)",0,14607235,434471
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_tex_write_transactions","L2 Transactions (Texture Writes)",0,180159,8636
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_read_throughput","L2 Throughput (Reads)",788.341570MB/s,57.039250GB/s,44.289976GB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_write_throughput","L2 Throughput (Writes)",406.316192MB/s,1.699751GB/s,1.070090GB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"sysmem_read_throughput","System Memory Read Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"sysmem_write_throughput","System Memory Write Throughput",12.204102KB/s,67.486904MB/s,0.000000B/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_utilization","L2 Cache Utilization","Low (1)","Low (2)","Low (1)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_atomic_throughput","L2 Throughput (Atomic requests)",234.323242KB/s,1.265379GB/s,198.364258MB/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"l2_atomic_transactions","L2 Transactions (Atomic requests)",192,53874,3832
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"sysmem_utilization","System Memory Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"ecc_throughput","ECC Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"sysmem_read_utilization","System Memory Read Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"sysmem_write_utilization","System Memory Write Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"eligible_warps_per_cycle","Eligible Warps Per Active Cycle",0.205626,0.353151,0.283200
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"flop_sp_efficiency","FLOP Efficiency(Peak Single)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","check_triangles(Mesh, unsigned int*, Worklist2, int)",101,"flop_dp_efficiency","FLOP Efficiency(Peak Double)",0.000000%,19.216153%,6.311073%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"sm_efficiency","Multiprocessor Activity",74.396522%,99.997211%,98.962564%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"achieved_occupancy","Achieved Occupancy",0.309525,0.312500,0.312388
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"ipc","Executed IPC",0.199707,0.381454,0.238490
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"issued_ipc","Issued IPC",0.200030,0.398727,0.239109
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_per_warp","Instructions per warp",216.958333,1649340.075000,70759.627778
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"branch_efficiency","Branch Efficiency",90.977353%,100.000000%,96.322863%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"warp_execution_efficiency","Warp Execution Efficiency",7.862065%,80.517665%,15.571143%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"warp_nonpred_execution_efficiency","Warp Non-Predicated Execution Efficiency",7.440510%,74.031008%,14.514775%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_replay_overhead","Instruction Replay Overhead",0.000003,0.027649,0.001374
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"issue_slot_utilization","Issue Slot Utilization",4.952288%,9.070542%,5.559555%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"shared_load_transactions_per_request","Shared Memory Load Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"shared_store_transactions_per_request","Shared Memory Store Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"local_load_transactions_per_request","Local Memory Load Transactions Per Request",0.000000,4.553517,3.606839
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"local_store_transactions_per_request","Local Memory Store Transactions Per Request",0.000000,2.372183,1.946940
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"gld_transactions_per_request","Global Load Transactions Per Request",2.532906,7.837907,4.834296
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"gst_transactions_per_request","Global Store Transactions Per Request",1.058140,9.007817,4.677406
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"shared_store_transactions","Shared Store Transactions",0,0,0
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"shared_load_transactions","Shared Load Transactions",0,0,0
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"local_load_transactions","Local Load Transactions",0,17512369,941160
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"local_store_transactions","Local Store Transactions",0,5703333,331316
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"gld_transactions","Global Load Transactions",1302,91195642,5198304
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"gst_transactions","Global Store Transactions",204,10555490,664866
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"dram_read_transactions","Device Memory Read Transactions",170,31243989,1902125
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"dram_write_transactions","Device Memory Write Transactions",125,7069121,431886
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"global_hit_rate","Global Hit Rate",0.611726%,30.414747%,1.971577%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"local_hit_rate","Local Hit Rate",0.000000%,63.073852%,46.638905%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"gld_requested_throughput","Requested Global Load Throughput",311.339154MB/s,8.184993GB/s,5.775131GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"gst_requested_throughput","Requested Global Store Throughput",9.782251MB/s,842.859797MB/s,624.656677MB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"gld_throughput","Global Load Throughput",3.200183GB/s,52.291558GB/s,38.241968GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"gst_throughput","Global Store Throughput",53.261109MB/s,6.718144GB/s,4.929490GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"dram_read_throughput","Device Memory Read Throughput",203.523719MB/s,18.723530GB/s,14.104880GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"dram_write_throughput","Device Memory Write Throughput",143.315269MB/s,4.445747GB/s,3.201887GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"tex_cache_throughput","Unified Cache Throughput",4.002706GB/s,32.393698GB/s,23.027882GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"local_load_throughput","Local Memory Load Throughput",0.000000B/s,10.956458GB/s,6.978400GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"local_store_throughput","Local Memory Store Throughput",0.000000B/s,4.464453GB/s,2.455898GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"shared_load_throughput","Shared Memory Load Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"shared_store_throughput","Shared Memory Store Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"gld_efficiency","Global Memory Load Efficiency",9.500774%,15.695943%,14.881287%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"gst_efficiency","Global Memory Store Efficiency",12.185716%,22.058824%,14.029066%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"tex_cache_transactions","Unified Cache Transactions",1212,63474417,3105452
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"cf_fu_utilization","Control-Flow Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"tex_fu_utilization","Texture Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"ldst_fu_utilization","Load/Store Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"double_precision_fu_utilization","Double-Precision Function Unit Utilization","Idle (0)","Low (2)","Low (1)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"special_fu_utilization","Special Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"single_precision_fu_utilization","Single-Precision Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"flop_count_dp","Floating Point Operations(Double Precision)",0,62761642,3942559
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"flop_count_dp_add","Floating Point Operations(Double Precision Add)",0,16135199,1019157
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"flop_count_dp_fma","Floating Point Operations(Double Precision FMA)",0,16611596,1045738
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"flop_count_dp_mul","Floating Point Operations(Double Precision Mul)",0,13403251,831925
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"flop_count_sp","Floating Point Operations(Single Precision)",0,563284,40033
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"flop_count_sp_add","Floating Point Operations(Single Precision Add)",0,0,0
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"flop_count_sp_fma","Floating Point Operations(Single Precision FMA)",0,281642,20016
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"flop_count_sp_mul","Floating Point Operation(Single Precision Mul)",0,0,0
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"flop_count_sp_special","Floating Point Operations(Single Precision Special)",7680,289322,27696
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_executed","Instructions Executed",26005,197920809,8492292
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_issued","Instructions Issued",26696,198007052,8491648
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"dram_utilization","Device Memory Utilization","Low (1)","Low (3)","Low (1)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"tex_utilization","Unified Cache Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"shared_utilization","Shared Memory Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_fp_32","FP Instructions(Single)",7680,1134248,87747
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_fp_64","FP Instructions(Double)",0,49190552,3089059
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_integer","Integer Instructions",391485,449416131,25917773
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_bit_convert","Bit-Convert Instructions",26880,26880,26880
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_control","Control-Flow Instructions",90017,129977438,7384076
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_compute_ld_st","Load/Store Instructions",18724,175909804,9520541
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_misc","Misc Instructions",104604,100492819,6228129
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"inst_inter_thread_communication","Inter-Thread Instructions",0,303366,20920
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"issue_slots","Issue Slots",24292,176628448,7457390
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"cf_issued","Issued Control-Flow Instructions",4272,40016563,1739356
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"cf_executed","Executed Control-Flow Instructions",4272,40016563,1739356
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"ldst_issued","Issued Load/Store Instructions",3663,78673703,3689941
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"ldst_executed","Executed Load/Store Instructions",4226,54950903,2091321
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"atomic_transactions","Atomic Transactions",0,176795,13077
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"atomic_transactions_per_request","Atomic Transactions Per Request",0.000000,5.964516,4.275988
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",2.514551%,4.830414%,3.660739%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",5.967718%,8.795755%,6.964852%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"stall_memory_dependency","Issue Stall Reasons (Data Request)",29.651204%,79.124218%,44.082039%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.247099%,0.033762%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"stall_sync","Issue Stall Reasons (Synchronization)",9.087133%,57.646135%,42.792366%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"stall_other","Issue Stall Reasons (Other)",0.980257%,2.785875%,2.075835%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.000834%,4.479229%,0.159826%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.072669%,0.434727%,0.122887%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.000000%,0.000413%,0.000050%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"stall_not_selected","Issue Stall Reasons (Not Selected)",0.072241%,0.776410%,0.107643%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"sysmem_read_transactions","System Memory Read Transactions",0,0,0
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"sysmem_write_transactions","System Memory Write Transactions",5,5,5
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_read_transactions","L2 Read Transactions",1324,102137478,5764844
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_write_transactions","L2 Write Transactions",210,16433348,1010281
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"ecc_transactions","ECC Transactions",0,0,0
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"local_memory_overhead","Local Memory Overhead",0.000000%,16.400077%,8.770282%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"tex_cache_hit_rate","Unified Cache Hit Rate",1.259009%,26.145038%,7.008351%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_tex_read_hit_rate","L2 Hit Rate (Texture Reads)",64.582532%,100.977713%,88.414177%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_tex_write_hit_rate","L2 Hit Rate (Texture Writes)",74.462304%,99.019608%,85.316042%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_tex_read_throughput","L2 Throughput (Texture Reads)",3.160552GB/s,58.667315GB/s,42.494386GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_tex_write_throughput","L2 Throughput (Texture Writes)",80.064590MB/s,10.014955GB/s,7.388182GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_tex_read_transactions","L2 Transactions (Texture Reads)",957,101915578,5730587
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_tex_write_transactions","L2 Transactions (Texture Writes)",204,16259047,996416
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_read_throughput","L2 Throughput (Reads)",4.372593GB/s,59.730674GB/s,42.748637GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_write_throughput","L2 Throughput (Writes)",86.808691MB/s,10.477389GB/s,7.490627GB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"sysmem_read_throughput","System Memory Read Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"sysmem_write_throughput","System Memory Write Throughput",1.739258KB/s,16.909119MB/s,0.000000B/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_utilization","L2 Cache Utilization","Low (1)","Low (3)","Low (1)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_atomic_throughput","L2 Throughput (Atomic requests)",0.000000B/s,822.894906MB/s,104.904175MB/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"l2_atomic_transactions","L2 Transactions (Atomic requests)",0,356226,27935
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"sysmem_utilization","System Memory Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"ecc_throughput","ECC Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"sysmem_read_utilization","System Memory Read Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"sysmem_write_utilization","System Memory Write Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"eligible_warps_per_cycle","Eligible Warps Per Active Cycle",0.214772,0.503159,0.243370
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"flop_sp_efficiency","FLOP Efficiency(Peak Single)",0.000000%,0.001011%,0.000312%
+"GeForce GTX 950 (0)","refine(Mesh, int, unsigned int*, unsigned int*, GlobalBarrier, Worklist2, Worklist2)",99,"flop_dp_efficiency","FLOP Efficiency(Peak Double)",0.000000%,2.821189%,0.891276%
