@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # run rcuda on mcx1
-#RCUDA_DEVICE_0=kepler1.ece.neu.edu:0  ./matrixMul/matrixMul
+devid=$1
+RCUDA_DEVICE_0=mcx1.coe.neu.edu:$devid  ./matrixMul
 
-./matrixMul
+#./matrixMul
