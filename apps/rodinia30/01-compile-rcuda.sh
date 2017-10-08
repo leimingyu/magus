@@ -20,7 +20,8 @@ do
 
 			#echo "$currDir"
 			cd $currDir
-			make clean && make EXTRA_NVCCFLAGS=--cudart=shared
+			#make clean && make EXTRA_NVCCFLAGS=--cudart=shared
+			./0_compile_rcuda.sh
 			cd ..
 		fi
 	fi
