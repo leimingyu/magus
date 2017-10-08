@@ -43,6 +43,13 @@
 #include <stdio.h>
 #include <math.h>
 
+#include <cuda_runtime.h>
+
+// helper functions and utilities to work with CUDA
+#include <helper_functions.h>
+#include <helper_cuda.h>
+#include <helper_math.h>
+
 #define THREADSX 16
 #define THREADSY 16
 #define THREADS 512
@@ -207,14 +214,22 @@ void acclCuda(int *out, int *components, const int *in, const uint nFrames,
     /*Streams Information*/    
     uint nFramsPerStream = 2;
     uint nStreams = nFrames/nFramsPerStream;
+
+		/*
     int rowsOccupancyMax = frameRows * nFramsPerStream;
-    cudaErrChk(cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize,
-                                        findSpansKernel, 0, rowsOccupancyMax));
+    //cudaErrChk(cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, findSpansKernel, 0, rowsOccupancyMax));
+    cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, findSpansKernel, 0, rowsOccupancyMax);
+		*/
+
+		// fixed 
+		minGridSize = 12;
+		blockSize = 1024;
+
     printf("Best Kernel Size\n");
     printf("-----------------\n");
     printf("\t Minimum gridSize to acchieve high occupancy: %d\n", minGridSize);
     printf("\t Block Size: %d\n", blockSize);
-    printf("\t Rows Max Occupancy: %d\n", rowsOccupancyMax);
+    //printf("\t Rows Max Occupancy: %d\n", rowsOccupancyMax);
 
     cudaEvent_t start, stop;
     float time;
@@ -222,26 +237,35 @@ void acclCuda(int *out, int *components, const int *in, const uint nFrames,
     cudaEventCreate(&stop);
 
     /* Choose which GPU to run on, change this on a multi-GPU system.*/
-    cudaErrChk(cudaSetDevice(0));
+    //cudaErrChk(cudaSetDevice(0));
+    cudaSetDevice(0);
 
 
 
     /* Allocate GPU buffers for three vectors (two input, one output)*/
-    cudaErrChk(cudaMalloc((void**)&devOut, sizeOut * sizeof(int)));
-    cudaErrChk(cudaMalloc((void**)&devComponents, sizeComponents * sizeof(int)));    
-    cudaErrChk(cudaMalloc((void**)&devIn, sizeIn * sizeof(int)));
+    //cudaErrChk(cudaMalloc((void**)&devOut, sizeOut * sizeof(int)));
+    //cudaErrChk(cudaMalloc((void**)&devComponents, sizeComponents * sizeof(int)));    
+    //cudaErrChk(cudaMalloc((void**)&devIn, sizeIn * sizeof(int)));
+
+    cudaMalloc((void**)&devOut, sizeOut * sizeof(int));
+    cudaMalloc((void**)&devComponents, sizeComponents * sizeof(int));    
+    cudaMalloc((void**)&devIn, sizeIn * sizeof(int));
 	
     /* Copy input vectors from host memory to GPU buffers*/
-    cudaErrChk(cudaMemcpy(devIn, in, sizeIn * sizeof(int), cudaMemcpyHostToDevice));
-    cudaErrChk(cudaMemcpy(devComponents, components, sizeComponents * sizeof(int),
-                          cudaMemcpyHostToDevice));
-    cudaErrChk(cudaMemcpy(devOut, out, sizeOut * sizeof(int), cudaMemcpyHostToDevice));
+    //cudaErrChk(cudaMemcpy(devIn, in, sizeIn * sizeof(int), cudaMemcpyHostToDevice));
+    //cudaErrChk(cudaMemcpy(devComponents, components, sizeComponents * sizeof(int), cudaMemcpyHostToDevice));
+    //cudaErrChk(cudaMemcpy(devOut, out, sizeOut * sizeof(int), cudaMemcpyHostToDevice));
+
+    cudaMemcpy(devIn, in, sizeIn * sizeof(int), cudaMemcpyHostToDevice);
+    cudaMemcpy(devComponents, components, sizeComponents * sizeof(int), cudaMemcpyHostToDevice);
+    cudaMemcpy(devOut, out, sizeOut * sizeof(int), cudaMemcpyHostToDevice);
 
     /*launch streams*/
     cudaStream_t *streams = (cudaStream_t *) malloc(nStreams * sizeof(cudaStream_t));
     for (int i = 0; i < nStreams; i++)
     {
-        cudaErrChk(cudaStreamCreate(&(streams[i])));
+        //cudaErrChk(cudaStreamCreate(&(streams[i])));
+        cudaStreamCreate(&(streams[i]));
     }
     /*variables for streaming*/
     const int frameSpansSize = rows/nStreams * colsSpans;
@@ -270,10 +294,11 @@ void acclCuda(int *out, int *components, const int *in, const uint nFrames,
                                                  frameRows);
     }
     /* Copy device to host*/
-    cudaErrChk(cudaMemcpy(components, devComponents, sizeComponents * sizeof(int),
-                          cudaMemcpyDeviceToHost));
-    cudaErrChk(cudaMemcpy(out, devOut, sizeOut * sizeof(int),
-                          cudaMemcpyDeviceToHost));
+    //cudaErrChk(cudaMemcpy(components, devComponents, sizeComponents * sizeof(int), cudaMemcpyDeviceToHost));
+    //cudaErrChk(cudaMemcpy(out, devOut, sizeOut * sizeof(int), cudaMemcpyDeviceToHost));
+
+    cudaMemcpy(components, devComponents, sizeComponents * sizeof(int), cudaMemcpyDeviceToHost);
+    cudaMemcpy(out, devOut, sizeOut * sizeof(int), cudaMemcpyDeviceToHost);
 
     cudaEventRecord(stop, 0);
     cudaEventSynchronize(stop);
