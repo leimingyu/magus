@@ -307,9 +307,9 @@ void acclCuda(int *out, int *components, const int *in, const uint nFrames,
     printf ("Time kernel execution: %f ms\n", time);
 
     /* Analysis of occupancy*/
+		/*
     int maxActiveBlocks;
-    cudaOccupancyMaxActiveBlocksPerMultiprocessor( &maxActiveBlocks,
-                                                   findSpansKernel, blockSize,0);
+    cudaOccupancyMaxActiveBlocksPerMultiprocessor( &maxActiveBlocks, findSpansKernel, blockSize,0);
 
     int device;
     cudaDeviceProp props;
@@ -324,6 +324,7 @@ void acclCuda(int *out, int *components, const int *in, const uint nFrames,
     printf("\t Block Size: %d\n", blockSize);
     printf("\t Grid Size: %d\n", gridSize);
     printf("\t Theoretical occupancy: %f\n", occupancy);
+		*/
 
     /*Free*/
     cudaFree(devOut);
