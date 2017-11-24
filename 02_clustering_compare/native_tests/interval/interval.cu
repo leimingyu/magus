@@ -30,6 +30,9 @@ const static char *sSDKsample = "Interval Computing";
 #include "cuda_interval.h"
 #include "cpu_interval.h"
 
+#include "../tictoc.h"
+#define LOG 1
+
 int main(int argc,char *argv[])
 {
     int implementation_choice = 0;
@@ -84,12 +87,39 @@ int main(int argc,char *argv[])
 
     interval_gpu<T> *d_result;
     int *d_nresults;
+
+#if LOG
+	double tic,toc;
+	tic = getCpuTime();
+#endif
+
     int *h_nresults = new int[THREADS];
+
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[cpu malloc (ms) : %lf]\n", toc - tic);
+#endif
+
+
+
+
     cudaEvent_t start, stop;
 
     CHECKED_CALL(cudaSetDevice(devID));
+
+#if LOG
+	tic = getCpuTime();
+#endif
+
     CHECKED_CALL(cudaMalloc((void **)&d_result, THREADS * DEPTH_RESULT * sizeof(*d_result)));
     CHECKED_CALL(cudaMalloc((void **)&d_nresults, THREADS * sizeof(*d_nresults)));
+
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[gpu malloc (ms) : %lf]\n", toc - tic);
+#endif
+
+
     CHECKED_CALL(cudaEventCreate(&start));
     CHECKED_CALL(cudaEventCreate(&stop));
 
@@ -111,22 +141,58 @@ int main(int argc,char *argv[])
 
     CHECKED_CALL(cudaEventRecord(start, 0));
 
+
+#if LOG
+	    tic = getCpuTime();
+#endif
+
     for (int it = 0; it < NUM_RUNS; ++it)
     {
         test_interval_newton<T><<<GRID_SIZE, BLOCK_SIZE>>>(d_result, d_nresults, i, implementation_choice);
         CHECKED_CALL(cudaGetLastError());
     }
 
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[gpu kernel (ms) : %lf]\n", toc - tic);
+#endif
+
+
     CHECKED_CALL(cudaEventRecord(stop, 0));
     CHECKED_CALL(cudaDeviceSynchronize());
 
+
+#if LOG
+	    tic = getCpuTime();
+#endif
+
     I_CPU *h_result = new I_CPU[THREADS * DEPTH_RESULT];
+
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[cpu malloc (ms) : %lf]\n", toc - tic);
+#endif
+
+
+
+#if LOG
+	    tic = getCpuTime();
+#endif
+
     CHECKED_CALL(cudaMemcpy(h_result, d_result, THREADS * DEPTH_RESULT * sizeof(*d_result), cudaMemcpyDeviceToHost));
     CHECKED_CALL(cudaMemcpy(h_nresults, d_nresults, THREADS * sizeof(*d_nresults), cudaMemcpyDeviceToHost));
+
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[gpu d2h (ms) : %lf]\n", toc - tic);
+#endif
 
     std::cout << "Found " << h_nresults[0] << " intervals that may contain the root(s)\n";
     std::cout.precision(15);
 
+#if LOG
+	    tic = getCpuTime();
+#endif
     for (int i = 0; i != h_nresults[0]; ++i)
     {
         std::cout << " i[" << i << "] ="
@@ -134,15 +200,35 @@ int main(int argc,char *argv[])
                   << ", " << h_result[THREADS * i + 0].upper() << "]\n";
     }
 
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[cpu check (ms) : %lf]\n", toc - tic);
+#endif
+
     float time;
     CHECKED_CALL(cudaEventElapsedTime(&time, start, stop));
     std::cout << "Number of equations solved: " << THREADS << "\n";
     std::cout << "Time per equation: " << 1000000.0f * (time / (float)(THREADS)) / NUM_RUNS << " us\n";
 
+
+#if LOG
+	    tic = getCpuTime();
+#endif
+
     CHECKED_CALL(cudaEventDestroy(start));
     CHECKED_CALL(cudaEventDestroy(stop));
     CHECKED_CALL(cudaFree(d_result));
     CHECKED_CALL(cudaFree(d_nresults));
+
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[gpu free (ms) : %lf]\n", toc - tic);
+#endif
+
+
+#if LOG
+	tic = getCpuTime();
+#endif
 
     // Compute the results using a CPU implementation based on the Boost library
     I_CPU i_cpu(0.01f, 4.0f);
@@ -157,6 +243,12 @@ int main(int argc,char *argv[])
     delete [] h_nresults_cpu;
     delete [] h_result;
     delete [] h_nresults;
+
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[cpu work (ms) : %lf]\n", toc - tic);
+#endif
+
 
     exit(bTestResult ? EXIT_SUCCESS : EXIT_FAILURE);
 }
