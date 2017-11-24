@@ -28,6 +28,9 @@
 #include <helper_image.h>     // helper for image and data comparison
 #include <helper_cuda.h>      // helper for cuda error checking functions
 
+#include "tictoc.h"
+#define LOG 1
+
 const char *sSDKsample = "Transpose";
 
 // Each block transposes/copies a tile of TILE_DIM x TILE_DIM elements
@@ -456,16 +459,40 @@ main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
+
     // allocate host memory
+#if LOG
+	double tic,toc;
+	tic = getCpuTime();
+#endif
+
     float *h_idata = (float *) malloc(mem_size);
     float *h_odata = (float *) malloc(mem_size);
     float *transposeGold = (float *) malloc(mem_size);
     float *gold;
 
-    // allocate device memory
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[cpu malloc (ms) : %lf]\n", toc - tic);
+#endif
+
+#if LOG
+	tic = getCpuTime();
+#endif
+
     float *d_idata, *d_odata;
     checkCudaErrors(cudaMalloc((void **) &d_idata, mem_size));
     checkCudaErrors(cudaMalloc((void **) &d_odata, mem_size));
+
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[gpu malloc (ms) : %lf]\n", toc - tic);
+#endif
+
+
+#if LOG
+	tic = getCpuTime();
+#endif
 
     // initialize host data
     for (int i = 0; i < (size_x*size_y); ++i)
@@ -473,11 +500,34 @@ main(int argc, char **argv)
         h_idata[i] = (float) i;
     }
 
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[cpu init (ms) : %lf]\n", toc - tic);
+#endif
+
+#if LOG
     // copy host data to device
+	tic = getCpuTime();
+#endif
+
     checkCudaErrors(cudaMemcpy(d_idata, h_idata, mem_size, cudaMemcpyHostToDevice));
 
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[gpu h2d (ms) : %lf]\n", toc - tic);
+#endif
+
+#if LOG
     // Compute reference transpose solution
+	tic = getCpuTime();
+#endif
+
     computeTransposeGold(transposeGold, h_idata, size_x, size_y);
+
+#if LOG
+	toc = getCpuTime();
+	fprintf(stdout, "\n[cpu computeTransposeGold (ms) : %lf]\n", toc - tic);
+#endif
 
     // print out common data for all kernels
     printf("\nMatrix size: %dx%d (%dx%d tiles), tile size: %dx%d, block size: %dx%d\n\n",
@@ -556,6 +606,10 @@ main(int argc, char **argv)
         // Clear error status
         checkCudaErrors(cudaGetLastError());
 
+#if LOG
+		tic = getCpuTime();
+#endif
+
         // warmup to avoid timing startup
         kernel<<<grid, threads>>>(d_odata, d_idata, size_x, size_y);
 
@@ -569,13 +623,36 @@ main(int argc, char **argv)
             checkCudaErrors(cudaGetLastError());
         }
 
+#if LOG
+		toc = getCpuTime();
+		fprintf(stdout, "\n[gpu kernel (ms) : %lf]\n", toc - tic);
+#endif
+
         checkCudaErrors(cudaEventRecord(stop, 0));
         checkCudaErrors(cudaEventSynchronize(stop));
         float kernelTime;
         checkCudaErrors(cudaEventElapsedTime(&kernelTime, start, stop));
 
+		tic = getCpuTime();
+
         checkCudaErrors(cudaMemcpy(h_odata, d_odata, mem_size, cudaMemcpyDeviceToHost));
+
+#if LOG
+		toc = getCpuTime();
+		fprintf(stdout, "\n[gpu d2h (ms) : %lf]\n", toc - tic);
+#endif
+
+
+#if LOG
+		tic = getCpuTime();
+#endif
+
         bool res = compareData(gold, h_odata, size_x*size_y, 0.01f, 0.0f);
+
+#if LOG
+		toc = getCpuTime();
+		fprintf(stdout, "\n[cpu compareData (ms) : %lf]\n", toc - tic);
+#endif
 
         if (res == false)
         {
@@ -583,9 +660,30 @@ main(int argc, char **argv)
             success = false;
         }
 
+
+#if LOG
+		tic = getCpuTime();
+#endif
+
         // take measurements for loop inside kernel
         checkCudaErrors(cudaMemcpy(h_odata, d_odata, mem_size, cudaMemcpyDeviceToHost));
+
+#if LOG
+		toc = getCpuTime();
+		fprintf(stdout, "\n[gpu d2h (ms) : %lf]\n", toc - tic);
+#endif
+
+
+#if LOG
+		tic = getCpuTime();
+#endif
+
         res = compareData(gold, h_odata, size_x*size_y, 0.01f, 0.0f);
+
+#if LOG
+		toc = getCpuTime();
+		fprintf(stdout, "\n[cpu compareData (ms) : %lf]\n", toc - tic);
+#endif
 
         if (res == false)
         {
@@ -604,14 +702,32 @@ main(int argc, char **argv)
     }
 
     // cleanup
+#if LOG
+		tic = getCpuTime();
+#endif
+
     free(h_idata);
     free(h_odata);
     free(transposeGold);
+#if LOG
+		toc = getCpuTime();
+		fprintf(stdout, "\n[cpu free (ms) : %lf]\n", toc - tic);
+#endif
+
+
+#if LOG
+		tic = getCpuTime();
+#endif
     cudaFree(d_idata);
     cudaFree(d_odata);
 
     checkCudaErrors(cudaEventDestroy(start));
     checkCudaErrors(cudaEventDestroy(stop));
+
+#if LOG
+		toc = getCpuTime();
+		fprintf(stdout, "\n[gpu free (ms) : %lf]\n", toc - tic);
+#endif
 
     if (!success)
     {
@@ -621,4 +737,5 @@ main(int argc, char **argv)
 
     printf("Test passed\n");
     exit(EXIT_SUCCESS);
+
 }
