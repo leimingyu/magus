@@ -1,0 +1,15 @@
+Monte Carlo Single Asian Option (with PRNG)
+===========================================
+
+Pricing option on GPU (GeForce GTX 1080 Ti)
+
+
+[gpu malloc,datatransfer,compute (ms) : 236.448975]
+Precision:      single
+Number of sims: 100000
+
+   Spot    |   Strike   |     r      |   sigma    |   tenor    |  Call/Put  |   Value    |  Expected  |
+-----------|------------|------------|------------|------------|------------|------------|------------|
+        40 |         35 |       0.03 |        0.2 |   0.333333 |       Call |    5.17634 |    5.16253 |
+
+MonteCarloSingleAsianOptionP, Performance = 422925.96 sims/s, Time = 236.45(ms), NumDevsUsed = 1, Blocksize = 128
