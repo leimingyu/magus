@@ -1,0 +1,35 @@
+./mergeSort Starting...
+
+GPU Device 0: "GeForce GTX 1080 Ti" with compute capability 6.1
+
+Allocating and initializing host arrays...
+
+
+[cpu malloc and init (ms) : 71.568848]
+Allocating and initializing CUDA arrays...
+
+
+[gpu malloc (ms) : 225.448975]
+
+[gpu h2d (ms) : 79.088135]
+Initializing GPU merge sort...
+
+[gpu malloc (ms) : 0.852051]
+Running GPU merge sort...
+
+[gpu compute and d2d (ms) : 0.122070]
+Time: 4.773000 ms
+Reading back GPU merge sort results...
+
+[gpu compute and d2d (ms) : 80.968994]
+Inspecting the results...
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: stable!
+
+[cpu validation (ms) : 147.595947]
+Shutting down...
+
+[gpu free (ms) : 5.046143]
+
+[cpu free (ms) : 0.558105]
