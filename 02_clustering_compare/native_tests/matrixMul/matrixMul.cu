@@ -36,6 +36,9 @@
 #include <helper_functions.h>
 #include <helper_cuda.h>
 
+#include "../tictoc.h"
+#define LOG 1
+
 /**
  * Matrix multiplication (CUDA Kernel) on the device: C = A * B
  * wA is A's width and wB is B's width
@@ -129,6 +132,10 @@ void constantInit(float *data, int size, float val)
  */
 int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dimsB)
 {
+#if LOG
+    double tic,toc;
+    tic = getCpuTime();
+#endif	
     // Allocate host memory for matrices A and B
     unsigned int size_A = dimsA.x * dimsA.y;
     unsigned int mem_size_A = sizeof(float) * size_A;
@@ -156,7 +163,16 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
         exit(EXIT_FAILURE);
     }
 
+#if LOG
+    toc = getCpuTime();
+    fprintf(stdout, "\n[cpu prepare (ms) : %lf]\n", toc - tic);
+#endif
+
     cudaError_t error;
+
+#if LOG
+    tic = getCpuTime();
+#endif
 
     error = cudaMalloc((void **) &d_A, mem_size_A);
 
@@ -182,6 +198,16 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
         exit(EXIT_FAILURE);
     }
 
+#if LOG
+    toc = getCpuTime();
+    fprintf(stdout, "\n[gpu malloc (ms) : %lf]\n", toc - tic);
+#endif
+
+
+#if LOG
+    tic = getCpuTime();
+#endif
+
     // copy host memory to device
     error = cudaMemcpy(d_A, h_A, mem_size_A, cudaMemcpyHostToDevice);
 
@@ -199,12 +225,22 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
         exit(EXIT_FAILURE);
     }
 
+#if LOG
+    toc = getCpuTime();
+    fprintf(stdout, "\n[gpu h2d (ms) : %lf]\n", toc - tic);
+#endif
+
     // Setup execution parameters
     dim3 threads(block_size, block_size);
     dim3 grid(dimsB.x / threads.x, dimsA.y / threads.y);
 
     // Create and start timer
     printf("Computing result using CUDA Kernel...\n");
+
+#if LOG
+    tic = getCpuTime();
+#endif
+
 
     // Performs warmup operation using matrixMul CUDA kernel
     if (block_size == 16)
@@ -217,6 +253,11 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
     }
 
     printf("done\n");
+
+#if LOG
+    toc = getCpuTime();
+    fprintf(stdout, "\n[gpu kernel (ms) : %lf]\n", toc - tic);
+#endif
 
     cudaDeviceSynchronize();
 
@@ -248,6 +289,9 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
         exit(EXIT_FAILURE);
     }
 
+#if LOG
+    tic = getCpuTime();
+#endif
     // Execute the kernel
     int nIter = 300;
 
@@ -263,6 +307,10 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
         }
     }
 
+#if LOG
+    toc = getCpuTime();
+    fprintf(stdout, "\n[gpu kernel (ms) : %lf]\n", toc - tic);
+#endif
     // Record the stop event
     error = cudaEventRecord(stop, NULL);
 
@@ -301,6 +349,10 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
         flopsPerMatrixMul,
         threads.x * threads.y);
 
+#if LOG
+    tic = getCpuTime();
+#endif
+	
     // Copy result from device to host
     error = cudaMemcpy(h_C, d_C, mem_size_C, cudaMemcpyDeviceToHost);
 
@@ -310,8 +362,17 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
         exit(EXIT_FAILURE);
     }
 
+#if LOG
+    toc = getCpuTime();
+    fprintf(stdout, "\n[gpu d2h (ms) : %lf]\n", toc - tic);
+#endif
+
     printf("Checking computed result for correctness: ");
     bool correct = true;
+
+#if LOG
+    tic = getCpuTime();
+#endif
 
     // test relative error by the formula
     //     |<x, y>_cpu - <x,y>_gpu|/<|x|, |y|>  < eps
@@ -331,15 +392,40 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
         }
     }
 
+#if LOG
+    toc = getCpuTime();
+    fprintf(stdout, "\n[cpu check (ms) : %lf]\n", toc - tic);
+#endif
+
     printf("%s\n", correct ? "Result = PASS" : "Result = FAIL");
+
+#if LOG
+    tic = getCpuTime();
+#endif
 
     // Clean up memory
     free(h_A);
     free(h_B);
     free(h_C);
+
+#if LOG
+    toc = getCpuTime();
+    fprintf(stdout, "\n[cpu free (ms) : %lf]\n", toc - tic);
+#endif
+
+
+#if LOG
+    tic = getCpuTime();
+#endif
+
     cudaFree(d_A);
     cudaFree(d_B);
     cudaFree(d_C);
+
+#if LOG
+    toc = getCpuTime();
+    fprintf(stdout, "\n[gpu free (ms) : %lf]\n", toc - tic);
+#endif
 
     printf("\nNOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.\n");
 
