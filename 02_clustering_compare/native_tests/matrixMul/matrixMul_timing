@@ -1,0 +1,28 @@
+[Matrix Multiply Using CUDA] - Starting...
+GPU Device 0: "GeForce GTX 1080 Ti" with compute capability 6.1
+
+MatrixA(320,320), MatrixB(640,320)
+
+[cpu prepare (ms) : 1.802002]
+
+[gpu malloc (ms) : 280.675049]
+
+[gpu h2d (ms) : 1.167969]
+Computing result using CUDA Kernel...
+done
+
+[gpu kernel (ms) : 0.009033]
+
+[gpu kernel (ms) : 0.579102]
+Performance= 1347.75 GFlop/s, Time= 0.097 msec, Size= 131072000 Ops, WorkgroupSize= 1024 threads/block
+
+[gpu d2h (ms) : 2.241943]
+Checking computed result for correctness: 
+[cpu check (ms) : 3.731201]
+Result = PASS
+
+[cpu free (ms) : 0.067871]
+
+[gpu free (ms) : 0.324951]
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
