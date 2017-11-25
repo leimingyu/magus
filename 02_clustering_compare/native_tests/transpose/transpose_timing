@@ -1,0 +1,114 @@
+Transpose Starting...
+
+GPU Device 0: "GeForce GTX 1080 Ti" with compute capability 6.1
+
+> Device 0: "GeForce GTX 1080 Ti"
+> SM Capability 6.1 detected:
+> [GeForce GTX 1080 Ti] has 28 MP(s) x 128 (Cores/MP) = 3584 (Cores)
+> Compute performance scaling factor = 1.00
+
+[cpu malloc (ms) : 0.009033]
+
+[gpu malloc (ms) : 229.185059]
+
+[cpu init (ms) : 2.400879]
+
+[gpu h2d (ms) : 5.404785]
+
+[cpu computeTransposeGold (ms) : 12.240234]
+
+Matrix size: 1024x1024 (64x64 tiles), tile size: 16x16, block size: 16x16
+
+
+[gpu kernel (ms) : 0.212158]
+
+[gpu d2h (ms) : 10.414062]
+
+[cpu compareData (ms) : 3.333008]
+
+[gpu d2h (ms) : 10.125977]
+
+[cpu compareData (ms) : 3.858154]
+transpose simple copy       , Throughput = 300.0155 GB/s, Time = 0.02604 ms, Size = 1048576 fp32 elements, NumDevsUsed = 1, Workgroup = 256
+
+[gpu kernel (ms) : 0.205078]
+
+[gpu d2h (ms) : 10.121826]
+
+[cpu compareData (ms) : 3.931885]
+
+[gpu d2h (ms) : 10.126953]
+
+[cpu compareData (ms) : 3.327148]
+transpose shared memory copy, Throughput = 297.2105 GB/s, Time = 0.02629 ms, Size = 1048576 fp32 elements, NumDevsUsed = 1, Workgroup = 256
+
+[gpu kernel (ms) : 0.206055]
+
+[gpu d2h (ms) : 10.124023]
+
+[cpu compareData (ms) : 3.322021]
+
+[gpu d2h (ms) : 10.270996]
+
+[cpu compareData (ms) : 3.333008]
+transpose naive             , Throughput = 111.1671 GB/s, Time = 0.07028 ms, Size = 1048576 fp32 elements, NumDevsUsed = 1, Workgroup = 256
+
+[gpu kernel (ms) : 0.203857]
+
+[gpu d2h (ms) : 10.126953]
+
+[cpu compareData (ms) : 3.972900]
+
+[gpu d2h (ms) : 10.121826]
+
+[cpu compareData (ms) : 3.898193]
+transpose coalesced         , Throughput = 296.4023 GB/s, Time = 0.02636 ms, Size = 1048576 fp32 elements, NumDevsUsed = 1, Workgroup = 256
+
+[gpu kernel (ms) : 0.210938]
+
+[gpu d2h (ms) : 10.120850]
+
+[cpu compareData (ms) : 3.331055]
+
+[gpu d2h (ms) : 10.125000]
+
+[cpu compareData (ms) : 3.333984]
+transpose optimized         , Throughput = 299.1919 GB/s, Time = 0.02611 ms, Size = 1048576 fp32 elements, NumDevsUsed = 1, Workgroup = 256
+
+[gpu kernel (ms) : 0.204102]
+
+[gpu d2h (ms) : 10.124023]
+
+[cpu compareData (ms) : 4.028076]
+
+[gpu d2h (ms) : 10.121826]
+
+[cpu compareData (ms) : 3.959229]
+transpose coarse-grained    , Throughput = 299.3093 GB/s, Time = 0.02610 ms, Size = 1048576 fp32 elements, NumDevsUsed = 1, Workgroup = 256
+
+[gpu kernel (ms) : 0.202881]
+
+[gpu d2h (ms) : 10.121826]
+
+[cpu compareData (ms) : 3.394043]
+
+[gpu d2h (ms) : 10.125977]
+
+[cpu compareData (ms) : 3.427002]
+transpose fine-grained      , Throughput = 300.1335 GB/s, Time = 0.02603 ms, Size = 1048576 fp32 elements, NumDevsUsed = 1, Workgroup = 256
+
+[gpu kernel (ms) : 0.206055]
+
+[gpu d2h (ms) : 10.125000]
+
+[cpu compareData (ms) : 3.332031]
+
+[gpu d2h (ms) : 10.131836]
+
+[cpu compareData (ms) : 3.341064]
+transpose diagonal          , Throughput = 279.5674 GB/s, Time = 0.02794 ms, Size = 1048576 fp32 elements, NumDevsUsed = 1, Workgroup = 256
+
+[cpu free (ms) : 0.246094]
+
+[gpu free (ms) : 0.654053]
+Test passed
