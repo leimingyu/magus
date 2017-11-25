@@ -1,0 +1,248 @@
+./scan Starting...
+
+GPU Device 0: "GeForce GTX 1080 Ti" with compute capability 6.1
+
+Allocating and initializing host arrays...
+
+[cpu malloc (ms) : 0.101074]
+Allocating and initializing CUDA arrays...
+
+[gpu malloc (ms) : 206.319092]
+
+[gpu h2d (ms) : 63.234131]
+Initializing CUDA-C scan...
+
+
+[gpu malloc (ms) : 0.843018]
+*** Running GPU scan for short arrays (100 identical iterations)...
+
+Running scan for 4 elements (1703936 arrays)...
+
+[gpu kernel (ms) : 0.200928]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.419922]
+ ...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 27.518066]
+ ...Results Match
+
+Running scan for 8 elements (851968 arrays)...
+
+[gpu kernel (ms) : 0.195068]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.520996]
+ ...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 27.212891]
+ ...Results Match
+
+Running scan for 16 elements (425984 arrays)...
+
+[gpu kernel (ms) : 0.195801]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.406006]
+ ...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 29.003174]
+ ...Results Match
+
+Running scan for 32 elements (212992 arrays)...
+
+[gpu kernel (ms) : 0.194824]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.412109]
+ ...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 30.587891]
+ ...Results Match
+
+Running scan for 64 elements (106496 arrays)...
+
+[gpu kernel (ms) : 0.206055]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.426025]
+ ...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 31.395996]
+ ...Results Match
+
+Running scan for 128 elements (53248 arrays)...
+
+[gpu kernel (ms) : 0.202881]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.409912]
+ ...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 30.563965]
+ ...Results Match
+
+Running scan for 256 elements (26624 arrays)...
+
+[gpu kernel (ms) : 0.195068]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.401123]
+ ...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 31.027832]
+ ...Results Match
+
+Running scan for 512 elements (13312 arrays)...
+
+[gpu kernel (ms) : 0.188965]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.395020]
+ ...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 29.988037]
+ ...Results Match
+
+Running scan for 1024 elements (6656 arrays)...
+
+[gpu kernel (ms) : 0.192139]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.389893]
+ ...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 30.150879]
+ ...Results Match
+
+
+scan, Throughput = 6.5950 MElements/s, Time = 0.00016 s, Size = 1024 Elements, NumDevsUsed = 1, Workgroup = 256
+
+***Running GPU scan for large arrays (100 identical iterations)...
+
+Running scan for 2048 elements (3328 arrays)...
+
+[gpu compute (ms) : 0.599121]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.392822]
+...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 29.950928]
+ ...Results Match
+
+Running scan for 4096 elements (1664 arrays)...
+
+[gpu compute (ms) : 0.629883]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.397949]
+...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 30.696045]
+ ...Results Match
+
+Running scan for 8192 elements (832 arrays)...
+
+[gpu compute (ms) : 0.633057]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.550049]
+...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 29.525146]
+ ...Results Match
+
+Running scan for 16384 elements (416 arrays)...
+
+[gpu compute (ms) : 0.634033]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.390869]
+...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 29.318115]
+ ...Results Match
+
+Running scan for 32768 elements (208 arrays)...
+
+[gpu compute (ms) : 0.629883]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.395020]
+...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 30.290039]
+ ...Results Match
+
+Running scan for 65536 elements (104 arrays)...
+
+[gpu compute (ms) : 0.632080]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.401855]
+...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 30.737061]
+ ...Results Match
+
+Running scan for 131072 elements (52 arrays)...
+
+[gpu compute (ms) : 0.629883]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.392822]
+...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 29.856201]
+ ...Results Match
+
+Running scan for 262144 elements (26 arrays)...
+
+[gpu compute (ms) : 0.629150]
+Validating the results...
+...reading back GPU results
+
+[gpu d2h (ms) : 64.393066]
+...scanExclusiveHost()
+ ...comparing the results
+
+[cpu compute and compare (ms) : 30.528076]
+ ...Results Match
+
+
+scan, Throughput = 825.7544 MElements/s, Time = 0.00032 s, Size = 262144 Elements, NumDevsUsed = 1, Workgroup = 256
+
+Shutting down...
