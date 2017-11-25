@@ -1,0 +1,28 @@
+[./binomialOptions] - Starting...
+GPU Device 0: "GeForce GTX 1080 Ti" with compute capability 6.1
+
+Generating input data...
+
+[cpu prepare data (ms) : 0.190186]
+Running GPU binomial tree...
+
+[gpu (ms) : 1.973145]
+Options count            : 1024     
+Time steps               : 2048     
+binomialOptionsGPU() time: 1.978000 msec
+Options per second       : 517694.629320     
+Running CPU binomial tree...
+Comparing the results...
+GPU binomial vs. Black-Scholes
+L1 norm: 2.220162E-04
+CPU binomial vs. Black-Scholes
+L1 norm: 2.217447E-04
+CPU binomial vs. GPU binomial
+L1 norm: 1.161472E-06
+Shutting down...
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+
+
+[cpu compute and compare (ms) : 24965.510010]
+Test passed
