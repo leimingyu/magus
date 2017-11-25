@@ -1,0 +1,34 @@
+./reduction Starting...
+
+GPU Device 0: "GeForce GTX 1080 Ti" with compute capability 6.1
+
+Using Device 0: GeForce GTX 1080 Ti
+
+Reducing array of type int
+
+16777216 elements
+256 threads (max)
+64 blocks
+
+
+[cpu prepare data (ms) : 259.116943]
+
+[gpu malloc (ms) : 220.089844]
+
+[gpu h2d (ms) : 168.375000]
+
+[gpu kernel (ms) : 0.010986]
+
+[gpu computations (ms) : 183.667969]
+Reduction, Throughput = 36.6029 GB/s, Time = 0.00183 s, Size = 16777216 Elements, NumDevsUsed = 1, Workgroup = 256
+
+GPU result = 2139353471
+CPU result = 2139353471
+
+
+[cpu compare (ms) : 71.177979]
+
+[cpu free (ms) : 0.177002]
+
+[gpu free (ms) : 0.643799]
+Test passed
