@@ -1,0 +1,39 @@
+Sobol Quasi-Random Number Generator Starting...
+
+> number of vectors = 100000
+> number of dimensions = 100
+GPU Device 0: "GeForce GTX 1080 Ti" with compute capability 6.1
+
+Allocating CPU memory...
+
+[cpu malloc (ms) : 0.014893]
+Allocating GPU memory...
+
+[gpu malloc (ms) : 215.417969]
+Initializing direction numbers...
+
+[cpu init (ms) : 0.062988]
+Copying direction numbers to device...
+
+[gpu h2d (ms) : 0.011963]
+Executing QRNG on GPU...
+
+[gpu kernel (ms) : 1.520996]
+Gsamples/s: 6.57895
+Reading results from GPU...
+
+[gpu d2h (ms) : 95.468018]
+
+Executing QRNG on CPU...
+
+[cpu work (ms) : 38.613037]
+Gsamples/s: 0.258987
+Checking results...
+L1-Error: 0
+
+[cpu compare (ms) : 36.105957]
+Shutting down...
+
+[cpu free (ms) : 0.186035]
+
+[gpu free (ms) : 0.665039]
