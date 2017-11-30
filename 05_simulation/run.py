@@ -12,6 +12,7 @@ from subprocess import check_call, STDOUT
 import logging # logging multiprocessing 
 
 
+std_out = open(os.devnull, 'wb', 0)
 
 class cd:
     """Context manager for changing the current working directory"""
@@ -44,11 +45,14 @@ def run_remote_mp(DEVNULL, app_dir, app_cmd, *args):
     end = time.time()
     print("{} to {} = {:.3f} seconds".format(start, end, end - start))
 
+
+
+
 #------------------------------------------------------------------------------
 # tests
 #------------------------------------------------------------------------------
 def test1_run2():
-    std_out = open(os.devnull, 'wb', 0)
+    #std_out = open(os.devnull, 'wb', 0)
     p = multiprocessing.Process(target=run_remote_mp, args=(std_out,
         '../apps/rcuda_cusdk80/0_Simple/matrixMul/',
         './matrixMul'))
@@ -61,7 +65,7 @@ def test1_run2():
 
 def test2_selDev():
     #multiprocessing.log_to_stderr(logging.DEBUG)
-    std_out = open(os.devnull, 'wb', 0)
+    #std_out = open(os.devnull, 'wb', 0)
     p = multiprocessing.Process(target=run_remote_mp, args=(std_out,
         '../apps/rcuda_cusdk80/0_Simple/matrixMul/',
         'RCUDA_DEVICE_0=mcx1.coe.neu.edu:0',
@@ -75,7 +79,7 @@ def test2_selDev():
 
 
 def tests():
-    test1_run2()
+    #test1_run2()
     test2_selDev()
 
 
@@ -83,7 +87,7 @@ def tests():
 # main func 
 #------------------------------------------------------------------------------
 def main(arguments):
-    #tests()
+    tests()
 
 
 if __name__ == "__main__":
