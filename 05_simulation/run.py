@@ -28,27 +28,25 @@ class cd:
 
 def run_remote_mp(DEVNULL, app_dir, app_cmd, *args):
     start = time.time()
-
-    print "arg number :  " + str(len(args))
-
     with cd(app_dir):
         #print os.getcwd()
         if len(args) == 0:
+            # directly run the command 
             check_call([app_cmd], stdout=DEVNULL, stderr=STDOUT)
         else:
             app_cmd_list = [app_cmd]
             for arg in args:
                 app_cmd_list.append(arg)
-
-            print app_cmd_list
-
-            check_call(app_cmd_list, stdout=DEVNULL, stderr=STDOUT)
-            #check_call(app_cmd_list, stdout=DEVNULL, stderr=STDOUT, shell=True)
+            #concatenate the cmds into one string (including env var) 
+            cmd_str = ' '.join(str(e) for e in app_cmd_list)
+            check_call(cmd_str, stdout=DEVNULL, stderr=STDOUT, shell=True)
 
     end = time.time()
     print("{} to {} = {:.3f} seconds".format(start, end, end - start))
 
-
+#------------------------------------------------------------------------------
+# tests
+#------------------------------------------------------------------------------
 def test1_run2():
     std_out = open(os.devnull, 'wb', 0)
     p = multiprocessing.Process(target=run_remote_mp, args=(std_out,
@@ -69,15 +67,23 @@ def test2_selDev():
         'RCUDA_DEVICE_0=mcx1.coe.neu.edu:0',
         './matrixMul'))
     p.start()
+    p = multiprocessing.Process(target=run_remote_mp, args=(std_out,
+        '../apps/rcuda_cusdk80/0_Simple/vectorAdd/',
+        'RCUDA_DEVICE_0=mcx1.coe.neu.edu:1',
+        './vectorAdd'))
+    p.start()
 
 
 def tests():
-    #test1_run2()
+    test1_run2()
     test2_selDev()
 
 
+#------------------------------------------------------------------------------
+# main func 
+#------------------------------------------------------------------------------
 def main(arguments):
-    tests()
+    #tests()
 
 
 if __name__ == "__main__":
