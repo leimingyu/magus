@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-
-
+"""
+ schedule rcuda apps
+"""
 #from __future__ import print_function
 import os
 import sys
@@ -11,6 +12,7 @@ import time
 from subprocess import check_call, STDOUT
 import logging # logging multiprocessing 
 
+import math,random 
 
 DEVNULL = open(os.devnull, 'wb', 0) # no std out
 LOGT = True # timing log
@@ -29,6 +31,7 @@ class cd:
     def __exit__(self, etype, value, traceback):
         os.chdir(self.savedPath)
 
+
 def run_mp(app_dir, app_cmd):
     """
     Run multiprocessing
@@ -39,7 +42,6 @@ def run_mp(app_dir, app_cmd):
         check_call(app_cmd, stdout=DEVNULL, stderr=STDOUT, shell=True)
     end = time.time()
     print("{} to {} = {:.3f} seconds".format(start, end, end - start))
-
 
 
 def run_remote(app_dir, *args):
@@ -71,11 +73,42 @@ def test2_selDev():
     run_remote('../apps/rcuda_cusdk80/0_Simple/vectorAdd/', 
             'RCUDA_DEVICE_0=mcx1.coe.neu.edu:1', './vectorAdd')
 
+def test3_fixedT(maxjobs = 10):
+    count = 0
+    while True:
+        # run job
+        # wait for a fixed interval
+        # check termination
+        print count
+        #time.sleep(1)
+        time.sleep(0.1)
+        count = count + 1
+        if count == maxjobs:
+            break
+    print "Done!"
+        
+
+def nextTime(rateParameter):
+    return -math.log(1.0 - random.random()) / rateParameter
+
+def test4_poissonDist():
+# http://preshing.com/20111007/how-to-generate-random-timings-for-a-poisson-process/
+    print sum([nextTime(1/40.0) for i in xrange(1000000)]) / 1000000
+    print sum([random.expovariate(1/40.0) for i in xrange(1000000)]) / 1000000
+    
+
+
 
 def tests():
-    test1_run2()
+    #test1_run2()
     #test2_selDev()
+    #test3_fixedT()
+    test4_poissonDist()
 
+
+#------------------------------------------------------------------------------
+# input workloads 
+#------------------------------------------------------------------------------
 
 
 #------------------------------------------------------------------------------
