@@ -96,14 +96,32 @@ def test4_poissonDist():
     print sum([nextTime(1/40.0) for i in xrange(1000000)]) / 1000000
     print sum([random.expovariate(1/40.0) for i in xrange(1000000)]) / 1000000
     
+def test5_wk(total_jobs, interval_sec=1, rate=1, pattern="fixed"):
+    if total_jobs <=0:
+       sys.exit('<Error> total_jobs can not be zero or negative!')
 
+    if type(total_jobs) <> int:
+       sys.exit('<Error> total_jobs should be integer.!')
 
+    jobs_start_table = []
+
+    if pattern == "fixed":
+        jobs_start_table = [i*interval_sec for i in xrange(total_jobs)]
+    elif pattern == "poisson":
+        jobs_start_table = [random.expovariate(rate) for i in xrange(total_jobs)]
+        jobs_start_table.sort()
+    else:
+       sys.exit('<Error : run_remote> No application is specified!')
+
+    print jobs_start_table
 
 def tests():
     #test1_run2()
     #test2_selDev()
     #test3_fixedT()
-    test4_poissonDist()
+    #test4_poissonDist()
+    #test5_wk(10,interval_sec=2, pattern="fixed")
+    test5_wk(10, rate=1/5.0, pattern="poisson")
 
 
 #------------------------------------------------------------------------------
