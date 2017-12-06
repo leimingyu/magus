@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package tutorial;
+
+message GPUApp{
+	required string dir = 1;
+	repeated string cmd = 2;
+}
