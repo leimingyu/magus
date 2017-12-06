@@ -193,10 +193,13 @@ def client_dispatch_apps(apps_list, apps_start_list):
 
     ### to-do: shuffle the order of input apps
 
-    for app in apps_list:
+    import itertools
+
+    for (app, startT) in itertools.product(apps_list, apps_start_list):
         target_dev = 0
         print app[0]
-        start_app(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
+        print "start time : " + str(startT)
+        #start_app(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
 
 #------------------------------------------------------------------------------
 # main func 
