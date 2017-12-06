@@ -3,6 +3,7 @@ syntax = "proto2";
 package tutorial;
 
 message GPUApp{
-	required string dir = 1;
-	required string cmd = 2;
+	required string name = 1;
+	required string dir  = 2;
+	required string cmd  = 3;
 }

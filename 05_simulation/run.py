@@ -3,22 +3,24 @@
  schedule rcuda apps
 """
 #from __future__ import print_function
-import os
 import sys
+#sys.path.insert(0, './protobuf')
+sys.path.append('./protobuf')
+
+import GPUApp_pb2
+import os
 #import argparse
 import multiprocessing as mp
 import time
 from subprocess import check_call, STDOUT
 #import logging # logging multiprocessing 
-
 import math
 import random
 
-# protobuf
-sys.path.insert(0, './protobuf')
 
 DEVNULL = open(os.devnull, 'wb', 0) # no std out
-LOGT = True # timing log
+magus_debug = False 
+
 
 class cd:
     """
@@ -60,6 +62,12 @@ def run_remote(app_dir, *args):
 
     else:
         sys.exit('<Error : run_remote> No application is specified!')
+
+
+def start_app(app_dir, app_cmd, devid=0):
+    rcuda_select_dev = "RCUDA_DEVICE_0=mcx1.coe.neu.edu:" + str(devid)
+    print rcuda_select_dev
+    #run_remote(app_dir, rcuda_select_dev, app_cmd)
 
 
 
@@ -128,9 +136,67 @@ def tests():
 
 
 #------------------------------------------------------------------------------
-# input workloads 
+# 1) get app info
 #------------------------------------------------------------------------------
+def get_appinfo(app_info_file):
+    from google.protobuf.internal.decoder import _DecodeVarint32
+    # [name, dir, cmd]
+    read_app_list = [] 
+    with open(app_info_file, 'rb') as f:
+        buf = f.read()
+        n = 0
+        while n < len(buf):
+            msg_len, new_pos = _DecodeVarint32(buf, n)
+            n = new_pos
+            msg_buf = buf[n:n+msg_len]
+            n += msg_len
+            curApp = GPUApp_pb2.GPUApp()
+            curApp.ParseFromString(msg_buf)
+            read_app_list.append([curApp.name, curApp.dir, curApp.cmd])
+    return read_app_list
 
+
+def dump_dd(input_dd):
+    for key, value in input_dd.iteritems():
+        print key
+        print value
+
+def dump_applist(input_list):
+    for app in input_list:
+        print str(app[0]) + " : [" + str(app[1]) + ", " + str(app[2]) + "]"
+
+#------------------------------------------------------------------------------
+# 2) workload pattern for start time
+#------------------------------------------------------------------------------
+def getAppStartTime(total_jobs, interval_sec=1, pattern="fixed"):
+    if total_jobs <= 0:
+        sys.exit('<Error> total_jobs can not be zero or negative!')
+    if type(total_jobs) <> int:
+        sys.exit('<Error> total_jobs should be integer.!')
+    jobs_start_table = []
+    if pattern == "fixed":
+        jobs_start_table = [i*interval_sec for i in xrange(total_jobs)]
+    elif pattern == "poisson":
+        rate = 1 / float(interval_sec)
+        jobs_start_table = [random.expovariate(rate) for i in xrange(total_jobs)]
+        jobs_start_table.sort()
+    else:
+        sys.exit('<Error : getAppStartTime()> Wrong pattern is specified!')
+    return jobs_start_table
+
+
+#------------------------------------------------------------------------------
+# 3) dispatch work from the client 
+#------------------------------------------------------------------------------
+def client_dispatch_apps(apps_list, apps_start_list):
+    print "\nDispatching gpu applications"
+
+    ### to-do: shuffle the order of input apps
+
+    for app in apps_list:
+        target_dev = 0
+        print app[0]
+        start_app(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
 
 #------------------------------------------------------------------------------
 # main func 
@@ -138,8 +204,29 @@ def tests():
 def main(args):
     #tests()
 
-    # 1) read the input application info
-    print "main"
+    #
+    # 1) read app_info
+    #
+
+    apps_list = get_appinfo('./prepare/app_info.bin')
+    if magus_debug: dump_applist(apps_list)
+
+    apps_num = len(apps_list)
+    print "Total GPU Applications : " + str(apps_num)
+
+    #
+    # 2) figure out the application start time
+    #
+    apps_start_list = getAppStartTime(apps_num, interval_sec=2, pattern="fixed")
+    print apps_start_list
+
+    #apps_start_list = getAppStartTime(apps_num, interval_sec=2, pattern="poisson")
+    #print apps_start_list
+
+    #
+    # 3) schedule apps
+    #
+    client_dispatch_apps(apps_list, apps_start_list)
 
 
 if __name__ == "__main__":
