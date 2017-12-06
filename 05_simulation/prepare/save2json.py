@@ -13,12 +13,12 @@ appList = []
 appList.append(GPUApp_pb2.GPUApp(
     name='matrixMul',
     dir='../apps/rcuda_cusdk80/0_Simple/matrixMul',
-    cmd='matrixMul'))
+    cmd='./matrixMul'))
 
 appList.append(GPUApp_pb2.GPUApp(
     name='vectorAdd',
     dir='../apps/rcuda_cusdk80/0_Simple/vectorAdd',
-    cmd='vectorAdd'))
+    cmd='./vectorAdd'))
 
 
 with open(outputFile, 'wb') as f:
