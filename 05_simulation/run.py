@@ -5,14 +5,17 @@
 #from __future__ import print_function
 import os
 import sys
-import argparse
+#import argparse
 import multiprocessing as mp
-import subprocess
 import time
 from subprocess import check_call, STDOUT
-import logging # logging multiprocessing 
+#import logging # logging multiprocessing 
 
-import math,random 
+import math
+import random
+
+# protobuf
+sys.path.insert(0, './protobuf')
 
 DEVNULL = open(os.devnull, 'wb', 0) # no std out
 LOGT = True # timing log
@@ -132,8 +135,11 @@ def tests():
 #------------------------------------------------------------------------------
 # main func 
 #------------------------------------------------------------------------------
-def main(arguments):
-    tests()
+def main(args):
+    #tests()
+
+    # 1) read the input application info
+    print "main"
 
 
 if __name__ == "__main__":
