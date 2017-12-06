@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='GPUApp.proto',
   package='tutorial',
   syntax='proto2',
-  serialized_pb=_b('\n\x0cGPUApp.proto\x12\x08tutorial\"\"\n\x06GPUApp\x12\x0b\n\x03\x64ir\x18\x01 \x02(\t\x12\x0b\n\x03\x63md\x18\x02 \x03(\t')
+  serialized_pb=_b('\n\x0cGPUApp.proto\x12\x08tutorial\"\"\n\x06GPUApp\x12\x0b\n\x03\x64ir\x18\x01 \x02(\t\x12\x0b\n\x03\x63md\x18\x02 \x02(\t')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -42,8 +42,8 @@ _GPUAPP = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='cmd', full_name='tutorial.GPUApp.cmd', index=1,
-      number=2, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
+      number=2, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
