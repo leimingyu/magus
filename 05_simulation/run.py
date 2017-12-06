@@ -66,8 +66,8 @@ def run_remote(app_dir, *args):
 
 def start_app(app_dir, app_cmd, devid=0):
     rcuda_select_dev = "RCUDA_DEVICE_0=mcx1.coe.neu.edu:" + str(devid)
-    print rcuda_select_dev
-    #run_remote(app_dir, rcuda_select_dev, app_cmd)
+    #print rcuda_select_dev
+    run_remote(app_dir, rcuda_select_dev, app_cmd)
 
 
 
@@ -189,17 +189,26 @@ def getAppStartTime(total_jobs, interval_sec=1, pattern="fixed"):
 # 3) dispatch work from the client 
 #------------------------------------------------------------------------------
 def client_dispatch_apps(apps_list, apps_start_list):
+
+    from time import sleep
+
     print "\nDispatching gpu applications"
 
     ### to-do: shuffle the order of input apps
-
-    import itertools
-
-    for (app, startT) in itertools.product(apps_list, apps_start_list):
+    pid = 0
+    for app in apps_list:
         target_dev = 0
+        wait_time = apps_start_list[pid]
         print app[0]
-        print "start time : " + str(startT)
-        #start_app(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
+
+        # 1) when the job arrives
+        print "wait for " + str(wait_time) + " (s) to start"
+        sleep(wait_time)
+
+        # 2) start the job at the background
+        start_app(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
+
+        pid = pid + 1
 
 #------------------------------------------------------------------------------
 # main func 
