@@ -199,8 +199,209 @@ appList.append(GPUApp_pb2.GPUApp(
     cmd='./simpleCUBLAS'))
 
 #------------------------------------------------------------------------------
-# 
+# nupar 
 #------------------------------------------------------------------------------
+appList.append(GPUApp_pb2.GPUApp(
+    name='parIIR',
+    dir='../apps/rcuda_nupar/CUDA/IIR',
+    cmd='./parIIR 10240'))
+
+#------------------------------------------------------------------------------
+# polybench 
+#------------------------------------------------------------------------------
+appList.append(GPUApp_pb2.GPUApp(
+    name='2DCONV',
+    dir='../apps/rcuda_poly/CUDA/2DCONV',
+    cmd='./2DConvolution.exe'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='3DCONV',
+    dir='../apps/rcuda_poly/CUDA/3DCONV',
+    cmd='./3DConvolution.exe'))
+
+''' appList.append(GPUApp_pb2.GPUApp(
+    name='2MM',
+    dir='../apps/rcuda_poly/CUDA/2MM',
+    cmd='./2mm.exe')) '''
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='3MM',
+    dir='../apps/rcuda_poly/CUDA/3MM',
+    cmd='./3mm.exe'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='ATAX',
+    dir='../apps/rcuda_poly/CUDA/ATAX',
+    cmd='./atax.exe'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='BICG',
+    dir='../apps/rcuda_poly/CUDA/BICG',
+    cmd='./bicg.exe'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='CORR',
+    dir='../apps/rcuda_poly/CUDA/CORR',
+    cmd='./correlation.exe'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='COVAR',
+    dir='../apps/rcuda_poly/CUDA/COVAR',
+    cmd='./covariance.exe'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='FDTD-2D',
+    dir='../apps/rcuda_poly/CUDA/FDTD-2D',
+    cmd='./fdtd2d.exe'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='GEMM',
+    dir='../apps/rcuda_poly/CUDA/GEMM',
+    cmd='./gemm.exe'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='GESUMMV',
+    dir='../apps/rcuda_poly/CUDA/GESUMMV',
+    cmd='./gesummv.exe'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='MVT',
+    dir='../apps/rcuda_poly/CUDA/MVT',
+    cmd='./mvt.exe'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='SYR2K',
+    dir='../apps/rcuda_poly/CUDA/SYR2K',
+    cmd='./syr2k.exe'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='SYRK',
+    dir='../apps/rcuda_poly/CUDA/SYRK',
+    cmd='./syrk.exe'))
+
+#------------------------------------------------------------------------------
+# lonestar 
+#------------------------------------------------------------------------------
+appList.append(GPUApp_pb2.GPUApp(
+    name='bh',
+    dir='../apps/rcuda_lonestar/apps/bh',
+    cmd='./bh 30000 50 0'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='dmr',
+    dir='../apps/rcuda_lonestar/apps/dmr',
+    cmd='./dmr  ../../inputs/250k.2 20'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='mst',
+    dir='../apps/rcuda_lonestar/apps/mst',
+    cmd='./mst ../../inputs/LSGINPUTS/rmat12.sym.gr'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='sssp',
+    dir='../apps/rcuda_lonestar/apps/sssp',
+    cmd='./sssp ../../inputs/USA-road-d.FLA.gr'))
+
+#------------------------------------------------------------------------------
+# parboil 
+#------------------------------------------------------------------------------
+appList.append(GPUApp_pb2.GPUApp(
+    name='bfs',
+    dir='../apps/rcuda_parboil/benchmarks/bfs',
+    cmd='./bfs -i ../../datasets/bfs/NY/input/graph_input.dat  -o out.dat'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='cutcp',
+    dir='../apps/rcuda_parboil/benchmarks/cutcp',
+    cmd='./cutcp -i ../../datasets/cutcp/small/input/watbox.sl40.pqr  -o out_small'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='lbm',
+    dir='../apps/rcuda_parboil/benchmarks/lbm',
+    cmd='./lbm 1 -i ../../datasets/lbm/short/input/120_120_150_ldc.of  -o out'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='mri-q',
+    dir='../apps/rcuda_parboil/benchmarks/mri-q',
+    cmd='./mri-q -i ../../datasets/mri-q/small/input/32_32_32_dataset.bin'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='sgemm',
+    dir='../apps/rcuda_parboil/benchmarks/sgemm',
+    cmd='./sgemm  -i ../../datasets/sgemm/small/input/matrix1.txt,../../datasets/sgemm/small/input/matrix2.txt,../../datasets/sgemm/small/input/matrix2t.txt'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='stencil',
+    dir='../apps/rcuda_parboil/benchmarks/stencil',
+    cmd='./stencil -i ../../datasets/stencil/default/input/512x512x64x100.bin 512 512 64 100'))
+
+#------------------------------------------------------------------------------
+# rodinia
+#------------------------------------------------------------------------------
+appList.append(GPUApp_pb2.GPUApp(
+    name='backprop',
+    dir='../apps/rcuda_rodinia/backprop',
+    cmd='./backprop 65536'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='b+tree',
+    dir='../apps/rcuda_rodinia/b+tree',
+    cmd='./b+tree.out file ../data/b+tree/mil.txt command ../data/b+tree/command.txt'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='dwt2d',
+    dir='../apps/rcuda_rodinia/dwt2d',
+    cmd='./dwt2d rgb.bmp -d 1024x1024 -f -5 -l 3'))
+
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='gaussian',
+    dir='../apps/rcuda_rodinia/gaussian',
+    cmd='./gaussian -s 16'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='heartwall',
+    dir='../apps/rcuda_rodinia/heartwall',
+    cmd='./heartwall ../data/heartwall/test.avi 20'))
+
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='hotspot',
+    dir='../apps/rcuda_rodinia/hotspot',
+    cmd='./hotspot 512 2 2 ../data/hotspot/temp_512 ../data/hotspot/power_512 output.out'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='lavaMD',
+    dir='../apps/rcuda_rodinia/lavaMD',
+    cmd='./lavaMD -boxes1d 10'))
+
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='lud',
+    dir='../apps/rcuda_rodinia/lud',
+    cmd='cuda/lud_cuda -s 256 -v'))
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='needle',
+    dir='../apps/rcuda_rodinia/nw',
+    cmd='./needle 2048 10'))
+
+
+appList.append(GPUApp_pb2.GPUApp(
+    name='pathfinder',
+    dir='../apps/rcuda_rodinia/pathfinder',
+    cmd='./pathfinder 100000 100 20'))
+
+#------------------------------------------------------------------------------
+# others 
+#------------------------------------------------------------------------------
+
+''' appList.append(GPUApp_pb2.GPUApp(
+    name='',
+    dir='../apps/rcuda_others/',
+    cmd='')) '''
+
+
 
 with open(outputFile, 'wb') as f:
     for curApp in appList:
