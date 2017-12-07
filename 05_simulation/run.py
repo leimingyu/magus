@@ -51,6 +51,7 @@ def run_mp(timingQ, app_dir, app_cmd):
 
 
 
+'''
 def run_remote(app_dir, *args):
     """
     go to app dir, and run mp for the app
@@ -71,18 +72,29 @@ def run_remote(app_dir, *args):
     [startT, endT] = timingQ.get()
     return [startT, endT]
     #print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
+    '''
 
-'''
-def start_app(app_dir, app_cmd, devid=0):
+
+def run_remote(app_dir, app_cmd, devid=0):
     rcuda_select_dev = "RCUDA_DEVICE_0=mcx1.coe.neu.edu:" + str(devid)
-    run_remote(app_dir, rcuda_select_dev, app_cmd)
-'''
+    cmd_str = rcuda_select_dev + " " + str(app_cmd)
+
+    timingQ = mp.Queue()
+
+    p = mp.Process(target=run_mp, args=(timingQ, app_dir, cmd_str))
+    p.start()
+
+    [startT, endT] = timingQ.get()
+
+    return [startT, endT]
+
+    #run_remote(app_dir, rcuda_select_dev, app_cmd)
 
 
 #------------------------------------------------------------------------------
 # tests
 #------------------------------------------------------------------------------
-def test1_run2():
+''' def test1_run2():
     run_remote('../apps/rcuda_cusdk80/0_Simple/matrixMul/', './matrixMul')
     run_remote('../apps/rcuda_cusdk80/0_Simple/vectorAdd/', './vectorAdd')
 
@@ -93,7 +105,7 @@ def test2_selDev():
 
     [startT, endT] = run_remote('../apps/rcuda_cusdk80/0_Simple/vectorAdd/', 
             'RCUDA_DEVICE_0=mcx1.coe.neu.edu:1', './vectorAdd')
-    print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
+    print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT)) '''
 
 
 
@@ -145,9 +157,9 @@ def test5_wk(total_jobs, interval_sec=1, rate=1, pattern="fixed"):
 #------------------------------------------------------------------------------
 def tests():
     #test1_run2()
-    test2_selDev()
+    #test2_selDev()
     #test3_fixedT()
-    #test4_poissonDist()
+    test4_poissonDist()
     #test5_wk(10,interval_sec=2, pattern="fixed")
     #test5_wk(10, rate=1/5.0, pattern="poisson")
 
@@ -205,37 +217,40 @@ def getAppStartTime(total_jobs, interval_sec=1, pattern="fixed"):
 #------------------------------------------------------------------------------
 # 3) dispatch work from the client 
 #------------------------------------------------------------------------------
-def client_dispatch_apps(apps_list, apps_start_list):
+def client_dispatch_apps(apps_list, wait_time_list):
 
     from time import sleep
 
     print "\nDispatching gpu applications"
 
     ### to-do: shuffle the order of input apps
-    pid = 0
+    pid = 1
+    total_apps = len(apps_list) - 1
+
     for app in apps_list:
+        # 1) start the job at the background
         target_dev = 0
-        wait_time = apps_start_list[pid]
-        print app[0]
 
-        # 1) when the job arrives
-        print "wait for " + str(wait_time) + " (s) to start"
+        #[startT, endT]= run_remote(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
+
+
+        # 2) terminate if it is the last job
+        if pid > total_apps: 
+            break
+
+        # 3) wait for a certain time to schedule the next job
+        wait_time = wait_time_list[pid - 1]
         sleep(wait_time)
-
-        # 2) start the job at the background
-        #[beginT, endT] = start_app(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
-        start_app(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
+        #print str(pid) + " : wait for " + str(wait_time) + " (s) to start next"
 
         pid = pid + 1
-
-        break
 
 #------------------------------------------------------------------------------
 # main func 
 #------------------------------------------------------------------------------
 def main(args):
-    tests()
-'''
+    #tests()
+
     #
     # 1) read app_info
     #
@@ -249,18 +264,16 @@ def main(args):
     #
     # 2) figure out the application start time
     #
-    apps_start_list = getAppStartTime(apps_num, interval_sec=2, pattern="fixed")
+    #apps_start_list = getAppStartTime(apps_num, interval_sec=2, pattern="fixed")
+    apps_start_list = getAppStartTime(apps_num, interval_sec=2, pattern="poisson")
     print apps_start_list
 
-    #apps_start_list = getAppStartTime(apps_num, interval_sec=2, pattern="poisson")
-    #print apps_start_list
+    wait_time_list = [ (apps_start_list[i] - apps_start_list[i-1]) for i in xrange(1, apps_num)]
+    #print wait_time_list
+    print len(wait_time_list)
 
-    #
     # 3) schedule apps
-    #
-    client_dispatch_apps(apps_list, apps_start_list)
-    '''
-
+    client_dispatch_apps(apps_list, wait_time_list)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
