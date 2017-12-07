@@ -218,9 +218,8 @@ def getAppStartTime(total_jobs, interval_sec=1, pattern="fixed"):
 # 3) dispatch work from the client 
 #------------------------------------------------------------------------------
 def client_dispatch_apps(apps_list, wait_time_list):
-
+    """ Dispatch jobs from the clients. """
     from time import sleep
-
     print "\nDispatching gpu applications"
 
     ### to-do: shuffle the order of input apps
@@ -231,7 +230,10 @@ def client_dispatch_apps(apps_list, wait_time_list):
         # 1) start the job at the background
         target_dev = 0
 
-        #[startT, endT]= run_remote(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
+        [startT, endT]= run_remote(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
+        print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
+
+        break
 
 
         # 2) terminate if it is the last job
@@ -256,7 +258,9 @@ def main(args):
     #
 
     apps_list = get_appinfo('./prepare/app_info.bin')
-    if magus_debug: dump_applist(apps_list)
+
+    if magus_debug: 
+        dump_applist(apps_list)
 
     apps_num = len(apps_list)
     print "Total GPU Applications : " + str(apps_num)
@@ -266,11 +270,16 @@ def main(args):
     #
     #apps_start_list = getAppStartTime(apps_num, interval_sec=2, pattern="fixed")
     apps_start_list = getAppStartTime(apps_num, interval_sec=2, pattern="poisson")
-    print apps_start_list
 
+    if magus_debug:
+        print apps_start_list
+
+    # obtain the waiting time between jobs
     wait_time_list = [ (apps_start_list[i] - apps_start_list[i-1]) for i in xrange(1, apps_num)]
-    #print wait_time_list
-    print len(wait_time_list)
+
+    if magus_debug:
+        print wait_time_list
+        print len(wait_time_list)
 
     # 3) schedule apps
     client_dispatch_apps(apps_list, wait_time_list)
