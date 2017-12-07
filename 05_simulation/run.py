@@ -37,16 +37,18 @@ class cd:
         os.chdir(self.savedPath)
 
 
-def run_mp(app_dir, app_cmd):
+def run_mp(timingQ, app_dir, app_cmd):
     """
     Run multiprocessing
     """
-    start = time.time()
+    startT = time.time()
     with cd(app_dir):
         #print os.getcwd()
         check_call(app_cmd, stdout=DEVNULL, stderr=STDOUT, shell=True)
-    end = time.time()
-    print("{} to {} = {:.3f} seconds".format(start, end, end - start))
+    endT = time.time()
+    #print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
+    timingQ.put([startT, endT])
+
 
 
 def run_remote(app_dir, *args):
@@ -54,21 +56,27 @@ def run_remote(app_dir, *args):
     go to app dir, and run mp for the app
     """
     arg_num = len(args)
+
+    timingQ = mp.Queue()
+
     if arg_num > 0:
         cmd_str = ' '.join(str(e) for e in args)
         #multiprocessing.log_to_stderr(logging.DEBUG)
-        p = mp.Process(target=run_mp, args=(app_dir, cmd_str))
+        p = mp.Process(target=run_mp, args=(timingQ, app_dir, cmd_str))
         p.start()
 
     else:
         sys.exit('<Error : run_remote> No application is specified!')
 
+    [startT, endT] = timingQ.get()
+    return [startT, endT]
+    #print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
 
+'''
 def start_app(app_dir, app_cmd, devid=0):
     rcuda_select_dev = "RCUDA_DEVICE_0=mcx1.coe.neu.edu:" + str(devid)
-    #print rcuda_select_dev
     run_remote(app_dir, rcuda_select_dev, app_cmd)
-
+'''
 
 
 #------------------------------------------------------------------------------
@@ -79,10 +87,16 @@ def test1_run2():
     run_remote('../apps/rcuda_cusdk80/0_Simple/vectorAdd/', './vectorAdd')
 
 def test2_selDev():
-    run_remote('../apps/rcuda_cusdk80/0_Simple/matrixMul/', 
+    [startT, endT] = run_remote('../apps/rcuda_cusdk80/0_Simple/matrixMul/', 
             'RCUDA_DEVICE_0=mcx1.coe.neu.edu:0', './matrixMul')
-    run_remote('../apps/rcuda_cusdk80/0_Simple/vectorAdd/', 
+    print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
+
+    [startT, endT] = run_remote('../apps/rcuda_cusdk80/0_Simple/vectorAdd/', 
             'RCUDA_DEVICE_0=mcx1.coe.neu.edu:1', './vectorAdd')
+    print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
+
+
+
 
 def test3_fixedT(maxjobs = 10):
     count = 0
@@ -126,13 +140,16 @@ def test5_wk(total_jobs, interval_sec=1, rate=1, pattern="fixed"):
 
     print jobs_start_table
 
+#------------------------------------------------------------------------------
+# tests 
+#------------------------------------------------------------------------------
 def tests():
     #test1_run2()
-    #test2_selDev()
+    test2_selDev()
     #test3_fixedT()
     #test4_poissonDist()
     #test5_wk(10,interval_sec=2, pattern="fixed")
-    test5_wk(10, rate=1/5.0, pattern="poisson")
+    #test5_wk(10, rate=1/5.0, pattern="poisson")
 
 
 #------------------------------------------------------------------------------
@@ -206,16 +223,19 @@ def client_dispatch_apps(apps_list, apps_start_list):
         sleep(wait_time)
 
         # 2) start the job at the background
+        #[beginT, endT] = start_app(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
         start_app(app_dir = app[1], app_cmd = app[2], devid = target_dev) 
 
         pid = pid + 1
+
+        break
 
 #------------------------------------------------------------------------------
 # main func 
 #------------------------------------------------------------------------------
 def main(args):
-    #tests()
-
+    tests()
+'''
     #
     # 1) read app_info
     #
@@ -239,6 +259,7 @@ def main(args):
     # 3) schedule apps
     #
     client_dispatch_apps(apps_list, apps_start_list)
+    '''
 
 
 if __name__ == "__main__":
