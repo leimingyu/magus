@@ -1,0 +1,94 @@
+[./convolutionFFT2D] - Starting...
+MapSMtoCores for SM 6.1 is undefined.  Default to use 128 Cores/SM
+MapSMtoCores for SM 6.1 is undefined.  Default to use 128 Cores/SM
+MapSMtoCores for SM 6.1 is undefined.  Default to use 128 Cores/SM
+MapSMtoCores for SM 6.1 is undefined.  Default to use 128 Cores/SM
+MapSMtoCores for SM 6.1 is undefined.  Default to use 128 Cores/SM
+MapSMtoCores for SM 6.1 is undefined.  Default to use 128 Cores/SM
+MapSMtoCores for SM 6.1 is undefined.  Default to use 128 Cores/SM
+MapSMtoCores for SM 6.1 is undefined.  Default to use 128 Cores/SM
+MapSMtoCores for SM 6.1 is undefined.  Default to use 128 Cores/SM
+MapSMtoCores for SM 6.1 is undefined.  Default to use 128 Cores/SM
+MapSMtoCores for SM 6.1 is undefined.  Default to use 128 Cores/SM
+GPU Device 0: "GeForce GTX 1080 Ti" with compute capability 6.1
+
+Testing built-in R2C / C2R FFT-based convolution
+...allocating memory
+
+[cpu malloc (ms) : 0.008057]
+
+[gpu malloc (ms) : 233.402100]
+...generating random input data
+
+[cpu init data (ms) : 69.962158]
+...creating R2C & C2R FFT plans for 2048 x 2048
+...uploading to GPU and padding convolution kernel and input data
+...transforming convolution kernel
+...running GPU FFT convolution: 4004.003952 MPix/s (0.999000 ms)
+...reading back GPU convolution results
+
+[gpu compute (ms) : 390.358887]
+...running reference CPU convolution
+...comparing the results: rel L2 = 8.123478E-08 (max delta = 4.859493E-07)
+L2norm Error OK
+
+[cpu compute and compare (ms) : 897.503906]
+...shutting down
+
+[gpu free (ms) : 2.432129]
+
+[cpu free (ms) : 0.197998]
+Testing custom R2C / C2R FFT-based convolution
+...allocating memory
+
+[cpu malloc (ms) : 0.010986]
+
+[gpu malloc (ms) : 3.322998]
+...generating random input data
+
+[cpu prepare init data (ms) : 68.567871]
+...creating C2C FFT plan for 2048 x 1024
+...uploading to GPU and padding convolution kernel and input data
+...transforming convolution kernel
+...running GPU FFT convolution: 4016.064290 MPix/s (0.996000 ms)
+...reading back GPU FFT results
+
+[gpu compute and memcpy (ms) : 85.168945]
+...running reference CPU convolution
+...comparing the results: rel L2 = 8.395770E-08 (max delta = 5.655058E-07)
+L2norm Error OK
+...shutting down
+
+[cpu compute and compare (ms) : 865.911133]
+
+[gpu free (ms) : 2.338867]
+
+[cpu free (ms) : 0.256104]
+Testing updated custom R2C / C2R FFT-based convolution
+...allocating memory
+
+[cpu malloc (ms) : 0.007080]
+
+[gpu malloc (ms) : 2.504883]
+...generating random input data
+
+[cpu init and prepare (ms) : 66.643799]
+...creating C2C FFT plan for 2048 x 1024
+...uploading to GPU and padding convolution kernel and input data
+...transforming convolution kernel
+...running GPU FFT convolution: 5025.125604 MPix/s (0.796000 ms)
+...reading back GPU FFT results
+
+[gpu compute and memcpy (ms) : 84.000000]
+...running reference CPU convolution
+...comparing the results: rel L2 = 8.368403E-08 (max delta = 6.506287E-07)
+L2norm Error OK
+
+[cpu compute and compare (ms) : 898.214111]
+...shutting down
+
+[gpu free (ms) : 2.280029]
+
+[cpu free (ms) : 0.250977]
+Test Summary: 0 errors
+Test passed

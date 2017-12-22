@@ -1,0 +1,32 @@
+[Interval Computing]  starting ...
+
+GPU Device 0: "GeForce GTX 1080 Ti" with compute capability 6.1
+
+> GPU Device has Compute Capabilities SM 6.1
+
+GPU naive implementation
+
+[cpu malloc (ms) : 0.014160]
+
+[gpu malloc (ms) : 266.645996]
+Searching for roots in [0.01, 4]...
+
+[gpu kernel (ms) : 0.215088]
+
+[cpu malloc (ms) : 22.198975]
+
+[gpu d2h (ms) : 320.489014]
+Found 2 intervals that may contain the root(s)
+ i[0] = [0.999655515093009, 1.00011722206639]
+ i[1] = [1.00011907576551, 1.00044661086269]
+
+[cpu check (ms) : 0.006836]
+Number of equations solved: 65536
+Time per equation: 6.41984367370605 us
+
+[gpu free (ms) : 0.687012]
+
+Check against Host computation...
+
+
+[cpu work (ms) : 1103.339844]
