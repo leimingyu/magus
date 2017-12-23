@@ -37,7 +37,8 @@ host_name := $(shell hostname -s)
 $(info Host Name $(host_name))
 
 ifeq ($(host_name),mcx1)
-CUDA_PATH ?= /pub/cuda-8.0
+#CUDA_PATH ?= /pub/cuda-8.0
+CUDA_PATH ?= /usr/local/cuda-8.0
 else
 CUDA_PATH ?= /usr/local/cuda-8.0
 endif
