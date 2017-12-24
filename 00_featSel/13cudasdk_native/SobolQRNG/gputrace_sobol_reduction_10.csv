@@ -1,8 +1,0 @@
-==15525== NVPROF is profiling process 15525, command: ./SobolQRNG
-==15525== Profiling application: ./SobolQRNG
-==15525== Profiling result:
-"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
-ms,ms,,,,,,,,B,B,MB,GB/s,,,,
-962.753548,3.073000e-03,,,,,,,,,,0.012207,3.879248,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
-964.236332,0.102402,128,100,1,64,1,1,19,128,0,,,"GeForce GTX 1080 Ti (0)","1","7","sobolGPU_kernel(unsigned int, unsigned int, unsigned int*, float*) [1097]"
-964.370574,96.006562,,,,,,,,,,38.146973,0.388025,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
