@@ -10,10 +10,11 @@ do
 			#appExe=$currDir
 			echo $logFile
 			echo $appExe
-			nvprof --metrics all --csv --log-file $logFile ./$appExe
+			/usr/local/cuda-8.0/bin/nvprof --metrics all --csv --log-file $logFile ./$appExe
 			mv *.csv ../
 			cd ..
 		fi
   fi
+  break
 done
 
