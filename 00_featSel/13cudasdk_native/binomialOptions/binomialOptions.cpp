@@ -30,7 +30,7 @@
 #include "realtype.h"
 
 #include "../tictoc.h"
-#define LOG 1
+#define LOG 0
 
 ////////////////////////////////////////////////////////////////////////////////
 // Black-Scholes formula for binomial tree results validation
