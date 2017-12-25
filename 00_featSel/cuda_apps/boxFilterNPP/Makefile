@@ -265,14 +265,11 @@ boxFilterNPP.o:boxFilterNPP.cpp
 
 boxFilterNPP: boxFilterNPP.o
 	$(EXEC) $(NVCC) $(ALL_LDFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
-	$(EXEC) mkdir -p ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
-	$(EXEC) cp $@ ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
 
 run: build
 	$(EXEC) ./boxFilterNPP
 
 clean:
 	rm -f boxFilterNPP boxFilterNPP.o
-	rm -rf ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)/boxFilterNPP
 
 clobber: clean
