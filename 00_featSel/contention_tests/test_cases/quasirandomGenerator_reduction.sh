@@ -1,13 +1,13 @@
 #!/bin/bash
 app1="quasirandomGenerator"
 app1_keyword="quasirandomGenerator"
-app1_cmd="../13apps/quasirandomGenerator/quasirandomGenerator"
+app1_cmd="../../13apps/quasirandomGenerator/quasirandomGenerator"
 
 app2="reduction"
 app2_keyword="reduction"
-app2_cmd="../13apps/reduction/reduction"
+app2_cmd="../../13apps/reduction/reduction"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

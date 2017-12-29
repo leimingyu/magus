@@ -7,7 +7,7 @@ app2="interval"
 app2_keyword="interval"
 app2_cmd="../../13apps/interval/interval"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

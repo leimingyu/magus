@@ -5,9 +5,9 @@ app1_cmd="../../13apps/binomialOptions/binomialOptions"
 
 app2="mergeSort"
 app2_keyword="mergeSort"
-app2_cmd="../13apps/mergeSort/mergeSort"
+app2_cmd="../../13apps/mergeSort/mergeSort"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

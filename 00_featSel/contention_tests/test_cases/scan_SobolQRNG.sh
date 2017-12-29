@@ -1,13 +1,13 @@
 #!/bin/bash
 app1="scan"
 app1_keyword="scan"
-app1_cmd="../13apps/scan/scan"
+app1_cmd="../../13apps/scan/scan"
 
 app2="SobolQRNG"
 app2_keyword="SobolQRNG"
-app2_cmd="../13apps/SobolQRNG/SobolQRNG"
+app2_cmd="../../13apps/SobolQRNG/SobolQRNG"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

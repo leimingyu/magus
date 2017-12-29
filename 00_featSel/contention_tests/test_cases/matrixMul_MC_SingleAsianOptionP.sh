@@ -1,13 +1,13 @@
 #!/bin/bash
 app1="matrixMul"
 app1_keyword="matrixMul"
-app1_cmd="../13apps/matrixMul/matrixMul"
+app1_cmd="../../13apps/matrixMul/matrixMul"
 
 app2="MC_SingleAsianOptionP"
 app2_keyword="MC_SingleAsianOptionP"
-app2_cmd="../13apps/MC_SingleAsianOptionP/MC_SingleAsianOptionP"
+app2_cmd="../../13apps/MC_SingleAsianOptionP/MC_SingleAsianOptionP"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

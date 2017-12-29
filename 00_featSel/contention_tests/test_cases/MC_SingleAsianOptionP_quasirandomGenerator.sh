@@ -1,13 +1,13 @@
 #!/bin/bash
 app1="MC_SingleAsianOptionP"
 app1_keyword="MC_SingleAsianOptionP"
-app1_cmd="../13apps/MC_SingleAsianOptionP/MC_SingleAsianOptionP"
+app1_cmd="../../13apps/MC_SingleAsianOptionP/MC_SingleAsianOptionP"
 
 app2="quasirandomGenerator"
 app2_keyword="quasirandomGenerator"
-app2_cmd="../13apps/quasirandomGenerator/quasirandomGenerator"
+app2_cmd="../../13apps/quasirandomGenerator/quasirandomGenerator"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

@@ -7,7 +7,7 @@ app2="convfft2d"
 app2_keyword="convolutionFFT2D"
 app2_cmd="../../13apps/convolutionFFT2D/convolutionFFT2D"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

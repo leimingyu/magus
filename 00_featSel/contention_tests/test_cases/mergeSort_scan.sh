@@ -1,13 +1,13 @@
 #!/bin/bash
 app1="mergeSort"
 app1_keyword="mergeSort"
-app1_cmd="../13apps/mergeSort/mergeSort"
+app1_cmd="../../13apps/mergeSort/mergeSort"
 
 app2="scan"
 app2_keyword="scan"
-app2_cmd="../13apps/scan/scan"
+app2_cmd="../../13apps/scan/scan"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

@@ -1,13 +1,13 @@
 #!/bin/bash
 app1="MC_SingleAsianOptionP"
 app1_keyword="MC_SingleAsianOptionP"
-app1_cmd="../13apps/MC_SingleAsianOptionP/MC_SingleAsianOptionP"
+app1_cmd="../../13apps/MC_SingleAsianOptionP/MC_SingleAsianOptionP"
 
 app2="SobolQRNG"
 app2_keyword="SobolQRNG"
-app2_cmd="../13apps/SobolQRNG/SobolQRNG"
+app2_cmd="../../13apps/SobolQRNG/SobolQRNG"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

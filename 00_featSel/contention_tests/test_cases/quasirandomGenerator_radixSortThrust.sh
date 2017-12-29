@@ -1,13 +1,13 @@
 #!/bin/bash
 app1="quasirandomGenerator"
 app1_keyword="quasirandomGenerator"
-app1_cmd="../13apps/quasirandomGenerator/quasirandomGenerator"
+app1_cmd="../../13apps/quasirandomGenerator/quasirandomGenerator"
 
 app2="radixSortThrust"
 app2_keyword="radixSortThrust"
-app2_cmd="../13apps/radixSortThrust/radixSortThrust"
+app2_cmd="../../13apps/radixSortThrust/radixSortThrust"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

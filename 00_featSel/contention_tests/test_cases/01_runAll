@@ -6,13 +6,19 @@ file_array=()
 while IFS=  read -r -d $'\0'; do
 		file_array+=("$REPLY")
 done < <(find . -iname "*.sh" -print0)
-
 #echo ${file_array[0]}
+
+
+if [ -f benchmark.result ]
+then
+	rm benchmark.result
+fi
+touch benchmark.result
 
 for currentFile in "${file_array[@]}"
 do
 	#echo "Run "$currentFile
-	$currentFile
+	$currentFile >> benchmark.result
 	wait
 	#echo "Done!"
 done

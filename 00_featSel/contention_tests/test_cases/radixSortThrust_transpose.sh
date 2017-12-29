@@ -1,13 +1,13 @@
 #!/bin/bash
 app1="radixSortThrust"
 app1_keyword="radixSortThrust"
-app1_cmd="../13apps/radixSortThrust/radixSortThrust"
+app1_cmd="../../13apps/radixSortThrust/radixSortThrust"
 
 app2="transpose"
 app2_keyword="transpose"
-app2_cmd="../13apps/transpose/transpose"
+app2_cmd="../../13apps/transpose/transpose"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

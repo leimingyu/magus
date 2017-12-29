@@ -5,9 +5,9 @@ app1_cmd="../../13apps/convolutionFFT2D/convolutionFFT2D"
 
 app2="scan"
 app2_keyword="scan"
-app2_cmd="../13apps/scan/scan"
+app2_cmd="../../13apps/scan/scan"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

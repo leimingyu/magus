@@ -1,13 +1,13 @@
 #!/bin/bash
 app1="radixSortThrust"
 app1_keyword="radixSortThrust"
-app1_cmd="../13apps/radixSortThrust/radixSortThrust"
+app1_cmd="../../13apps/radixSortThrust/radixSortThrust"
 
 app2="SobolQRNG"
 app2_keyword="SobolQRNG"
-app2_cmd="../13apps/SobolQRNG/SobolQRNG"
+app2_cmd="../../13apps/SobolQRNG/SobolQRNG"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

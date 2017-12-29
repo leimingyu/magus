@@ -5,9 +5,9 @@ app1_cmd="../../13apps/interval/interval"
 
 app2="MC_SingleAsianOptionP"
 app2_keyword="MC_SingleAsianOptionP"
-app2_cmd="../13apps/MC_SingleAsianOptionP/MC_SingleAsianOptionP"
+app2_cmd="../../13apps/MC_SingleAsianOptionP/MC_SingleAsianOptionP"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then

@@ -5,9 +5,9 @@ app1_cmd="../../13apps/binomialOptions/binomialOptions"
 
 app2="matrixMul"
 app2_keyword="matrixMul"
-app2_cmd="../13apps/matrixMul/matrixMul"
+app2_cmd="../../13apps/matrixMul/matrixMul"
 
-ITER=2
+ITER=20
 
 if [ -f time_log ]
 then
