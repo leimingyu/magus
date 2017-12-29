@@ -40,7 +40,7 @@ def genScriptRun2(app1, app1_keyword, app1_cmd, app2, app2_keyword, app2_cmd, sc
     "app2_keyword=\""+str(app2_keyword)+"\"" + "\n" + \
     "app2_cmd=\""+str(app2_cmd)+"\"" + "\n" + \
     "\n" + \
-    "ITER=2" + "\n" + \
+    "ITER=20" + "\n" + \
     "\n" + \
     "if [ -f time_log ]" + "\n" + \
     "then" + "\n" + \
@@ -84,20 +84,20 @@ def genScriptRun2(app1, app1_keyword, app1_cmd, app2, app2_keyword, app2_cmd, sc
 #
 N = len(appsInfo)
 count = 0
-for i in xrange(N-1):
+for i in xrange(N):
     #print appsInfo[i]
     [app1, app1_keyword, app1_cmd] = appsInfo[i]
     #print app1
-    for j in xrange(i+1, N):
-        [app2, app2_keyword, app2_cmd] = appsInfo[j]
-        print("\nScript ({}) : {} + {} ...".format(count, app1, app2))
-        # add python function to generate script
-        genScriptRun2(app1, app1_keyword, app1_cmd,\
-                app2, app2_keyword, app2_cmd,\
-                scriptDir)
-
-        print("Done!\n")
-        count = count + 1
+    for j in xrange(N):
+        if i <> j:
+            [app2, app2_keyword, app2_cmd] = appsInfo[j]
+            print("\nScript ({}) : {} + {} ...".format(count, app1, app2))
+            # add python function to generate script
+            genScriptRun2(app1, app1_keyword, app1_cmd,\
+                    app2, app2_keyword, app2_cmd,\
+                    scriptDir)
+            print("Done!\n")
+            count = count + 1
 
 print("\nTotal generated scripts = {}".format(count, scriptDir))
 
