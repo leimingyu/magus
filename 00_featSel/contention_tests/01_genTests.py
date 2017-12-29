@@ -99,6 +99,4 @@ for i in xrange(N):
             print("Done!\n")
             count = count + 1
 
-print("\nTotal generated scripts = {}".format(count, scriptDir))
-
-
+print("\nTotal generated scripts = {} at {}".format(count, scriptDir))
