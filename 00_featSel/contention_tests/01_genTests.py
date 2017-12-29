@@ -12,16 +12,16 @@ appsInfo = [
 ["binopt",                "binomialOptions",       "../../13apps/binomialOptions/binomialOptions"],
 ["convfft2d",             "convolutionFFT2D",      "../../13apps/convolutionFFT2D/convolutionFFT2D"],
 ["interval",              "interval",              "../../13apps/interval/interval"],
-["matrixMul",             "matrixMul",             "../13apps/matrixMul/matrixMul"],
-["MC_SingleAsianOptionP", "MC_SingleAsianOptionP", "../13apps/MC_SingleAsianOptionP/MC_SingleAsianOptionP"],
-["mergeSort",             "mergeSort",             "../13apps/mergeSort/mergeSort"],
-["quasirandomGenerator",  "quasirandomGenerator",  "../13apps/quasirandomGenerator/quasirandomGenerator"],
-["radixSortThrust",       "radixSortThrust",       "../13apps/radixSortThrust/radixSortThrust"],
-["reduction",             "reduction",             "../13apps/reduction/reduction"],
-["scan",                  "scan",                  "../13apps/scan/scan"],
-["SobolQRNG",             "SobolQRNG",             "../13apps/SobolQRNG/SobolQRNG"],
-["sortingNetworks",       "sortingNetworks",       "../13apps/sortingNetworks/sortingNetworks"],
-["transpose",             "transpose",             "../13apps/transpose/transpose"]
+["matrixMul",             "matrixMul",             "../../13apps/matrixMul/matrixMul"],
+["MC_SingleAsianOptionP", "MC_SingleAsianOptionP", "../../13apps/MC_SingleAsianOptionP/MC_SingleAsianOptionP"],
+["mergeSort",             "mergeSort",             "../../13apps/mergeSort/mergeSort"],
+["quasirandomGenerator",  "quasirandomGenerator",  "../../13apps/quasirandomGenerator/quasirandomGenerator"],
+["radixSortThrust",       "radixSortThrust",       "../../13apps/radixSortThrust/radixSortThrust"],
+["reduction",             "reduction",             "../../13apps/reduction/reduction"],
+["scan",                  "scan",                  "../../13apps/scan/scan"],
+["SobolQRNG",             "SobolQRNG",             "../../13apps/SobolQRNG/SobolQRNG"],
+["sortingNetworks",       "sortingNetworks",       "../../13apps/sortingNetworks/sortingNetworks"],
+["transpose",             "transpose",             "../../13apps/transpose/transpose"]
 ]
 
 
