@@ -36,7 +36,7 @@ def genScriptSingle(app1, app1_keyword, app1_cmd, scriptDir):
     "app1_keyword=\""+str(app1_keyword)+"\"" + "\n" + \
     "app1_cmd=\""+str(app1_cmd)+"\"" + "\n" + \
     "\n" + \
-    "ITER=20" + "\n" + \
+    "ITER=100" + "\n" + \
     "\n" + \
     "if [ -f time_log ]" + "\n" + \
     "then" + "\n" + \
