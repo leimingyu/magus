@@ -7,13 +7,13 @@ metrics_list="branch_efficiency,warp_execution_efficiency,warp_nonpred_execution
 
 #echo $metrics_list
 
-ITERS=1
+ITERS=2
 
-if [ -f prof_ovhd_featall ]
+if [ -f prof_ovhd_feat64 ]
 then
-  rm prof_ovhd_featall
+  rm prof_ovhd_feat64
 fi
-touch prof_ovhd_featall
+touch prof_ovhd_feat64
 
 
 ##--------
@@ -25,7 +25,7 @@ do
   ts=$(date +%s%N)
 	nvprof --metrics $metrics_list --csv --log-file "binomialOptions_metrics.csv"  ./binomialOptions
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\nbinOpt:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\nbinOpt:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -41,7 +41,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "convolutionFFT2D_metrics.csv"  ./convolutionFFT2D
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\nconvFFT2D:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\nconvFFT2D:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -58,7 +58,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "interval_metrics.csv"  ./interval
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\ninterval:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\ninterval:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -73,7 +73,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "matrixMul_metrics.csv" ./matrixMul 
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\nmatrixMul:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\nmatrixMul:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -89,7 +89,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "MC_SingleAsianOptionP_metrics.csv" ./MC_SingleAsianOptionP 
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\nMC_OptP:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\nMC_OptP:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -104,7 +104,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "mergeSort_metrics.csv" ./mergeSort 
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\nmergeSort:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\nmergeSort:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -119,7 +119,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "quasirandomGenerator_metrics.csv" ./quasirandomGenerator 
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\nquasiGen:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\nquasiGen:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -134,7 +134,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "radixSortThrust_metrics.csv" ./radixSortThrust
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\nrdxSortTust:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\nrdxSortTust:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -149,7 +149,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "reduction_metrics.csv" ./reduction
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\nreduction:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\nreduction:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -163,7 +163,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "scan_metrics.csv" ./scan
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\nscan:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\nscan:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -178,7 +178,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "SobolQRNG_metrics.csv" ./SobolQRNG
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\nSobolQRNG:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\nSobolQRNG:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -193,7 +193,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "sortingNetworks_metrics.csv" ./sortingNetworks
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\nsortNets:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\nsortNets:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
@@ -208,8 +208,7 @@ do
   ts=$(date +%s%N)
   nvprof --metrics $metrics_list --csv --log-file "transpose_metrics.csv" ./transpose
 	runtime_ms=$((($(date +%s%N) - $ts)/1000000))
-	echo -e "\ntranspose:$runtime_ms" >> ../prof_ovhd_featall
+	echo -e "\ntranspose:$runtime_ms" >> ../prof_ovhd_feat64
 	wait
 done
 cd ../
-
