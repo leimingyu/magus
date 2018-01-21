@@ -1,0 +1,14 @@
+==30606== NVPROF is profiling process 30606, command: ./FDTD3d
+==30606== Profiling application: ./FDTD3d
+==30606== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+s,ms,,,,,,,,KB,B,MB,MB/s,,,,
+12.137205,566.138918,,,,,,,,,,216.000000,381.531798,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+12.703430,566.143654,,,,,,,,,,216.000000,381.528607,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+13.269586,0.001184,,,,,,,,,,0.000019,16.109363,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+13.269618,2.408055,12,24,1,32,16,1,40,3.750000,0,,,"GeForce GTX 1080 Ti (0)","1","7","FiniteDifferencesKernel(float*, float const *, int, int, int) [1128]"
+13.272027,2.382998,12,24,1,32,16,1,40,3.750000,0,,,"GeForce GTX 1080 Ti (0)","1","7","FiniteDifferencesKernel(float*, float const *, int, int, int) [1135]"
+13.274412,2.391031,12,24,1,32,16,1,40,3.750000,0,,,"GeForce GTX 1080 Ti (0)","1","7","FiniteDifferencesKernel(float*, float const *, int, int, int) [1142]"
+13.276805,2.380374,12,24,1,32,16,1,40,3.750000,0,,,"GeForce GTX 1080 Ti (0)","1","7","FiniteDifferencesKernel(float*, float const *, int, int, int) [1149]"
+13.279187,2.397623,12,24,1,32,16,1,40,3.750000,0,,,"GeForce GTX 1080 Ti (0)","1","7","FiniteDifferencesKernel(float*, float const *, int, int, int) [1156]"
+13.281600,541.684345,,,,,,,,,,216.000000,398.756216,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
