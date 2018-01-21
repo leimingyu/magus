@@ -265,14 +265,11 @@ nvgraph_Pagerank.o:nvgraph_Pagerank.cpp
 
 nvgraph_Pagerank: nvgraph_Pagerank.o
 	$(EXEC) $(NVCC) $(ALL_LDFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
-	$(EXEC) mkdir -p ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
-	$(EXEC) cp $@ ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
 
 run: build
 	$(EXEC) ./nvgraph_Pagerank
 
 clean:
 	rm -f nvgraph_Pagerank nvgraph_Pagerank.o
-	rm -rf ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)/nvgraph_Pagerank
 
 clobber: clean
