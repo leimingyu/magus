@@ -11,6 +11,7 @@ import time
 import Queue
 import numpy as np
 import ctypes
+import logging
 
 from multiprocessing import Pool, Value, Lock
 
@@ -34,7 +35,7 @@ class Server(object):
         self.gpuNum = 2         # Note:  gpus in cluster
         self.lock = Lock()
 
-    def scheduler(self, jobTimingTable, jobID, GpuNodeStatus, scheme = 'rr'):
+    def scheduler(self, jobID, GpuNodeStatus, scheme = 'rr'):
         self.logger.debug("(Monitoring)")
         target_dev = 0
 
@@ -72,13 +73,10 @@ class Server(object):
     #--------------------------------------------------------------------------
     # run gpu job 
     #--------------------------------------------------------------------------
-    def handleWorkload(self, connection, address, jobID, target_gpu, 
-            GpuJobTable, GpuNodeStatus,
-            jobTimingTable):
+    def handleWorkload(self, connection, address, jobID, GpuJobTable, GpuNodeStatus):
         '''
         schedule workloads on the gpu
         '''
-        import logging
         logging.basicConfig(level=logging.DEBUG)
         logger = logging.getLogger("process-%r" % (address,))
 
@@ -100,9 +98,26 @@ class Server(object):
 
                 logger.debug("Received data %r", data)
 
+                #--------------------------------------------------------------
+                # 2) Scheduler 
+                #--------------------------------------------------------------
+                target_gpu = self.scheduler(jobID, GpuNodeStatus, scheme='rr')
+                self.logger.debug("Target GPU-%r ", target_gpu)
+
+
+                #-----------------------------------------
+                # 2) update gpu job table 
+                #
+                # 5 columns:
+                #    jobid      gpu     status      starT       endT 
+                #-----------------------------------------
+                # Assign job to the target GPU
+                GpuJobTable[jobID, 0] = jobID
+                GpuJobTable[jobID, 1] = target_gpu 
+                GpuJobTable[jobID, 2] = 0 
 
                 #--------------------------------------------------------------
-                # 2) add job to Gpu Node Status 
+                # 3) add job to Gpu Node
                 #--------------------------------------------------------------
                 with self.lock:
                     GpuNodeStatus[target_gpu, 0] = GpuNodeStatus[target_gpu, 0] + 1
@@ -235,21 +250,6 @@ class Server(object):
         #self.logger.debug("%r ", type(gpuTable))
         #self.logger.debug("%r ", gpuTable.dtype)
         #self.logger.debug("%r ", gpuTable[:])
-        #
-        # global workload table
-        #
-        # rows: different application
-        # cols: 1) status(0/1)
-        # cols: 2) startT(s)
-        # cols: 3) endT(s)
-
-        rows, cols = 10,3
-        d_arr = mp.Array(ctypes.c_double, rows*cols)
-        arr = np.frombuffer(d_arr.get_obj())
-        jobTimingTable = arr.reshape((rows,cols))
-        #self.logger.debug("%r ", jobTimingTable[:])
-        #print jobTimingTable[:]
-        #print jobTimingTable[0,1]
 
         
 
@@ -268,40 +268,15 @@ class Server(object):
             #self.logger.debug("Got connection : %r at %r ( job %r )", conn, address, jobID)
             self.logger.debug("Got connection : %r ( job %r )", address, jobID)
 
-            #-----------------------------------------
-            #  
-            #-----------------------------------------
 
 
-
-
-            #-----------------------------------------
-            # select gpu to run
-            #-----------------------------------------
-            target_gpu = self.scheduler(jobTimingTable, jobID, GpuNodeStatus, scheme='rr')
-            self.logger.debug("Target GPU-%r ", target_gpu)
-
-
-            #-----------------------------------------
-            # Update gpu job table 
-            #
-            # 5 columns:
-            #    jobid      gpu     status      starT       endT 
-            #-----------------------------------------
-            # Assign job to the target GPU
-            GpuJobTable[jobID, 0] = jobID
-            GpuJobTable[jobID, 1] = target_gpu 
-            GpuJobTable[jobID, 2] = 0 
 
 
             #-----------------------------------------
             # schedule the workload to the target GPU 
             #-----------------------------------------
             process = mp.Process(target=self.handleWorkload, 
-                    args=(conn, address, jobID, target_gpu, 
-                        GpuJobTable,
-                        GpuNodeStatus,
-                        jobTimingTable))
+                    args=(conn, address, jobID, GpuJobTable, GpuNodeStatus))
 
             process.daemon = False 
             process.start()
