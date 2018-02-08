@@ -31,11 +31,21 @@ class Server(object):
         self.logger = logging.getLogger("server")
         self.hostname = hostname
         self.port = port
-        self.gpuNum = 8  # gpus in cluster
+        self.gpuNum = 2         # Note:  gpus in cluster
+        self.lock = Lock()
 
-    def monitor(self, jobTimingTable, jobID, scheme = 'rr'):
+    def scheduler(self, jobTimingTable, jobID, GpuNodeStatus, scheme = 'rr'):
         self.logger.debug("(Monitoring)")
         target_dev = 0
+
+        #--------------------------------
+        # check current GPU Node Status
+        #--------------------------------
+        with self.lock:
+            print("\nGpuID\tActiveJobs")
+            for gid in xrange(self.gpuNum):
+                print("{}\t{}".format(gid, GpuNodeStatus[gid, 0]))
+            print('\n')
 
         # round-robin
         if scheme == 'rr':
@@ -62,8 +72,9 @@ class Server(object):
     #--------------------------------------------------------------------------
     # run gpu job 
     #--------------------------------------------------------------------------
-    def handleWorkload(self, connection, address, jobID, GpuJobTable, jobTimingTable, 
-            target_dev):
+    def handleWorkload(self, connection, address, jobID, target_gpu, 
+            GpuJobTable, GpuNodeStatus,
+            jobTimingTable):
         '''
         schedule workloads on the gpu
         '''
@@ -76,9 +87,9 @@ class Server(object):
             #logger.debug("Connected %r at %r", connection, address)
             logger.debug("Connected")
             while True:
-                #------------------------------------------------------------------
-                # receive data
-                #------------------------------------------------------------------
+                #--------------------------------------------------------------
+                # 1) receive data
+                #--------------------------------------------------------------
                 data = connection.recv(1024)
                 if data == "":
                     logger.debug("Socket closed remotely")
@@ -90,13 +101,33 @@ class Server(object):
                 logger.debug("Received data %r", data)
 
 
+                #--------------------------------------------------------------
+                # 2) add job to Gpu Node Status 
+                #--------------------------------------------------------------
+                with self.lock:
+                    GpuNodeStatus[target_gpu, 0] = GpuNodeStatus[target_gpu, 0] + 1
+
+
+
                 #------------------------------------------------------------------
-                # work on the job 
+                # 3) work on the job 
                 #------------------------------------------------------------------
                 foo_input = int(data) * 2000
                 [startT, endT] = foo(foo_input)
                 #print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
                 self.logger.debug("(Job {}) {} to {} = {:.3f} seconds".format(jobID, startT, endT, endT - startT))
+
+
+
+                #--------------------------------------------------------------
+                # The job is done! 
+                #--------------------------------------------------------------
+
+                #--------------------------------------------------------------
+                # 4) delete the job to Gpu Node Status 
+                #--------------------------------------------------------------
+                with self.lock:
+                    GpuNodeStatus[target_gpu, 0] = GpuNodeStatus[target_gpu, 0] - 1
 
                 #------------------------------------------------------------------
                 # update job timing table 
@@ -109,9 +140,11 @@ class Server(object):
 
                 #--------------------------------------------------------------
                 # update gpu job table 
+                #
                 # 5 columns:
                 #    jobid      gpu     status      starT       endT 
                 #--------------------------------------------------------------
+                # mark the job is done, and update the timing info
                 GpuJobTable[jobID, 2] = 1  # done
                 GpuJobTable[jobID, 3] = startT 
                 GpuJobTable[jobID, 4] = endT 
@@ -166,22 +199,42 @@ class Server(object):
         self.socket.bind((self.hostname, self.port))
         self.socket.listen(1)
 
-        #-----------------------
+        #----------------------------------------------------------------------
         # 1) gpu job table : 5 columns
+        #----------------------------------------------------------------------
+        #----------------------------------------------------------------------
         #
         #    jobid      gpu     status      starT       endT 
         #       0       0           1       1           2
         #       1       1           1       1.3         2.4
         #       2       0           0       -           -
         #       ...
-        #-----------------------
+        #----------------------------------------------------------------------
         maxJobHist = 10000
         rows, cols = maxJobHist,5 # note: init with a large prefixed table
         d_arr = mp.Array(ctypes.c_double, rows*cols)
         arr = np.frombuffer(d_arr.get_obj())
         GpuJobTable = arr.reshape((rows,cols))
 
-    
+        #----------------------------------------------------------------------
+        # 2) gpu node status: 1 columns
+        #----------------------------------------------------------------------
+        #----------------------------------------------------------------------
+        #    GPU_Node(rows)     ActiveJobs
+        #       0               0
+        #       1               0
+        #       2               0
+        #       ...
+        #----------------------------------------------------------------------
+        rows, cols = self.gpuNum, 1
+        d_arr = mp.Array(ctypes.c_double, rows*cols)
+        arr = np.frombuffer(d_arr.get_obj())
+        GpuNodeStatus = arr.reshape((rows,cols))
+
+
+        #self.logger.debug("%r ", type(gpuTable))
+        #self.logger.debug("%r ", gpuTable.dtype)
+        #self.logger.debug("%r ", gpuTable[:])
         #
         # global workload table
         #
@@ -198,27 +251,11 @@ class Server(object):
         #print jobTimingTable[:]
         #print jobTimingTable[0,1]
 
-        #
-        # gpu_status_table: list of list 
-        #
-        # rows: gpu_id
-        # cols: 1) running_jobs
-        # cols: 2)  
-        rows, cols = self.gpuNum,2
-        d_arr = mp.Array(ctypes.c_double, rows*cols)
-        arr = np.frombuffer(d_arr.get_obj())
-        gpuStatusTable = arr.reshape((rows,cols))
-        #self.logger.debug("%r ", type(gpuTable))
-        #self.logger.debug("%r ", gpuTable.dtype)
-        #self.logger.debug("%r ", gpuTable[:])
         
 
         
-        #KeepRun = Value('i', 1)
-        #lock = Lock()
 
-        total_jobs = 3 # Note: Flag to terminate simulation
-
+        total_jobs = 5 # Note: Flag to terminate simulation
         jobID= -1
 
         #----------------------------------------------------------------------
@@ -232,67 +269,67 @@ class Server(object):
             self.logger.debug("Got connection : %r ( job %r )", address, jobID)
 
             #-----------------------------------------
+            #  
+            #-----------------------------------------
+
+
+
+
+            #-----------------------------------------
             # select gpu to run
             #-----------------------------------------
-            target_gpu = self.monitor(jobTimingTable, jobID, scheme='rr')
+            target_gpu = self.scheduler(jobTimingTable, jobID, GpuNodeStatus, scheme='rr')
             self.logger.debug("Target GPU-%r ", target_gpu)
 
-            #print gpuTable[target_gpu, :]
 
             #-----------------------------------------
             # Update gpu job table 
+            #
             # 5 columns:
             #    jobid      gpu     status      starT       endT 
             #-----------------------------------------
+            # Assign job to the target GPU
             GpuJobTable[jobID, 0] = jobID
             GpuJobTable[jobID, 1] = target_gpu 
             GpuJobTable[jobID, 2] = 0 
 
 
             #-----------------------------------------
-            # update gpu status table 
-            #-----------------------------------------
-
-            ### add job num
-            ##gpuStatusTable[target_gpu, 0] = gpuStatusTable[target_gpu, 0] + 1
-            ##self.logger.debug("%r ", gpuStatusTable[:])
-
-            #-----------------------------------------
             # schedule the workload to the target GPU 
             #-----------------------------------------
             process = mp.Process(target=self.handleWorkload, 
-                    args=(conn, address,
-                        jobID, 
+                    args=(conn, address, jobID, target_gpu, 
                         GpuJobTable,
-                        jobTimingTable,
-                        target_gpu))
+                        GpuNodeStatus,
+                        jobTimingTable))
 
             process.daemon = False 
             process.start()
             self.logger.debug("Started process %r", process)
 
 
+
+
+            #------------------------------------------------------------------
+            # Check the timing trace for all the GPU jobs 
+            #------------------------------------------------------------------
             if jobID == total_jobs - 1: # jobID starts from 0
                 process.join() # make sure the last process ends
                 self.logger.debug("\n\nEnd Simulation\n\n")
                 if maxJobHist < total_jobs:
                     self.logger.debug("\n\nError! The total_jobs exceeds the limit!\n\n")
-
                 self.PrintGpuJobTable(GpuJobTable, total_jobs)
 
-            #if KeepRun.value == 0:
-            #    print("\n=> (End Simulation)\n")
+                #
+                # also print the Gpu Node Status
+                #
+                with self.lock:
+                    print("\nGpuID\tActiveJobs")
+                    for gid in xrange(self.gpuNum):
+                        print("{}\t{}".format(gid, GpuNodeStatus[gid, 0]))
 
-            #with lock:
-            #    if KeepRun.value == 0:
-            #        print("\n=> (End Simulation)\n")
-                    #self.logger.debug("End Simulation")
 
             
-            #-----------------------------------------
-            # check status
-            #-----------------------------------------
-            #self.logger.debug("%r ", GpuJobTable[:5,:])
 
 
 if __name__ == "__main__":
