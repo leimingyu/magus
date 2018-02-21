@@ -13,8 +13,12 @@ def main(argv):
     time.sleep(time_to_sleep)
 
     # start connection
+    # create socket for ipv4 with tcp 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(("localhost", 9000))
+
+    # mcx1 : 155.33.203.180
+    #sock.connect(("localhost", 9000))
+    sock.connect(("155.33.203.180", 9000))
 
     print time.time()
 
