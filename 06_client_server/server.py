@@ -127,8 +127,8 @@ class Server(object):
                 #------------------------------------------------------------------
                 # 3) work on the job 
                 #------------------------------------------------------------------
-                foo_input = int(data) * 2000
-                [startT, endT] = foo(foo_input)
+                #foo_input = int(data) * 2000
+                [startT, endT] = foo(1)
                 #print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
                 self.logger.debug("(Job {}) {} to {} = {:.3f} seconds".format(jobID, startT, endT, endT - startT))
 
@@ -310,8 +310,8 @@ class Server(object):
 if __name__ == "__main__":
     import logging
     logging.basicConfig(level=logging.DEBUG)
-    #server = Server("0.0.0.0", 9000)
-    server = Server("mcx1.coe.neu.edu", 9000)
+    server = Server("0.0.0.0", 9000)
+    #server = Server("mcx1.coe.neu.edu", 9000)
 
     try:
         logging.info("Listening")
