@@ -64,7 +64,17 @@ int main(int argc, char **argv)
     }
 
     cudaDeviceProp deviceProp;
-    int dev = findCudaDevice(argc, (const char **)argv);
+    //int dev = findCudaDevice(argc, (const char **)argv);
+
+		int dev = 0;                                                              
+		if(argc == 2) {                                                             
+				dev = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", dev);                                      
+		cudaSetDevice(dev);
+
+
+
     checkCudaErrors(cudaGetDeviceProperties(&deviceProp, dev));
 
     if (((deviceProp.major << 4) + deviceProp.minor) < 0x20)
