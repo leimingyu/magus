@@ -333,7 +333,7 @@ appList.append(GPUApp_pb2.GPUApp(
 appList.append(GPUApp_pb2.GPUApp(
     name='stencil',
     dir='../apps/rcuda_parboil/benchmarks/stencil',
-    cmd='./stencil -i ../../datasets/stencil/default/input/512x512x64x100.bin 512 512 64 100'))
+    cmd='./stencil -i ../../datasets/stencil/small/input/128x128x32.bin 128 128 32 1001'))
 
 #------------------------------------------------------------------------------
 # rodinia

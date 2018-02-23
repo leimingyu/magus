@@ -4,16 +4,20 @@
 https://gist.github.com/micktwomey/606178
 '''
 
-import multiprocessing as mp
-import socket
-import math
-import time
-import Queue
-import numpy as np
-import ctypes
+import os,socket,math,time
+import Queue,ctypes
 import logging
 
-from multiprocessing import Pool, Value, Lock
+import numpy as np
+import multiprocessing as mp
+
+
+from multiprocessing import Pool,Value,Lock
+from subprocess import check_call,STDOUT,CalledProcessError
+
+DEVNULL = open(os.devnull, 'wb', 0) # no std out
+magus_debug = False 
+
 
 def foo(n):
     startT = time.time()
@@ -25,6 +29,41 @@ def foo(n):
     #print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
     return [startT, endT]
 
+class cd:
+    """
+    Context manager for changing the current working directory
+    """
+    def __init__(self, newPath):
+        self.newPath = os.path.expanduser(newPath)
+
+    def __enter__(self):
+        self.savedPath = os.getcwd()
+        os.chdir(self.newPath)
+
+    def __exit__(self, etype, value, traceback):
+        os.chdir(self.savedPath)
+
+
+
+def run_remote(app_dir, app_cmd, devid=0):
+    rcuda_select_dev = "RCUDA_DEVICE_" + str(devid) + "=mcx1.coe.neu.edu:" + str(devid)
+    cmd_str = rcuda_select_dev + " " + str(app_cmd)
+
+    #
+    #
+    #
+    startT = time.time()
+    with cd(app_dir):
+        #print os.getcwd()
+        #print app_dir
+        try:
+            check_call(cmd_str, stdout=DEVNULL, stderr=STDOUT, shell=True)
+        except CalledProcessError as e:
+            raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
+    endT = time.time()
+    
+    return [startT, endT]
+
 
 class Server(object):
     def __init__(self, hostname, port):
@@ -32,7 +71,7 @@ class Server(object):
         self.logger = logging.getLogger("server")
         self.hostname = hostname
         self.port = port
-        self.gpuNum = 2         # Note:  gpus in cluster
+        self.gpuNum = 12         # Note:  gpus in cluster
         self.lock = Lock()
 
     def scheduler(self, jobID, GpuNodeStatus, scheme = 'rr'):
@@ -98,6 +137,12 @@ class Server(object):
 
                 logger.debug("Received data %r", data)
 
+                data_split = data.split(';')
+                #print data_split
+
+                app_dir, app_cmd = data_split[0], data_split[1]
+                #print app_dir, app_cmd
+
                 #--------------------------------------------------------------
                 # 2) Scheduler 
                 #--------------------------------------------------------------
@@ -128,7 +173,19 @@ class Server(object):
                 # 3) work on the job 
                 #------------------------------------------------------------------
                 #foo_input = int(data) * 2000
-                [startT, endT] = foo(1)
+                #[startT, endT] = foo(1)
+
+                #
+                # run app to rcuda
+                #
+                [startT, endT]= run_remote(app_dir = app_dir, app_cmd = app_cmd, devid = target_gpu) 
+                print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
+
+
+
+
+
+
                 #print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
                 self.logger.debug("(Job {}) {} to {} = {:.3f} seconds".format(jobID, startT, endT, endT - startT))
 
@@ -311,7 +368,6 @@ if __name__ == "__main__":
     import logging
     logging.basicConfig(level=logging.DEBUG)
     server = Server("0.0.0.0", 9000)
-    #server = Server("mcx1.coe.neu.edu", 9000)
 
     try:
         logging.info("Listening")

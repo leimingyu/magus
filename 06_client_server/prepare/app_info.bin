@@ -65,8 +65,8 @@ scalarProd+../apps/rcuda_cusdk80/6_Advanced/scalarProd./scalarProd5
 cutcp&../apps/rcuda_parboil/benchmarks/cutcpI./cutcp -i ../../datasets/cutcp/small/input/watbox.sl40.pqr  -o out_smallq
 lbm$../apps/rcuda_parboil/benchmarks/lbmD./lbm 1 -i ../../datasets/lbm/short/input/120_120_150_ldc.of  -o outq
 mri-q&../apps/rcuda_parboil/benchmarks/mri-q@./mri-q -i ../../datasets/mri-q/small/input/32_32_32_dataset.bin≈
-sgemm&../apps/rcuda_parboil/benchmarks/sgemmì./sgemm  -i ../../datasets/sgemm/small/input/matrix1.txt,../../datasets/sgemm/small/input/matrix2.txt,../../datasets/sgemm/small/input/matrix2t.txtà
-stencil(../apps/rcuda_parboil/benchmarks/stencilS./stencil -i ../../datasets/stencil/default/input/512x512x64x100.bin 512 512 64 100<
+sgemm&../apps/rcuda_parboil/benchmarks/sgemmì./sgemm  -i ../../datasets/sgemm/small/input/matrix1.txt,../../datasets/sgemm/small/input/matrix2.txt,../../datasets/sgemm/small/input/matrix2t.txtÉ
+stencil(../apps/rcuda_parboil/benchmarks/stencilN./stencil -i ../../datasets/stencil/small/input/128x128x32.bin 128 128 32 1001<
 backprop../apps/rcuda_rodinia/backprop./backprop 65536s
 b+tree../apps/rcuda_rodinia/b+treeK./b+tree.out file ../data/b+tree/mil.txt command ../data/b+tree/command.txtM
 dwt2d../apps/rcuda_rodinia/dwt2d'./dwt2d rgb.bmp -d 1024x1024 -f -5 -l 3<
