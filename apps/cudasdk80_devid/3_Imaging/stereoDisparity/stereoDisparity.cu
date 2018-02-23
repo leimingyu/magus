@@ -63,7 +63,13 @@ runTest(int argc, char **argv)
     int dev = 0;
 
     // This will pick the best possible CUDA capable device
-    dev = findCudaDevice(argc, (const char **)argv);
+    //dev = findCudaDevice(argc, (const char **)argv);
+
+		if(argc == 2) {
+				dev = atoi(argv[1]);
+		}
+		printf("select device : %d\n", dev);
+		cudaSetDevice(dev);
 
     checkCudaErrors(cudaGetDeviceProperties(&deviceProp, dev));
 
