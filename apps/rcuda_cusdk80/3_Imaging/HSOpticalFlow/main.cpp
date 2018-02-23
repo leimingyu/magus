@@ -233,6 +233,8 @@ int main(int argc, char **argv)
     delete [] h_source;
     delete [] h_target;
 
+		//printf("status : %d\n", status);
+
     // report self-test status
-    exit(status ? EXIT_SUCCESS : EXIT_FAILURE);
+    //exit(status ? EXIT_SUCCESS : EXIT_FAILURE);
 }
