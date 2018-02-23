@@ -1,0 +1,232 @@
+==2685== NVPROF is profiling process 2685, command: ./reduction
+==2685== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==2685== Profiling application: ./reduction
+==2685== Profiling result:
+==2685== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"sm_efficiency","Multiprocessor Activity",77.890000%,84.579393%,79.567641%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"achieved_occupancy","Achieved Occupancy",0.939240,0.999181,0.994666
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"ipc","Executed IPC",0.576775,0.740421,0.648666
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"issued_ipc","Issued IPC",0.558319,0.740129,0.650286
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_per_warp","Instructions per warp",6183.500000,6183.500000,6183.500000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"branch_efficiency","Branch Efficiency",100.000000%,100.000000%,100.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"warp_execution_efficiency","Warp Execution Efficiency",99.992167%,99.992167%,99.992167%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"warp_nonpred_execution_efficiency","Warp Non-Predicated Execution Efficiency",99.874852%,99.874860%,99.874856%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_replay_overhead","Instruction Replay Overhead",0.000243,0.000243,0.000243
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"issue_slot_utilization","Issue Slot Utilization",11.631558%,15.419235%,13.547519%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"shared_load_transactions_per_request","Shared Memory Load Transactions Per Request",0.411765,0.411765,0.411765
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"shared_store_transactions_per_request","Shared Memory Store Transactions Per Request",0.583333,0.583333,0.583333
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"local_load_transactions_per_request","Local Memory Load Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"local_store_transactions_per_request","Local Memory Store Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"gld_transactions_per_request","Global Load Transactions Per Request",8.000000,8.000000,8.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"gst_transactions_per_request","Global Store Transactions Per Request",1.000000,1.000000,1.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"shared_store_transactions","Shared Store Transactions",896,896,896
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"shared_load_transactions","Shared Load Transactions",448,448,448
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"local_load_transactions","Local Load Transactions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"local_store_transactions","Local Store Transactions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"gld_transactions","Global Load Transactions",4194304,4194304,4194304
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"gst_transactions","Global Store Transactions",64,64,64
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"dram_read_transactions","Device Memory Read Transactions",2086152,2095117,2088033
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"dram_write_transactions","Device Memory Write Transactions",15975,16469,16171
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"global_hit_rate","Global Hit Rate",50.000000%,50.000000%,50.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"local_hit_rate","Local Hit Rate",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"gld_requested_throughput","Requested Global Load Throughput",81.337633GB/s,84.335350GB/s,83.283521GB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"gst_requested_throughput","Requested Global Store Throughput",325.349609KB/s,337.340820KB/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"gld_throughput","Global Load Throughput",81.337633GB/s,84.335350GB/s,83.283521GB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"gst_throughput","Global Store Throughput",2.541800MB/s,2.635479MB/s,1.907349MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"dram_read_throughput","Device Memory Read Throughput",80.962662GB/s,83.972092GB/s,82.921237GB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"dram_write_throughput","Device Memory Write Throughput",638.864551MB/s,673.291959MB/s,657.081604MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"tex_cache_throughput","Unified Cache Throughput",81.337633GB/s,84.335350GB/s,83.283521GB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"local_load_throughput","Local Memory Load Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"local_store_throughput","Local Memory Store Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"shared_load_throughput","Shared Memory Load Throughput",71.170428MB/s,73.793430MB/s,72.479248MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"shared_store_throughput","Shared Memory Store Throughput",142.340858MB/s,147.586862MB/s,144.958496MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"gld_efficiency","Global Memory Load Efficiency",100.000000%,100.000000%,100.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"gst_efficiency","Global Memory Store Efficiency",12.500000%,12.500000%,12.500000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"tex_cache_transactions","Unified Cache Transactions",2097152,2097152,2097152
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"cf_fu_utilization","Control-Flow Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"tex_fu_utilization","Texture Function Unit Utilization","Low (2)","Low (3)","Low (2)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"ldst_fu_utilization","Load/Store Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"double_precision_fu_utilization","Double-Precision Function Unit Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"special_fu_utilization","Special Function Unit Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"single_precision_fu_utilization","Single-Precision Function Unit Utilization","Low (2)","Low (2)","Low (2)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"flop_count_dp","Floating Point Operations(Double Precision)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"flop_count_dp_add","Floating Point Operations(Double Precision Add)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"flop_count_dp_fma","Floating Point Operations(Double Precision FMA)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"flop_count_dp_mul","Floating Point Operations(Double Precision Mul)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"flop_count_sp_add","Floating Point Operations(Single Precision Add)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"flop_count_sp_fma","Floating Point Operations(Single Precision FMA)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"flop_count_sp_mul","Floating Point Operation(Single Precision Mul)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"flop_count_sp_special","Floating Point Operations(Single Precision Special)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_executed","Instructions Executed",3165952,3165952,3165952
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_issued","Instructions Issued",3166720,3166720,3166720
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"dram_utilization","Device Memory Utilization","High (9)","High (9)","High (9)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"tex_utilization","Unified Cache Utilization","Low (2)","Low (2)","Low (2)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"shared_efficiency","Shared Memory Efficiency",100.000000%,100.000000%,100.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"shared_utilization","Shared Memory Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_fp_32","FP Instructions(Single)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_fp_64","FP Instructions(Double)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_integer","Integer Instructions",67278976,67278976,67278976
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_bit_convert","Bit-Convert Instructions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_control","Control-Flow Instructions",8495104,8495104,8495104
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_compute_ld_st","Load/Store Instructions",16820288,16820288,16820288
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_misc","Misc Instructions",8579072,8579072,8579072
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"inst_inter_thread_communication","Inter-Thread Instructions",10240,10240,10240
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"issue_slots","Issue Slots",2638912,2638912,2638912
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"cf_issued","Issued Control-Flow Instructions",266688,266688,266688
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"cf_executed","Executed Control-Flow Instructions",266688,266688,266688
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"ldst_issued","Issued Load/Store Instructions",2103232,2103232,2103232
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"ldst_executed","Executed Load/Store Instructions",530368,530368,530368
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"atomic_transactions","Atomic Transactions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"atomic_transactions_per_request","Atomic Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",1.769888%,2.299322%,1.935098%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",2.631783%,3.221724%,2.828163%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"stall_memory_dependency","Issue Stall Reasons (Data Request)",92.098310%,94.072959%,93.289281%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"stall_sync","Issue Stall Reasons (Synchronization)",0.315587%,1.491994%,0.739256%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"stall_other","Issue Stall Reasons (Other)",0.437163%,0.556141%,0.480899%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.048748%,0.073297%,0.053790%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.286896%,0.379067%,0.322158%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.000413%,0.000545%,0.000468%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"stall_not_selected","Issue Stall Reasons (Not Selected)",0.296438%,0.407353%,0.350887%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"sysmem_read_transactions","System Memory Read Transactions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"sysmem_write_transactions","System Memory Write Transactions",5,5,5
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_read_transactions","L2 Read Transactions",2097191,2097327,2097225
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_write_transactions","L2 Write Transactions",70,70,70
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"ecc_transactions","ECC Transactions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"local_memory_overhead","Local Memory Overhead",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"tex_cache_hit_rate","Unified Cache Hit Rate",49.999237%,49.999237%,49.999237%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_tex_read_hit_rate","L2 Hit Rate (Texture Reads)",0.000000%,0.553322%,0.445205%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_tex_write_hit_rate","L2 Hit Rate (Texture Writes)",93.750000%,95.312500%,95.095916%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_tex_read_throughput","L2 Throughput (Texture Reads)",81.337633GB/s,84.335350GB/s,83.283521GB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_tex_write_throughput","L2 Throughput (Texture Writes)",2.541800MB/s,2.635479MB/s,1.907349MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_tex_read_transactions","L2 Transactions (Texture Reads)",2097152,2097152,2097152
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_tex_write_transactions","L2 Transactions (Texture Writes)",64,64,64
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_read_throughput","L2 Throughput (Reads)",81.339146GB/s,84.340135GB/s,83.286315GB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_write_throughput","L2 Throughput (Writes)",2.780094MB/s,2.882555MB/s,1.907349MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"sysmem_read_throughput","System Memory Read Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"sysmem_write_throughput","System Memory Write Throughput",203.343750KB/s,210.837891KB/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_utilization","L2 Cache Utilization","Low (3)","Low (3)","Low (3)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_atomic_throughput","L2 Throughput (Atomic requests)",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"l2_atomic_transactions","L2 Transactions (Atomic requests)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"sysmem_utilization","System Memory Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"ecc_throughput","ECC Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"sysmem_read_utilization","System Memory Read Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"sysmem_write_utilization","System Memory Write Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"eligible_warps_per_cycle","Eligible Warps Per Active Cycle",0.636650,0.870959,0.764050
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"flop_sp_efficiency","FLOP Efficiency(Peak Single)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=256, bool=1>(int*, int*, unsigned int)",101,"flop_dp_efficiency","FLOP Efficiency(Peak Double)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"sm_efficiency","Multiprocessor Activity",4.852414%,7.783751%,5.820635%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"achieved_occupancy","Achieved Occupancy",0.015615,0.015635,0.015625
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"ipc","Executed IPC",0.027223,0.049748,0.043494
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"issued_ipc","Issued IPC",0.027816,0.051040,0.045423
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_per_warp","Instructions per warp",79.000000,79.000000,79.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"branch_efficiency","Branch Efficiency",100.000000%,100.000000%,100.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"warp_execution_efficiency","Warp Execution Efficiency",95.094937%,95.094937%,95.094937%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"warp_nonpred_execution_efficiency","Warp Non-Predicated Execution Efficiency",89.952532%,90.031646%,89.989715%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_replay_overhead","Instruction Replay Overhead",0.025316,0.025316,0.025316
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"issue_slot_utilization","Issue Slot Utilization",0.583791%,1.071204%,0.953330%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"shared_load_transactions_per_request","Shared Memory Load Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"shared_store_transactions_per_request","Shared Memory Store Transactions Per Request",1.000000,1.000000,1.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"local_load_transactions_per_request","Local Memory Load Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"local_store_transactions_per_request","Local Memory Store Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"gld_transactions_per_request","Global Load Transactions Per Request",8.000000,8.000000,8.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"gst_transactions_per_request","Global Store Transactions Per Request",1.000000,1.000000,1.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"shared_store_transactions","Shared Store Transactions",1,1,1
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"shared_load_transactions","Shared Load Transactions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"local_load_transactions","Local Load Transactions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"local_store_transactions","Local Store Transactions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"gld_transactions","Global Load Transactions",16,16,16
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"gst_transactions","Global Store Transactions",1,1,1
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"dram_read_transactions","Device Memory Read Transactions",16,52,30
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"dram_write_transactions","Device Memory Write Transactions",24,84,49
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"global_hit_rate","Global Hit Rate",50.000000%,50.000000%,50.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"local_hit_rate","Local Hit Rate",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"gld_requested_throughput","Requested Global Load Throughput",76.509127MB/s,91.233417MB/s,84.877014MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"gst_requested_throughput","Requested Global Store Throughput",1.195455MB/s,1.425522MB/s,976.562500KB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"gld_throughput","Global Load Throughput",76.509127MB/s,91.233417MB/s,84.877014MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"gst_throughput","Global Store Throughput",9.563641MB/s,11.404177MB/s,9.536743MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"dram_read_throughput","Device Memory Read Throughput",153.066222MB/s,592.574332MB/s,329.971313MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"dram_write_throughput","Device Memory Write Throughput",231.705750MB/s,861.246170MB/s,535.964966MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"tex_cache_throughput","Unified Cache Throughput",76.509127MB/s,91.233417MB/s,84.877014MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"local_load_throughput","Local Memory Load Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"local_store_throughput","Local Memory Store Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"shared_load_throughput","Shared Memory Load Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"shared_store_throughput","Shared Memory Store Throughput",38.254563MB/s,45.616708MB/s,41.961670MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"gld_efficiency","Global Memory Load Efficiency",100.000000%,100.000000%,100.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"gst_efficiency","Global Memory Store Efficiency",12.500000%,12.500000%,12.500000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"tex_cache_transactions","Unified Cache Transactions",8,8,8
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"cf_fu_utilization","Control-Flow Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"tex_fu_utilization","Texture Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"ldst_fu_utilization","Load/Store Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"double_precision_fu_utilization","Double-Precision Function Unit Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"special_fu_utilization","Special Function Unit Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"single_precision_fu_utilization","Single-Precision Function Unit Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"flop_count_dp","Floating Point Operations(Double Precision)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"flop_count_dp_add","Floating Point Operations(Double Precision Add)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"flop_count_dp_fma","Floating Point Operations(Double Precision FMA)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"flop_count_dp_mul","Floating Point Operations(Double Precision Mul)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"flop_count_sp_add","Floating Point Operations(Single Precision Add)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"flop_count_sp_fma","Floating Point Operations(Single Precision FMA)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"flop_count_sp_mul","Floating Point Operation(Single Precision Mul)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"flop_count_sp_special","Floating Point Operations(Single Precision Special)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_executed","Instructions Executed",79,79,79
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_issued","Instructions Issued",81,81,81
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"dram_utilization","Device Memory Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"tex_utilization","Unified Cache Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"shared_efficiency","Shared Memory Efficiency",100.000000%,100.000000%,100.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"shared_utilization","Shared Memory Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_fp_32","FP Instructions(Single)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_fp_64","FP Instructions(Double)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_integer","Integer Instructions",1058,1058,1058
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_bit_convert","Bit-Convert Instructions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_control","Control-Flow Instructions",352,352,352
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_compute_ld_st","Load/Store Instructions",97,97,97
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_misc","Misc Instructions",608,608,608
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"inst_inter_thread_communication","Inter-Thread Instructions",160,160,160
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"issue_slots","Issue Slots",68,68,68
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"cf_issued","Issued Control-Flow Instructions",16,16,16
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"cf_executed","Executed Control-Flow Instructions",16,16,16
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"ldst_issued","Issued Load/Store Instructions",21,21,21
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"ldst_executed","Executed Load/Store Instructions",15,15,15
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"atomic_transactions","Atomic Transactions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"atomic_transactions_per_request","Atomic Transactions Per Request",0.000000,0.000000,0.000000
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",6.031746%,46.851852%,15.876390%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",12.386816%,22.902796%,19.414040%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"stall_memory_dependency","Issue Stall Reasons (Data Request)",14.342629%,31.933767%,23.516437%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"stall_sync","Issue Stall Reasons (Synchronization)",2.933720%,5.392810%,4.557525%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"stall_other","Issue Stall Reasons (Other)",1.962963%,18.937745%,6.121999%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",17.819631%,37.272727%,29.098714%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.181094%,0.333333%,0.282979%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.724375%,1.333333%,1.131915%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"stall_not_selected","Issue Stall Reasons (Not Selected)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"sysmem_read_transactions","System Memory Read Transactions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"sysmem_write_transactions","System Memory Write Transactions",5,5,5
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_read_transactions","L2 Read Transactions",31,72,47
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_write_transactions","L2 Write Transactions",7,7,7
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"ecc_transactions","ECC Transactions",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"local_memory_overhead","Local Memory Overhead",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"tex_cache_hit_rate","Unified Cache Hit Rate",47.058824%,47.058824%,47.058824%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_tex_read_hit_rate","L2 Hit Rate (Texture Reads)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_tex_write_hit_rate","L2 Hit Rate (Texture Writes)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_tex_read_throughput","L2 Throughput (Texture Reads)",76.509127MB/s,91.233417MB/s,84.877014MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_tex_write_throughput","L2 Throughput (Texture Writes)",9.563641MB/s,11.404177MB/s,9.536743MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_tex_read_transactions","L2 Transactions (Texture Reads)",8,8,8
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_tex_write_transactions","L2 Transactions (Texture Writes)",1,1,1
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_read_throughput","L2 Throughput (Reads)",296.565805MB/s,819.875233MB/s,504.493713MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_write_throughput","L2 Throughput (Writes)",66.945486MB/s,79.829240MB/s,74.386597MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"sysmem_read_throughput","System Memory Read Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"sysmem_write_throughput","System Memory Write Throughput",47.818204MB/s,57.020885MB/s,52.452087MB/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_utilization","L2 Cache Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_atomic_throughput","L2 Throughput (Atomic requests)",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"l2_atomic_transactions","L2 Transactions (Atomic requests)",0,0,0
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"sysmem_utilization","System Memory Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"ecc_throughput","ECC Throughput",0.000000B/s,0.000000B/s,0.000000B/s
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"sysmem_read_utilization","System Memory Read Utilization","Idle (0)","Idle (0)","Idle (0)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"sysmem_write_utilization","System Memory Write Utilization","Low (1)","Low (1)","Low (1)"
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"eligible_warps_per_cycle","Eligible Warps Per Active Cycle",0.023352,0.042848,0.038133
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"flop_sp_efficiency","FLOP Efficiency(Peak Single)",0.000000%,0.000000%,0.000000%
+"GeForce GTX 950 (0)","void reduce6<int, unsigned int=32, bool=1>(int*, int*, unsigned int)",100,"flop_dp_efficiency","FLOP Efficiency(Peak Double)",0.000000%,0.000000%,0.000000%
