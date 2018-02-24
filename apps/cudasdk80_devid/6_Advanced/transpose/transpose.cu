@@ -379,7 +379,17 @@ main(int argc, char **argv)
         return 0;
     }
 
-    int devID = findCudaDevice(argc, (const char **)argv);
+    //int devID = findCudaDevice(argc, (const char **)argv);
+		int devID = 0;                                                              
+		if(argc == 2) {                                                             
+				devID = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", devID);                                      
+		cudaSetDevice(devID);                                                       
+
+
+
+
     cudaDeviceProp deviceProp;
 
     // get number of SMs on this GPU
