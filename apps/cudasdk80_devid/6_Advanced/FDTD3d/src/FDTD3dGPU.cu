@@ -28,8 +28,20 @@ bool getTargetDeviceGlobalMemSize(memsize_t *result, const int argc, const char 
     printf(" cudaGetDeviceCount\n");
     checkCudaErrors(cudaGetDeviceCount(&deviceCount));
 
-    // Select target device (device 0 by default)
-    targetDevice = findCudaDevice(argc, (const char **)argv);
+    //// Select target device (device 0 by default)
+    //targetDevice = findCudaDevice(argc, (const char **)argv);
+
+		if(argc == 2) {                                                             
+				targetDevice = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", targetDevice);                                      
+		cudaSetDevice(targetDevice);                                                       
+
+
+
+
+
+
 
     // Query target device for maximum memory allocation
     printf(" cudaGetDeviceProperties\n");
@@ -50,7 +62,7 @@ bool fdtdGPU(float *output, const float *input, const float *coeff, const int di
     const int         outerDimz  = dimz + 2 * radius;
     const size_t      volumeSize = outerDimx * outerDimy * outerDimz;
     int               deviceCount  = 0;
-    int               targetDevice = 0;
+    //int               targetDevice = 0;
     float            *bufferOut    = 0;
     float            *bufferIn     = 0;
     dim3              dimBlock;
@@ -82,10 +94,10 @@ bool fdtdGPU(float *output, const float *input, const float *coeff, const int di
     // Get the number of CUDA enabled GPU devices
     checkCudaErrors(cudaGetDeviceCount(&deviceCount));
 
-    // Select target device (device 0 by default)
-    targetDevice = findCudaDevice(argc, (const char **)argv);
+    //// Select target device (device 0 by default)
+    //targetDevice = findCudaDevice(argc, (const char **)argv);
 
-    checkCudaErrors(cudaSetDevice(targetDevice));
+    //checkCudaErrors(cudaSetDevice(targetDevice));
 
     // Allocate memory buffers
     checkCudaErrors(cudaMalloc((void **)&bufferOut, paddedVolumeSize * sizeof(float)));

@@ -228,7 +228,7 @@ GENCODE_FLAGS += -gencode arch=compute_$(HIGHEST_SM),code=compute_$(HIGHEST_SM)
 endif
 endif
 
-INCLUDES += -Iinc
+INCLUDES += -I./inc
 
 ifeq ($(SAMPLE_ENABLED),0)
 EXEC ?= @echo "[@]"
@@ -249,6 +249,7 @@ else
 endif
 
 FDTD3d.o:src/FDTD3d.cpp
+#FDTD3d.o:src/FDTD3d.cu
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
 FDTD3dGPU.o:src/FDTD3dGPU.cu
