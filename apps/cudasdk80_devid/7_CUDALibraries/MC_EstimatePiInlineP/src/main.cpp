@@ -41,6 +41,32 @@ void runTest(int argc, const char **argv);
 
 int main(int argc, char **argv)
 {
+		/*
+		int devID = 0;                                                              
+		if(argc == 2) {                                                             
+				devID = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", devID);                                      
+		cudaSetDevice(devID);                                                       
+
+
+		cudaError_t error;                                                          
+		cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, devID);                        
+		if (error != cudaSuccess)                                                   
+		{                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+								cudaGetErrorString(error), error, __LINE__);
+		}                                                                           
+		else                                                                        
+		{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+								devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}                                                                           
+		*/
+
+
     using std::invalid_argument;
     using std::string;
 
@@ -110,6 +136,16 @@ void runTest(int argc, const char **argv)
         // by default specify GPU Device == 0
         test.device             = 0;
 
+				/*
+				if(argc == 2) {                                                             
+						test.device = atoi(argv[1]);                                                  
+				}                                                                           
+				printf("select device : %d\n", test.device);                                      
+				cudaSetDevice(test.device);                                                       
+				*/
+
+
+
         // Get number of available devices
         cudaResult = cudaGetDeviceCount(&deviceCount);
 
@@ -139,7 +175,14 @@ void runTest(int argc, const char **argv)
             }
             else
             {
-                test.device = gpuGetMaxGflopsDeviceId();
+                //test.device = gpuGetMaxGflopsDeviceId();
+
+								if(argc == 2) {                                                             
+										test.device = atoi(argv[1]);                                                  
+								}                                                                           
+								printf("select device : %d\n", test.device);                                      
+								cudaSetDevice(test.device);                                                       
+
             }
 
             if (getCmdLineArgumentString(argc, argv, "sims", &value))
