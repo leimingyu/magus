@@ -95,15 +95,38 @@ main(int argc, char **argv)
     cudaDeviceProp deviceProp;
     deviceProp.major = 0;
     deviceProp.minor = 0;
-    int dev;
+    //int dev;
 
     printf("%s Starting...\n\n", sSDKsample);
 
-    dev = findCudaDevice(argc, (const char **)argv);
+    //dev = findCudaDevice(argc, (const char **)argv);
+    //checkCudaErrors(cudaGetDeviceProperties(&deviceProp, dev));
+    //printf("GPU Device supports SM %d.%d compute capability\n\n", deviceProp.major, deviceProp.minor);
 
-    checkCudaErrors(cudaGetDeviceProperties(&deviceProp, dev));
 
-    printf("GPU Device supports SM %d.%d compute capability\n\n", deviceProp.major, deviceProp.minor);
+		int dev = 0;                                                              
+		if(argc == 2) {                                                             
+				dev = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", dev);                                      
+		cudaSetDevice(dev);                                                       
+
+
+		cudaError_t error;                                                          
+		//cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, dev);                        
+		if (error != cudaSuccess)                                                   
+		{                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+								cudaGetErrorString(error), error, __LINE__);
+		}                                                                           
+		else                                                                        
+		{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+								dev, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}                                                                           
+
 
     bool bTestResult = false;
 
