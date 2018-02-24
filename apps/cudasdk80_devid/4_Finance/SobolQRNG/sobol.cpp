@@ -76,58 +76,82 @@ int main(int argc, char *argv[])
 
     printf("%s Starting...\n\n", sSDKsample);
 
-    // Print help if requested
-    if (checkCmdLineFlag(argc, (const char **)argv, "help"))
-    {
-        printHelp(argc, argv);
-        return 0;
-    }
+    //// Print help if requested
+    //if (checkCmdLineFlag(argc, (const char **)argv, "help"))
+    //{
+    //    printHelp(argc, argv);
+    //    return 0;
+    //}
 
-    if (checkCmdLineFlag(argc, (const char **)argv, "qatest"))
-    {
-        // For QA testing set a default number of vectors and dimensions
-        n_vectors = 100000;
-        n_dimensions = 100;
-    }
-    else
-    {
-        // Parse the command line to determine the required number of vectors
-        if (checkCmdLineFlag(argc, (const char **)argv, "vectors"))
-        {
-            n_vectors = getCmdLineArgumentInt(argc, (const char **)argv, "vectors");
+    //if (checkCmdLineFlag(argc, (const char **)argv, "qatest"))
+    //{
+    //    // For QA testing set a default number of vectors and dimensions
+    //    n_vectors = 100000;
+    //    n_dimensions = 100;
+    //}
+    //else
+    //{
+    //    // Parse the command line to determine the required number of vectors
+    //    if (checkCmdLineFlag(argc, (const char **)argv, "vectors"))
+    //    {
+    //        n_vectors = getCmdLineArgumentInt(argc, (const char **)argv, "vectors");
 
-            if (n_vectors < 1)
-            {
-                std::cerr << "Illegal argument: number of vectors must be positive (--vectors=N)" << std::endl;
-                ok = false;
-            }
-        }
+    //        if (n_vectors < 1)
+    //        {
+    //            std::cerr << "Illegal argument: number of vectors must be positive (--vectors=N)" << std::endl;
+    //            ok = false;
+    //        }
+    //    }
 
-        std::cout << "> number of vectors = " << n_vectors << std::endl;
+    //    std::cout << "> number of vectors = " << n_vectors << std::endl;
 
-        // Parse the command line to determine the number of dimensions in each vector
-        if (checkCmdLineFlag(argc, (const char **)argv, "dimensions"))
-        {
-            n_dimensions = getCmdLineArgumentInt(argc, (const char **)argv, "dimensions");
+    //    // Parse the command line to determine the number of dimensions in each vector
+    //    if (checkCmdLineFlag(argc, (const char **)argv, "dimensions"))
+    //    {
+    //        n_dimensions = getCmdLineArgumentInt(argc, (const char **)argv, "dimensions");
 
-            if (n_dimensions < 1)
-            {
-                std::cerr << "Illegal argument: number of dimensions must be positive (--dimensions=N)" << std::endl;
-                ok = false;
-            }
-        }
+    //        if (n_dimensions < 1)
+    //        {
+    //            std::cerr << "Illegal argument: number of dimensions must be positive (--dimensions=N)" << std::endl;
+    //            ok = false;
+    //        }
+    //    }
 
-        std::cout << "> number of dimensions = " << n_dimensions << std::endl;
-    }
+    //    std::cout << "> number of dimensions = " << n_dimensions << std::endl;
+    //}
 
-    // If any of the command line checks failed, exit
-    if (!ok)
-    {
-        return -1;
-    }
+    //// If any of the command line checks failed, exit
+    //if (!ok)
+    //{
+    //    return -1;
+    //}
 
-    // Use command-line specified CUDA device, otherwise use device with highest Gflops/s
-    findCudaDevice(argc, (const char **)argv);
+    //// Use command-line specified CUDA device, otherwise use device with highest Gflops/s
+    //findCudaDevice(argc, (const char **)argv);
+
+		int devID = 0;                                                              
+		if(argc == 2) {                                                             
+				devID = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", devID);                                      
+		cudaSetDevice(devID);                                                       
+
+
+		cudaError_t error;                                                          
+		cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, devID);                        
+		if (error != cudaSuccess)                                                   
+		{                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+		}                                                                           
+		else                                                                        
+		{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}                                                                           
+
+
+
 
     // Create a timer to measure performance
     StopWatchInterface *hTimer = NULL;
