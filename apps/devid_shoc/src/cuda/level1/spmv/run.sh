@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./FFT -d $1
+./Spmv -d $1

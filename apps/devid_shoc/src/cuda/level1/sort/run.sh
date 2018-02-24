@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./FFT -d $1
+./Sort -d $1

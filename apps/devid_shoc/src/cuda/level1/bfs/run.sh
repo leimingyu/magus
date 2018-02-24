@@ -1,2 +1,2 @@
 #!/bin/bash
-./MD -d $1
+./BFS -d $1
