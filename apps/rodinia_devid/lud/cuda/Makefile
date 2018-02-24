@@ -1,0 +1,53 @@
+CC = gcc
+NVCC = nvcc
+
+DEFS += \
+		-DGPU_TIMER \
+		$(SPACE)
+
+
+SMS ?= 30 35 50 52 60
+ifeq ($(GENCODE_FLAGS),)
+  $(foreach sm,$(SMS),$(eval GENCODE_FLAGS += -gencode arch=compute_$(sm),code=sm_$(sm)))
+endif
+
+NVCCFLAGS += $(EXTRA_NVCCFLAGS)
+
+NVCCFLAGS += -I../common \
+			 -O3 \
+			 -use_fast_math \
+			 -lm \
+			 $(SPACE)
+
+NVCCFLAGS += $(GENCODE_FLAGS)
+
+CFLAGS += -I../common \
+					-I/usr/include/cuda \
+		  -O3 \
+		  -Wall \
+		  $(SPACE)
+
+# Add source files here
+EXECUTABLE  := lud_cuda
+# Cuda source files (compiled with cudacc)
+CUFILES     := lud_kernel.cu
+# C/C++ source files (compiled with gcc / c++)
+CCFILES     := lud.c lud_cuda.c ../common/common.c
+
+OBJS = ../common/common.o lud.o lud_kernel.o
+
+.PHONY: all clean 
+all : $(EXECUTABLE)
+
+.c.o : 
+	$(NVCC) $(KERNEL_DIM) $(NVCCFLAGS) $(DEFS) -o $@ -c $<
+
+%.o:	%.cu 
+	$(NVCC) $(KERNEL_DIM) $(NVCCFLAGS) $(DEFS) -o $@ -c $<
+
+
+$(EXECUTABLE) : $(OBJS)
+	$(NVCC) $(NVCCFLAGS) -o $@  $?
+
+clean:
+	rm -f $(EXECUTABLE) $(OBJS) *.linkinfo
