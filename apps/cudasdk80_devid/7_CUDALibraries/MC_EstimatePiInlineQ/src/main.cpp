@@ -139,7 +139,16 @@ void runTest(int argc, const char **argv)
             }
             else
             {
-                test.device = gpuGetMaxGflopsDeviceId();
+                //test.device = gpuGetMaxGflopsDeviceId();
+
+								if(argc == 2) {                                                             
+										test.device = atoi(argv[1]);                                                  
+								}                                                                           
+								printf("select device : %d\n", test.device);                                      
+								cudaSetDevice(test.device);                                                       
+
+
+
             }
 
             if (getCmdLineArgumentString(argc, argv, "sims", &value))
