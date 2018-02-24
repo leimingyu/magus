@@ -40,7 +40,35 @@ int main(int argc, char **argv)
     printf("%s Starting...\n\n", argv[0]);
 
     printf("Starting up CUDA context...\n");
-    int dev = findCudaDevice(argc, (const char **)argv);
+    //int dev = findCudaDevice(argc, (const char **)argv);
+
+		int dev = 0;                                                              
+		if(argc == 2) {                                                             
+				dev = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", dev);                                      
+		cudaSetDevice(dev);                                                       
+
+
+		//cudaError_t error;                                                          
+		cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, dev);                        
+		if (error != cudaSuccess)                                                   
+		{                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+								cudaGetErrorString(error), error, __LINE__);
+		}                                                                           
+		else                                                                        
+		{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+								dev, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}                                                                           
+
+
+
+
+
 
     uint *h_InputKey, *h_InputVal, *h_OutputKeyGPU, *h_OutputValGPU;
     uint *d_InputKey, *d_InputVal,    *d_OutputKey,    *d_OutputVal;

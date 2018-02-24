@@ -16,6 +16,7 @@
 
 // CUDA Runtime
 #include <cuda_runtime.h>
+#include <stdlib.h>
 
 // Utility and system includes
 #include <helper_cuda.h>
@@ -46,7 +47,9 @@ int main(int argc, char **argv)
     printf("[%s] - Starting...\n", sSDKsample);
 
     //Use command-line specified CUDA device, otherwise use device with highest Gflops/s
-    int dev = findCudaDevice(argc, (const char **)argv);
+    //int dev = findCudaDevice(argc, (const char **)argv);
+
+		int dev = atoi(argv[1]);
 
     checkCudaErrors(cudaGetDeviceProperties(&deviceProp, dev));
 

@@ -62,7 +62,8 @@ __global__ void sum(clock_t *d_clocks, int N)
     }
 
     s_clocks[threadIdx.x] = my_sum;
-    syncthreads();
+    //syncthreads();
+		__syncthreads();
 
     for (int i=16; i>0; i/=2)
     {
@@ -71,7 +72,8 @@ __global__ void sum(clock_t *d_clocks, int N)
             s_clocks[threadIdx.x] += s_clocks[threadIdx.x + i];
         }
 
-        syncthreads();
+        //syncthreads();
+        __syncthreads();
     }
 
     d_clocks[0] = s_clocks[0];
@@ -84,33 +86,57 @@ int main(int argc, char **argv)
     int nbytes = nkernels * sizeof(clock_t);   // number of data bytes
     float kernel_time = 10; // time the kernel should run in ms
     float elapsed_time;   // timing variables
-    int cuda_device = 0;
+    //int cuda_device = 0;
 
     printf("[%s] - Starting...\n", argv[0]);
 
-    // get number of kernels if overridden on the command line
-    if (checkCmdLineFlag(argc, (const char **)argv, "nkernels"))
-    {
-        nkernels = getCmdLineArgumentInt(argc, (const char **)argv, "nkernels");
-        nstreams = nkernels + 1;
-    }
+    //// get number of kernels if overridden on the command line
+    //if (checkCmdLineFlag(argc, (const char **)argv, "nkernels"))
+    //{
+    //    nkernels = getCmdLineArgumentInt(argc, (const char **)argv, "nkernels");
+    //    nstreams = nkernels + 1;
+    //}
 
-    // use command-line specified CUDA device, otherwise use device with highest Gflops/s
-    cuda_device = findCudaDevice(argc, (const char **)argv);
+    //// use command-line specified CUDA device, otherwise use device with highest Gflops/s
+    //cuda_device = findCudaDevice(argc, (const char **)argv);
 
-    cudaDeviceProp deviceProp;
-    checkCudaErrors(cudaGetDevice(&cuda_device));
+		int devID = 0;                                                              
+		if(argc == 2) {                                                             
+				devID = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", devID);                                      
+		cudaSetDevice(devID);                                                       
 
-    checkCudaErrors(cudaGetDeviceProperties(&deviceProp, cuda_device));
 
-    if ((deviceProp.concurrentKernels == 0))
-    {
-        printf("> GPU does not support concurrent kernel execution\n");
-        printf("  CUDA kernel runs will be serialized\n");
-    }
+		cudaError_t error;                                                          
+		cudaDeviceProp deviceProp;                                                  
 
-    printf("> Detected Compute SM %d.%d hardware with %d multi-processors\n",
-           deviceProp.major, deviceProp.minor, deviceProp.multiProcessorCount);
+		error = cudaGetDeviceProperties(&deviceProp, devID);                        
+		if (error != cudaSuccess)                                                   
+		{                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+		}                                                                           
+		else                                                                        
+		{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}                                                                           
+
+
+
+
+    //cudaDeviceProp deviceProp;
+    //checkCudaErrors(cudaGetDevice(&cuda_device));
+
+    //checkCudaErrors(cudaGetDeviceProperties(&deviceProp, cuda_device));
+
+    //if ((deviceProp.concurrentKernels == 0))
+    //{
+    //    printf("> GPU does not support concurrent kernel execution\n");
+    //    printf("  CUDA kernel runs will be serialized\n");
+    //}
+
+    //printf("> Detected Compute SM %d.%d hardware with %d multi-processors\n",
+    //       deviceProp.major, deviceProp.minor, deviceProp.multiProcessorCount);
 
     // allocate host memory
     clock_t *a = 0;                     // pointer to the array data in host memory

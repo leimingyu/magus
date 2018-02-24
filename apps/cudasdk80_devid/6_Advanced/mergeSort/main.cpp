@@ -35,12 +35,39 @@ int main(int argc, char **argv)
 
     printf("%s Starting...\n\n", argv[0]);
 
-    int dev = findCudaDevice(argc, (const char **) argv);
+    //int dev = findCudaDevice(argc, (const char **) argv);
 
-    if (dev == -1)
-    {
-        return EXIT_FAILURE;
-    }
+    //if (dev == -1)
+    //{
+    //    return EXIT_FAILURE;
+    //}
+
+		int dev = 0;                                                              
+		if(argc == 2) {                                                             
+				dev = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", dev);                                      
+		cudaSetDevice(dev);                                                       
+
+
+		cudaError_t error;                                                          
+		cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, dev);                        
+		if (error != cudaSuccess)                                                   
+		{                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+		}                                                                           
+		else                                                                        
+		{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", dev, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}                                                                           
+
+
+
+
+
+
 
     printf("Allocating and initializing host arrays...\n\n");
     sdkCreateTimer(&hTimer);

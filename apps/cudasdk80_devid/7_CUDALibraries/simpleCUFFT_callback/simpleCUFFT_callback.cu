@@ -75,6 +75,7 @@ int runTest(int argc, char **argv);
 ////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv)
 {
+		/*
     struct cudaDeviceProp properties;
     int device;
     checkCudaErrors(cudaGetDevice(&device));
@@ -83,6 +84,7 @@ int main(int argc, char **argv)
         printf("simpleCUFFT_callback requires CUDA architecture SM2.0 or higher\n");
         return EXIT_WAIVED;
     }
+		*/
 
     return runTest(argc, argv);
 }
@@ -94,7 +96,36 @@ int runTest(int argc, char **argv)
 {
     printf("[simpleCUFFT_callback] is starting...\n");
 
-    findCudaDevice(argc, (const char **)argv);
+    //findCudaDevice(argc, (const char **)argv);
+
+		int devID = 0;                                                              
+		if(argc == 2) {                                                             
+				devID = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", devID);                                      
+		cudaSetDevice(devID);                                                       
+
+
+		cudaError_t error;                                                          
+		cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, devID);                        
+		if (error != cudaSuccess)                                                   
+		{                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+								cudaGetErrorString(error), error, __LINE__);
+		}                                                                           
+		else                                                                        
+		{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+								devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}         
+
+
+
+
+
+
 
     // Allocate host memory for the signal
     Complex *h_signal = (Complex *)malloc(sizeof(Complex) * SIGNAL_SIZE);

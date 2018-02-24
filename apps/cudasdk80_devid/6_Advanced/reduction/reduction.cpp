@@ -130,8 +130,8 @@ main(int argc, char **argv)
         minimumComputeVersion = 13;
     }
 
+		/*
     int dev;
-
     dev = findCudaDevice(argc, (const char **)argv);
 
     checkCudaErrors(cudaGetDeviceProperties(&deviceProp, dev));
@@ -147,6 +147,30 @@ main(int argc, char **argv)
                minimumComputeVersion / 10, minimumComputeVersion % 10);
         exit(EXIT_FAILURE);
     }
+		*/
+
+		int devID = 0;                                                              
+		if(argc == 2) {                                                             
+				devID = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", devID);                                      
+		cudaSetDevice(devID);                                                       
+
+
+		cudaError_t error;                                                          
+		//cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, devID);                        
+		if (error != cudaSuccess)                                                   
+		{                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+		}                                                                           
+		else                                                                        
+		{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}    
+
+
 
     printf("Reducing array of type %s\n\n", getReduceTypeString(datatype));
 

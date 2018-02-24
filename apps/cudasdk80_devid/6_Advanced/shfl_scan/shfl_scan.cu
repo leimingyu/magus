@@ -205,10 +205,11 @@ bool shuffle_simple_test(int argc, char **argv)
     int *d_data, *d_partial_sums;
     const int n_elements = 65536;
     int sz = sizeof(int)*n_elements;
-    int cuda_device = 0;
+    //int cuda_device = 0;
 
     printf("Starting shfl_scan\n");
 
+		/*
     // use command-line specified CUDA device, otherwise use device with highest Gflops/s
     cuda_device = findCudaDevice(argc, (const char **)argv);
 
@@ -227,6 +228,7 @@ bool shuffle_simple_test(int argc, char **argv)
         printf("> Waiving test.\n");
         exit(EXIT_WAIVED);
     }
+		*/
 
     checkCudaErrors(cudaMallocHost((void **)&h_data, sizeof(int)*n_elements));
     checkCudaErrors(cudaMallocHost((void **)&h_result, sizeof(int)*n_elements));
@@ -384,12 +386,36 @@ int main(int argc, char *argv[])
     printf("Starting shfl_scan\n");
 
     // use command-line specified CUDA device, otherwise use device with highest Gflops/s
-    cuda_device = findCudaDevice(argc, (const char **)argv);
+    //cuda_device = findCudaDevice(argc, (const char **)argv);
 
-    cudaDeviceProp deviceProp;
-    checkCudaErrors(cudaGetDevice(&cuda_device));
+		if(argc == 2) {                                                             
+				cuda_device = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", cuda_device);                                      
+		cudaSetDevice(cuda_device);                                                       
 
-    checkCudaErrors(cudaGetDeviceProperties(&deviceProp, cuda_device));
+
+		cudaError_t error;                                                          
+		cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, cuda_device);                        
+		if (error != cudaSuccess)                                                   
+		{                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+								cudaGetErrorString(error), error, __LINE__);
+		}                                                                           
+		else                                                                        
+		{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+								cuda_device, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}                                                                           
+
+
+
+    //cudaDeviceProp deviceProp;
+    //checkCudaErrors(cudaGetDevice(&cuda_device));
+
+    //checkCudaErrors(cudaGetDeviceProperties(&deviceProp, cuda_device));
 
     printf("> Detected Compute SM %d.%d hardware with %d multi-processors\n",
            deviceProp.major, deviceProp.minor, deviceProp.multiProcessorCount);

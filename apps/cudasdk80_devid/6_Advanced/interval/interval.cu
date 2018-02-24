@@ -42,7 +42,20 @@ int main(int argc,char *argv[])
     }
 
     // Pick the best GPU available, or if the developer selects one at the command line
-    int devID = findCudaDevice(argc, (const char **)argv);
+    //int devID = findCudaDevice(argc, (const char **)argv);
+
+		int devID = 0;                                                              
+		if(argc == 2) {                                                             
+				devID = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", devID);                                      
+		cudaSetDevice(devID);  
+
+
+
+
+
+
     cudaDeviceProp deviceProp;
     cudaGetDeviceProperties(&deviceProp, devID);
     printf("> GPU Device has Compute Capabilities SM %d.%d\n\n", deviceProp.major, deviceProp.minor);

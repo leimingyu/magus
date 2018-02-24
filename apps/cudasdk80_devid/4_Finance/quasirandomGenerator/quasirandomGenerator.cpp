@@ -63,15 +63,38 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    cudaDeviceProp deviceProp;
-    int dev = findCudaDevice(argc, (const char **)argv);
-    checkCudaErrors(cudaGetDeviceProperties(&deviceProp, dev));
+    //cudaDeviceProp deviceProp;
+    //int dev = findCudaDevice(argc, (const char **)argv);
 
-    if (((deviceProp.major << 4) + deviceProp.minor) < 0x20)
-    {
-        fprintf(stderr, "quasirandomGenerator requires Compute Capability of SM 2.0 or higher to run.\n");
-        exit(EXIT_WAIVED);
-    }
+		int dev = 0;                                                              
+		if(argc == 2) {                                                             
+				dev = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", dev);                                      
+		cudaSetDevice(dev);
+
+		cudaError_t error;                                                          
+		cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, dev);                        
+		if (error != cudaSuccess)                                                   
+		{                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+		}                                                                           
+		else                                                                        
+		{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", dev, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}                   
+
+
+
+    //checkCudaErrors(cudaGetDeviceProperties(&deviceProp, dev));
+
+    //if (((deviceProp.major << 4) + deviceProp.minor) < 0x20)
+    //{
+    //    fprintf(stderr, "quasirandomGenerator requires Compute Capability of SM 2.0 or higher to run.\n");
+    //    exit(EXIT_WAIVED);
+    //}
 
     sdkCreateTimer(&hTimer);
 

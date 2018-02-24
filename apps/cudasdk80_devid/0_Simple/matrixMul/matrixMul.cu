@@ -379,13 +379,14 @@ int main(int argc, char **argv)
     //if (checkCmdLineFlag(argc, (const char **)argv, "device"))
     //{
     //    devID = getCmdLineArgumentInt(argc, (const char **)argv, "device");
-    //    cudaSetDevice(devID);
     //}
+
 
 		if(argc == 2) {
 			devID = atoi(argv[1]);
 		}
-
+		printf("select device : %d\n", devID);
+    cudaSetDevice(devID);
 
     cudaError_t error;
     cudaDeviceProp deviceProp;

@@ -111,41 +111,62 @@ runTest(int argc, char **argv)
 
     char *s_fname = NULL, *r_gold_fname = NULL;
     char r_fname[256];
-    const char usage[] =
-    {
-        "\nUsage:\n"
-        "  dwtHaar1D --signal=<signal_file> --result=<result_file> --gold=<gold_file>\n\n"
-        "  <signal_file> Input file containing the signal\n"
-        "  <result_file> Output file storing the result of the wavelet decomposition\n"
-        "  <gold_file>   Input file containing the reference result of the wavelet decomposition\n"
-        "\nExample:\n"
-        "  ./dwtHaar1D\n"
-        "       --signal=signal.dat\n"
-        "       --result=result.dat\n"
-        "       --gold=regression.gold.dat\n"
-    };
+    //const char usage[] =
+    //{
+    //    "\nUsage:\n"
+    //    "  dwtHaar1D --signal=<signal_file> --result=<result_file> --gold=<gold_file>\n\n"
+    //    "  <signal_file> Input file containing the signal\n"
+    //    "  <result_file> Output file storing the result of the wavelet decomposition\n"
+    //    "  <gold_file>   Input file containing the reference result of the wavelet decomposition\n"
+    //    "\nExample:\n"
+    //    "  ./dwtHaar1D\n"
+    //    "       --signal=signal.dat\n"
+    //    "       --result=result.dat\n"
+    //    "       --gold=regression.gold.dat\n"
+    //};
 
     printf("%s Starting...\n\n", argv[0]);
 
-    // use command-line specified CUDA device, otherwise use device with highest Gflops/s
-    findCudaDevice(argc, (const char **)argv);
+    //// use command-line specified CUDA device, otherwise use device with highest Gflops/s
+    //findCudaDevice(argc, (const char **)argv);
+
+		int devID = 0;
+		if(argc == 2) {
+				devID = atoi(argv[1]);
+		}
+		printf("select device : %d\n", devID);
+		cudaSetDevice(devID);
+
+
+		cudaError_t error;
+		cudaDeviceProp deviceProp;
+
+		error = cudaGetDeviceProperties(&deviceProp, devID);
+		if (error != cudaSuccess)
+		{
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+		}
+		else
+		{
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}
 
     // file names, either specified as cmd line args or use default
     if (argc == 4)
     {
-        char *tmp_sfname, *tmp_rfname, *tmp_goldfname;
+        //char *tmp_sfname, *tmp_rfname, *tmp_goldfname;
 
-        if ((getCmdLineArgumentString(argc, (const char **)argv, "signal", &tmp_sfname) != true) ||
-            (getCmdLineArgumentString(argc, (const char **)argv, "result", &tmp_rfname) != true) ||
-            (getCmdLineArgumentString(argc, (const char **)argv, "gold", &tmp_goldfname) != true))
-        {
-            fprintf(stderr, "Invalid input syntax.\n%s", usage);
-            exit(EXIT_FAILURE);
-        }
+        //if ((getCmdLineArgumentString(argc, (const char **)argv, "signal", &tmp_sfname) != true) ||
+        //    (getCmdLineArgumentString(argc, (const char **)argv, "result", &tmp_rfname) != true) ||
+        //    (getCmdLineArgumentString(argc, (const char **)argv, "gold", &tmp_goldfname) != true))
+        //{
+        //    fprintf(stderr, "Invalid input syntax.\n%s", usage);
+        //    exit(EXIT_FAILURE);
+        //}
 
-        s_fname      = sdkFindFilePath(tmp_sfname,    argv[0]);
-        r_gold_fname = sdkFindFilePath(tmp_goldfname, argv[0]);
-        strcpy(r_fname, tmp_rfname);
+        //s_fname      = sdkFindFilePath(tmp_sfname,    argv[0]);
+        //r_gold_fname = sdkFindFilePath(tmp_goldfname, argv[0]);
+        //strcpy(r_fname, tmp_rfname);
     }
     else
     {
@@ -164,7 +185,7 @@ runTest(int argc, char **argv)
 
     if (s_fname == NULL)
     {
-        fprintf(stderr, "Cannot find the file containing the signal.\n%s", usage);
+        //fprintf(stderr, "Cannot find the file containing the signal.\n%s", usage);
 
         exit(EXIT_FAILURE);
     }
@@ -313,7 +334,7 @@ runTest(int argc, char **argv)
     // write file for regression test
     if (r_fname == NULL)
     {
-        fprintf(stderr, "Cannot write the output file storing the result of the wavelet decomposition.\n%s", usage);
+        //fprintf(stderr, "Cannot write the output file storing the result of the wavelet decomposition.\n%s", usage);
         exit(EXIT_FAILURE);
     }
 
@@ -332,7 +353,7 @@ runTest(int argc, char **argv)
 
     if (r_gold_fname == NULL)
     {
-        fprintf(stderr, "Cannot read the file containing the reference result of the wavelet decomposition.\n%s", usage);
+        //fprintf(stderr, "Cannot read the file containing the reference result of the wavelet decomposition.\n%s", usage);
 
         exit(EXIT_FAILURE);
     }

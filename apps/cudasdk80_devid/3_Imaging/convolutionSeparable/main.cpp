@@ -55,6 +55,34 @@ int main(int argc, char **argv)
     // start logs
     printf("[%s] - Starting...\n", argv[0]);
 
+		int devID = 0;
+		if(argc == 2) {
+				devID = atoi(argv[1]);
+		}
+		printf("select device : %d\n", devID);
+		cudaSetDevice(devID);
+
+
+		cudaError_t error;
+		cudaDeviceProp deviceProp;
+
+		error = cudaGetDeviceProperties(&deviceProp, devID);
+		if (error != cudaSuccess)
+		{
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+		}
+		else
+		{
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}
+
+
+
+
+
+
+
+
     float
     *h_Kernel,
     *h_Input,
@@ -75,7 +103,7 @@ int main(int argc, char **argv)
     StopWatchInterface *hTimer = NULL;
 
     //Use command-line specified CUDA device, otherwise use device with highest Gflops/s
-    findCudaDevice(argc, (const char **)argv);
+    //findCudaDevice(argc, (const char **)argv);
 
     sdkCreateTimer(&hTimer);
 
