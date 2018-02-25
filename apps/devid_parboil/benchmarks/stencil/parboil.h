@@ -85,6 +85,8 @@ struct pb_Parameters {
                                       * specified on the command line. */
   struct pb_DeviceParam *device; /* If not NULL, the device
                                       * specified on the command line. */
+
+	int devID;
 };
 
 /* Read command-line parameters.
