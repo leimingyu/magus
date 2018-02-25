@@ -1,2 +1,2 @@
 #!/bin/bash
-./3mm.exe
+./3mm.exe $1

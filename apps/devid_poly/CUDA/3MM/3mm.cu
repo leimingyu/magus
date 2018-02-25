@@ -257,6 +257,28 @@ void mm3Cuda(DATA_TYPE* A, DATA_TYPE* B, DATA_TYPE* C, DATA_TYPE* D, DATA_TYPE* 
 
 int main(int argc, char** argv)
 {
+		int devID = 0;                                                              
+		if(argc == 2) {                                                             
+				devID = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", devID);                                      
+		cudaSetDevice(devID);                                                       
+
+		cudaError_t error;                                                          
+		cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, devID);                        
+		if (error != cudaSuccess){                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+								cudaGetErrorString(error), error, __LINE__);
+		}else{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+								devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}          
+
+
+
+
 	double t_start, t_end;
 
 	DATA_TYPE* A;
@@ -279,7 +301,7 @@ int main(int argc, char** argv)
 
 	init_array(A, B, C, D);
 
-	GPU_argv_init();
+	//GPU_argv_init();
 
 	mm3Cuda(A, B, C, D, E, F, G, G_outputFromGpu);
 
