@@ -229,7 +229,7 @@ cutcpu.o:cutcpu.c
 #main.o:main.c parboil.c
 #	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
-cutcp: main.c parboil.c cutoff6overlap.cu  readatom.o output.o excl.o cutcpu.o 
+cutcp: main.cu parboil.c cutoff6overlap.cu  readatom.o output.o excl.o cutcpu.o 
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_LDFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
 
 clean:

@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <cuda.h> // added
 
 #include "parboil.h"
 #include "atom.h"
@@ -109,6 +110,24 @@ int main(int argc, char *argv[]) {
   if (parameters == NULL) {
     exit(1);
   }
+
+
+	printf("select device : %d\n", parameters->devID);                                      
+	cudaSetDevice(parameters->devID);                                                       
+
+	cudaError_t error;                                                          
+	cudaDeviceProp deviceProp;                                                  
+
+	error = cudaGetDeviceProperties(&deviceProp, parameters->devID);                        
+	if (error != cudaSuccess){                                                                           
+			printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+							cudaGetErrorString(error), error, __LINE__);
+	}else{                                                                           
+			printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+							parameters->devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+	}       
+
+
 
   /* Expect one input file */
   if (pb_Parameters_CountInputs(parameters) != 1) {
