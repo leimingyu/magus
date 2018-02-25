@@ -44,6 +44,26 @@ int main(int argc, char** argv) {
 	printf("This version maintained by Chris Rodrigues  ***********\n");
 	parameters = pb_ReadParameters(&argc, argv);
 
+	printf("select device : %d\n", parameters->devID);                                      
+	cudaSetDevice(parameters->devID);                                                       
+
+	cudaError_t error;                                                          
+	cudaDeviceProp deviceProp;                                                  
+
+	error = cudaGetDeviceProperties(&deviceProp, parameters->devID);                        
+	if (error != cudaSuccess){                                                                           
+			printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+							cudaGetErrorString(error), error, __LINE__);
+	}else{                                                                           
+			printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+							parameters->devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+	}        
+
+
+
+
+
+
 	pb_InitializeTimerSet(&timers);
 	pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE);
 	

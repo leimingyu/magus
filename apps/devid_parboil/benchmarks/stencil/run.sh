@@ -1,2 +1,2 @@
 #!/bin/bash
-./stencil -i ../../datasets/stencil/default/input/512x512x64x100.bin 512 512 64 100
+./stencil -i ../../datasets/stencil/small/input/128x128x32.bin 128 128 32 100 -d $1

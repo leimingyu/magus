@@ -383,6 +383,28 @@ parse_output_file(struct argparse *ap, struct pb_Parameters *params)
   return ARGPARSE_OK;
 }
 
+static result
+parse_devID(struct argparse *ap, struct pb_Parameters *params)
+{
+  if (is_end_of_arguments(ap))
+    {
+      report_parse_error("Expecting file name after '-d'\n");
+      return ARGPARSE_ERROR;
+    }
+
+  /* Replace the output file name */
+  //free(params->outFile);
+  params->devID = atoi(consume_argument(ap));
+
+  return ARGPARSE_OK;
+}
+
+
+
+
+
+
+
 /* Input files
  *
  * -i FILE,FILE,...
@@ -474,6 +496,7 @@ parse_platform(struct argparse *ap, struct pb_Parameters *params)
 static struct option options[] = {
   { 'o', NULL, &parse_output_file },
   { 'i', NULL, &parse_input_files },
+  { 'd', "devID", &parse_devID},
   { '-', NULL, &parse_end_options },
   { 0, "device", &parse_device },
   { 0, "platform", &parse_platform },

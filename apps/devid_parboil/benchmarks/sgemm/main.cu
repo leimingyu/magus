@@ -19,6 +19,8 @@
 #include <vector>
 #include <iostream>
 
+#include <cuda.h>
+
 #include "parboil.h"
 #include "sgemm_kernel.cu"
 
@@ -46,6 +48,25 @@ main (int argc, char *argv[]) {
   /* Read command line. Expect 3 inputs: A, B and B^T 
      in column-major layout*/
   params = pb_ReadParameters(&argc, argv);
+
+	printf("select device : %d\n", params->devID);                                      
+	cudaSetDevice(params->devID);                                                       
+
+	cudaError_t error;                                                          
+	cudaDeviceProp deviceProp;                                                  
+
+	error = cudaGetDeviceProperties(&deviceProp, params->devID);                        
+	if (error != cudaSuccess){                                                                           
+			printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+							cudaGetErrorString(error), error, __LINE__);
+	}else{                                                                           
+			printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+							params->devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+	}        
+
+
+
+
   if ((params->inpFiles[0] == NULL) 
       || (params->inpFiles[1] == NULL)
       || (params->inpFiles[2] == NULL)

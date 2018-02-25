@@ -57,6 +57,26 @@ int main(int argc, char** argv)
 
   pb_InitializeTimerSet(&timers);
   params = pb_ReadParameters(&argc, argv);
+
+
+	//added
+	printf("select device : %d\n", params->devID);
+	cudaSetDevice(params->devID);                                                       
+
+	cudaError_t error;                                                          
+	cudaDeviceProp deviceProp;                                                  
+
+	error = cudaGetDeviceProperties(&deviceProp, params->devID);                        
+	if (error != cudaSuccess){                                                                           
+			printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+							cudaGetErrorString(error), error, __LINE__);
+	}else{                                                                           
+			printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+							params->devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+	}       
+
+
+
   if ((params->inpFiles[0] == NULL) || (params->inpFiles[1] != NULL))
   {
     fprintf(stderr, "Expecting one input filename\n");

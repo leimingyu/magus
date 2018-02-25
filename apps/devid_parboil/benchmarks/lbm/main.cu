@@ -35,6 +35,21 @@ int main( int nArgs, char* arg[] ) {
 	struct pb_Parameters* params;
 	params = pb_ReadParameters(&nArgs, arg);
 
+	printf("select device : %d\n", params->devID);                                      
+	cudaSetDevice(params->devID);                                                       
+
+	cudaError_t error;                                                          
+	cudaDeviceProp deviceProp;                                                  
+
+	error = cudaGetDeviceProperties(&deviceProp, params->devID);                        
+	if (error != cudaSuccess){                                                                           
+			printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+							cudaGetErrorString(error), error, __LINE__);
+	}else{                                                                           
+			printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+							params->devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+	}       
+
         
 
 	static LBM_GridPtr TEMP_srcGrid;
