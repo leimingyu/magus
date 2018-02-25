@@ -19,6 +19,8 @@ struct pb_Parameters {
 				 * holding the input file(s) for the
 				 * computation.  The array and strings
 				 * are owned. */
+
+	int devID;
 };
 
 /* Read command-line parameters.
