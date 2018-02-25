@@ -1,2 +1,2 @@
 #!/bin/bash
-./syrk.exe
+./syrk.exe $1
