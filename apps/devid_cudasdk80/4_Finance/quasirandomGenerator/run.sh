@@ -1,2 +1,2 @@
 #!/bin/bash
-./quasirandomGenerator
+./quasirandomGenerator $1

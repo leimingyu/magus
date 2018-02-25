@@ -1,2 +1,2 @@
 #!/bin/bash
-./convolutionFFT2D
+./convolutionFFT2D $1

@@ -1,2 +1,2 @@
 #!/bin/bash
-./shfl_scan
+./shfl_scan $1

@@ -9,7 +9,6 @@ do
 		if [ "$currDir" != "others_" ]; then
 			cd $currDir
 			make clean
-			make
 			cd ..
 		fi
     fi

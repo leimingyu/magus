@@ -1,2 +1,2 @@
 #!/bin/bash
-./MC_EstimatePiQ
+./MC_EstimatePiQ $1

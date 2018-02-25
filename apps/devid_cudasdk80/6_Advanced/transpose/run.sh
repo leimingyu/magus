@@ -1,2 +1,2 @@
 #!/bin/bash
-./transpose
+./transpose $1

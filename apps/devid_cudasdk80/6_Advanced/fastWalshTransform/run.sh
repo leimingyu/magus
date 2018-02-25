@@ -1,2 +1,2 @@
 #!/bin/bash
-./fastWalshTransform
+./fastWalshTransform $1

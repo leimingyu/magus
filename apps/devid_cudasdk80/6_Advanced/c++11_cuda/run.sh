@@ -1,2 +1,2 @@
 #!/bin/bash
-./c++11_cuda
+./c++11_cuda $1

@@ -1,2 +1,2 @@
 #!/bin/bash
-./interval
+./interval $1

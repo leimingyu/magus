@@ -1,2 +1,2 @@
 #!/bin/bash
-./sortingNetworks
+./sortingNetworks $1

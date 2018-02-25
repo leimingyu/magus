@@ -1,2 +1,2 @@
 #!/bin/bash
-./segmentationTreeThrust
+./segmentationTreeThrust $1

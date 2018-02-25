@@ -1,2 +1,2 @@
 #!/bin/bash
-./lineOfSight
+./lineOfSight $1

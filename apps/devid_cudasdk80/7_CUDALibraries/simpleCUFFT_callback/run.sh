@@ -1,2 +1,2 @@
 #!/bin/bash
-./simpleCUFFT_callback
+./simpleCUFFT_callback $1

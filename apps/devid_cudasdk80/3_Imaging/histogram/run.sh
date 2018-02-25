@@ -1,2 +1,2 @@
 #!/bin/bash
-./histogram
+./histogram $1

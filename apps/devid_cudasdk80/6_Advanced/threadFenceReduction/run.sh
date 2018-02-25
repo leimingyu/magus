@@ -1,2 +1,2 @@
 #!/bin/bash
-./threadFenceReduction
+./threadFenceReduction $1

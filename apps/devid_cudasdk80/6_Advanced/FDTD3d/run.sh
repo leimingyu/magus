@@ -1,2 +1,2 @@
 #!/bin/bash
-./FDTD3d
+./FDTD3d $1

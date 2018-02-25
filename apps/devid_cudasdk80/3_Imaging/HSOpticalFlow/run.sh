@@ -1,2 +1,2 @@
 #!/bin/bash
-./HSOpticalFlow
+./HSOpticalFlow $1

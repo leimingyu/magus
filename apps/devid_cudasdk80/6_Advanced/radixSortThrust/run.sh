@@ -1,2 +1,2 @@
 #!/bin/bash
-./radixSortThrust
+./radixSortThrust $1

@@ -1,2 +1,2 @@
 #!/bin/bash
-./BlackScholes
+./BlackScholes $1

@@ -1,2 +1,2 @@
 #!/bin/bash
-./binomialOptions
+./binomialOptions $1

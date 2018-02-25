@@ -1,2 +1,2 @@
 #!/bin/bash
-./concurrentKernels
+./concurrentKernels $1

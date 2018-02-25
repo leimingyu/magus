@@ -1,2 +1,2 @@
 #!/bin/bash
-./dwtHaar1D
+./dwtHaar1D $1

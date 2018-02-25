@@ -1,2 +1,2 @@
 #!/bin/bash
-./reduction
+./reduction $1

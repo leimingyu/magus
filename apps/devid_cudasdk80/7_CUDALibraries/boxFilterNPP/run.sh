@@ -1,2 +1,2 @@
 #!/bin/bash
-./boxFilterNPP
+./boxFilterNPP $1

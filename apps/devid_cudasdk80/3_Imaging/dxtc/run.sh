@@ -1,2 +1,2 @@
 #!/bin/bash
-./dxtc
+./dxtc $1

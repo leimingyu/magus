@@ -1,2 +1,2 @@
 #!/bin/bash
-./MC_EstimatePiInlineP
+./MC_EstimatePiInlineP $1

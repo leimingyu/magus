@@ -1,2 +1,2 @@
 #!/bin/bash
-./convolutionTexture
+./convolutionTexture $1

@@ -1,2 +1,2 @@
 #!/bin/bash
-./MC_SingleAsianOptionP
+./MC_SingleAsianOptionP $1

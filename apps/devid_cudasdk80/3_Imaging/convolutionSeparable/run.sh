@@ -1,2 +1,2 @@
 #!/bin/bash
-./convolutionSeparable
+./convolutionSeparable $1
