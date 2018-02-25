@@ -1,2 +1,2 @@
 #!/bin/bash
-./covariance.exe
+./covariance.exe $1
