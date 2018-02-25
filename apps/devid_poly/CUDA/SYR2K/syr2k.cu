@@ -166,8 +166,31 @@ void syr2kCuda(DATA_TYPE* A, DATA_TYPE* B, DATA_TYPE* C, DATA_TYPE* C_outputFrom
 }
 
 
-int main()
+int main(int argc, char**argv)
 {
+		int devID = 0;                                                              
+		if(argc == 2) {                                                             
+				devID = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", devID);                                      
+		cudaSetDevice(devID);                                                       
+
+		cudaError_t error;                                                          
+		cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, devID);                        
+		if (error != cudaSuccess){                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+								cudaGetErrorString(error), error, __LINE__);
+		}else{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+								devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}           
+
+
+
+
+
 	double t_start, t_end;
 
 	DATA_TYPE* A;
@@ -182,7 +205,7 @@ int main()
 
 	init_arrays(A, B, C);
     
-	GPU_argv_init();
+	//GPU_argv_init();
 	syr2kCuda(A, B, C, C_outputFromGpu);
 	
 	t_start = rtclock();
