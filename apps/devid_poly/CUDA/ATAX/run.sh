@@ -1,2 +1,2 @@
 #!/bin/bash
-./atax.exe
+./atax.exe $1
