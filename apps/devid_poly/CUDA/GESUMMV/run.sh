@@ -1,2 +1,2 @@
 #!/bin/bash
-./gesummv.exe
+./gesummv.exe $1
