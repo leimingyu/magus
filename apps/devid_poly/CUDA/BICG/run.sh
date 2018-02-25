@@ -1,2 +1,2 @@
 #!/bin/bash
-./bicg.exe
+./bicg.exe $1
