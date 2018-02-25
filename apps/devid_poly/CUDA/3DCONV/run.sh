@@ -1,2 +1,2 @@
 #!/bin/bash
-./3DConvolution.exe
+./3DConvolution.exe $1
