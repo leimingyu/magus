@@ -216,8 +216,31 @@ void fdtdCuda(DATA_TYPE* _fict_, DATA_TYPE* ex, DATA_TYPE* ey, DATA_TYPE* hz, DA
 }
 
 
-int main()
+int main(int argc, char**argv)
 {
+		int devID = 0;                                                              
+		if(argc == 2) {                                                             
+				devID = atoi(argv[1]);                                                  
+		}                                                                           
+		printf("select device : %d\n", devID);                                      
+		cudaSetDevice(devID);                                                       
+
+		cudaError_t error;                                                          
+		cudaDeviceProp deviceProp;                                                  
+
+		error = cudaGetDeviceProperties(&deviceProp, devID);                        
+		if (error != cudaSuccess){                                                                           
+				printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+								cudaGetErrorString(error), error, __LINE__);
+		}else{                                                                           
+				printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+								devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+		}           
+
+
+
+
+
 	double t_start, t_end;
 
 	DATA_TYPE* _fict_;
@@ -234,7 +257,7 @@ int main()
 
 	init_arrays(_fict_, ex, ey, hz);
 
-	GPU_argv_init();
+	//GPU_argv_init();
 	fdtdCuda(_fict_, ex, ey, hz, hz_outputFromGpu);
 
 	t_start = rtclock();

@@ -1,2 +1,2 @@
 #!/bin/bash
-./fdtd2d.exe
+./fdtd2d.exe $1
