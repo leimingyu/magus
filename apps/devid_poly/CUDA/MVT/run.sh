@@ -1,2 +1,2 @@
 #!/bin/bash
-./mvt.exe
+./mvt.exe $1
