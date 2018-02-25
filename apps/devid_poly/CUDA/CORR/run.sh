@@ -1,2 +1,2 @@
 #!/bin/bash
-./correlation.exe
+./correlation.exe $1
