@@ -5,7 +5,8 @@ do
     if [ -d $currDir ]; then
 			if [ "$currDir" != "common" ];then
 				cd $currDir
-				make clean && make 
+				make clean 
+				make 
 				cd ..
 		fi
 	fi
