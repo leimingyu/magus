@@ -44,7 +44,7 @@ class cd:
         os.chdir(self.savedPath)
 
 
-
+'''
 def run_remote(app_dir, app_cmd, devid=0):
     rcuda_select_dev = "RCUDA_DEVICE_" + str(devid) + "=mcx1.coe.neu.edu:" + str(devid)
     cmd_str = rcuda_select_dev + " " + str(app_cmd)
@@ -63,7 +63,28 @@ def run_remote(app_dir, app_cmd, devid=0):
     endT = time.time()
     
     return [startT, endT]
+    '''
 
+def run_remote(app_dir, app_cmd, devid=0):
+    #rcuda_select_dev = "RCUDA_DEVICE_" + str(devid) + "=mcx1.coe.neu.edu:" + str(devid)
+    cmd_str = app_cmd + " " + str(devid)
+
+    #
+    #
+    #
+    startT = time.time()
+    with cd(app_dir):
+        #print os.getcwd()
+        print app_dir
+        print cmd_str
+        try:
+            check_call(cmd_str, stdout=DEVNULL, stderr=STDOUT, shell=True)
+        except CalledProcessError as e:
+            raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
+
+    endT = time.time()
+    
+    return [startT, endT]
 
 class Server(object):
     def __init__(self, hostname, port):
