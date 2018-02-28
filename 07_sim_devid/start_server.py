@@ -19,16 +19,6 @@ DEVNULL = open(os.devnull, 'wb', 0) # no std out
 magus_debug = False 
 
 
-def foo(n):
-    startT = time.time()
-    total = 0
-    for x in xrange(n):
-        total += math.factorial(x)
-    #return total
-    endT = time.time()
-    #print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
-    return [startT, endT]
-
 class cd:
     """
     Context manager for changing the current working directory
@@ -69,18 +59,15 @@ def run_remote(app_dir, app_cmd, devid=0):
     #rcuda_select_dev = "RCUDA_DEVICE_" + str(devid) + "=mcx1.coe.neu.edu:" + str(devid)
     cmd_str = app_cmd + " " + str(devid)
 
-    #
-    #
-    #
     startT = time.time()
     with cd(app_dir):
         #print os.getcwd()
-        print app_dir
-        print cmd_str
+        #print app_dir
+        #print cmd_str
         try:
             check_call(cmd_str, stdout=DEVNULL, stderr=STDOUT, shell=True)
         except CalledProcessError as e:
-            raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
+            raise RuntimeError("command '{}' return with error (code {}): {} ({})".format(e.cmd, e.returncode, e.output, app_dir))
 
     endT = time.time()
     
@@ -193,14 +180,8 @@ class Server(object):
                 #------------------------------------------------------------------
                 # 3) work on the job 
                 #------------------------------------------------------------------
-                #foo_input = int(data) * 2000
-                #[startT, endT] = foo(1)
-
-                #
-                # run app to rcuda
-                #
                 [startT, endT]= run_remote(app_dir = app_dir, app_cmd = app_cmd, devid = target_gpu) 
-                print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
+                #print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
 
 
 
