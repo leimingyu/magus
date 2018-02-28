@@ -107,7 +107,7 @@ class Server(object):
                 # sort the dd in ascending order
                 sorted_stat = sorted(GpuStat_dd.items(), key=operator.itemgetter(1))
                 #print sorted_stat
-                target_gpu = int(sorted_stat[0][0]) # the least loaded gpu
+                target_dev = int(sorted_stat[0][0]) # the least loaded gpu
 
         else:
             self.logger.debug("Unknown scheduling scheme!")
