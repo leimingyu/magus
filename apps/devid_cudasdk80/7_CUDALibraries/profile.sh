@@ -9,7 +9,7 @@ do
 				#make 
 				./profile-this.sh
 				mv metrics_*.csv ../../metrics/
-				mv traces_*.csv ../../metrics/
+				mv traces_*.csv ../../traces/
 				cd ..
 		fi
 	fi
