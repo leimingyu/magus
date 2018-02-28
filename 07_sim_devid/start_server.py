@@ -95,7 +95,7 @@ class Server(object):
         #--------------------------------
         with self.lock:
             print("\nGpuID\tActiveJobs")
-            for key, value in GpuStat_dd.iteritems():
+            for key, value in dict(GpuStat_dd).iteritems():
                 print("{}\t{}".format(key, value))
 
         
@@ -308,9 +308,13 @@ class Server(object):
         #       ...
         #----------------------------------------------------------------------
         GpuStat_dd = self.manager.dict()
-        for i in xrange(self.gpuNum):
-            GpuStat_dd[i] = i * 2
+        #print type(GpuStat_dd)
 
+        for i in xrange(self.gpuNum):
+            GpuStat_dd[i] = 0 
+
+        ##for key, value in dict(GpuStat_dd).iteritems():
+        ##    print key, value
 
         #self.logger.debug("%r ", type(gpuTable))
         #self.logger.debug("%r ", gpuTable.dtype)
