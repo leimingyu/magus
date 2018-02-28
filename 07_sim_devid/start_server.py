@@ -93,18 +93,16 @@ class Server(object):
         #--------------------------------
         # check current GPU Node Status
         #--------------------------------
-        #with self.lock:
-        #    print("\nGpuID\tActiveJobs")
-        #    for gid in xrange(self.gpuNum):
-        #        print("{}\t{}".format(gid, GpuNodeStatus[gid, 0]))
-        #    print('\n')
+        with self.lock:
+            print("\nGpuID\tActiveJobs")
+            for key, value in GpuStat_dd.iteritems():
+                print("{}\t{}".format(key, value))
 
         
         if scheme == 'rr': # round-robin
             target_dev = jobID % self.gpuNum
 
         elif scheme == 'll': # least load
-            # find the least loaded gpu node
             with self.lock:
                 # sort the dd in ascending order
                 sorted_stat = sorted(GpuStat_dd.items(), key=operator.itemgetter(1))
@@ -173,7 +171,7 @@ class Server(object):
                 # 2) Scheduler
                 #--------------------------------------------------------------
                 target_gpu = self.scheduler(jobID, GpuStat_dd, scheme='ll')
-                self.logger.debug("Target GPU-%r ", target_gpu)
+                self.logger.debug("TargetGPU-%r", target_gpu)
 
                 #-----------------------------------------
                 # 2) update gpu job table
