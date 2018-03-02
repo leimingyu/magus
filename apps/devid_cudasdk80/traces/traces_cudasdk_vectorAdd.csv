@@ -1,0 +1,9 @@
+==19472== NVPROF is profiling process 19472, command: ./vectorAdd 0
+==19472== Profiling application: ./vectorAdd 0
+==19472== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,us,,,,,,,,B,B,KB,MB/s,,,,
+611.996748,511.803000,,,,,,,,,,195.312500,372.672421,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+612.534600,516.604000,,,,,,,,,,195.312500,369.209032,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+613.055684,2.208000,196,1,1,256,1,1,8,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","vectorAdd(float const *, float const *, float*, int) [1168]"
+613.060036,467.481000,,,,,,,,,,195.312500,408.005594,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

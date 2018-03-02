@@ -1,0 +1,12 @@
+==7236== NVPROF is profiling process 7236, command: ./dwtHaar1D 0
+==7236== Profiling application: ./dwtHaar1D 0
+==7236== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,us,,,,,,,,B,KB,KB,GB/s,,,,
+577.963742,3.233000,,,,,,,,,,16.000000,4.719700,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+577.973375,1.120000,4,1,1,512,1,1,8,0,0.000000,,,"GeForce GTX 1080 Ti (0)","1","7","initValue(float*, float) [1165]"
+577.975935,2.464000,4,1,1,512,1,1,17,0,4.250000,,,"GeForce GTX 1080 Ti (0)","1","7","dwtHaar1D(float*, float*, float*, unsigned int, unsigned int, int) [1173]"
+577.982207,1.440000,,,,,,,,,,0.015625,0.010348,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoD]"
+577.984992,1.312000,1,1,1,2,1,1,17,0,0.015625,,,"GeForce GTX 1080 Ti (0)","1","7","dwtHaar1D(float*, float*, float*, unsigned int, unsigned int, int) [1182]"
+577.987616,0.896000,,,,,,,,,,0.003906,0.004158,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoD]"
+577.990592,28.225000,,,,,,,,,,16.000000,0.540613,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

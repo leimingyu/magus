@@ -1,0 +1,12 @@
+==13480== NVPROF is profiling process 13480, command: ./gesummv.exe 0
+==13480== Profiling application: ./gesummv.exe 0
+==13480== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+s,ms,,,,,,,,B,B,MB,GB/s,,,,
+0.712467,172.142007,,,,,,,,,,64.000000,0.363072,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+0.884702,172.106517,,,,,,,,,,64.000000,0.363147,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.056858,0.002016,,,,,,,,,,0.015625,7.568844,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.056909,0.002016,,,,,,,,,,0.015625,7.568844,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.056959,0.003104,,,,,,,,,,0.015625,4.915847,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.056964,1.593809,16,1,1,256,1,1,23,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","gesummv_kernel(float*, float*, float*, float*, float*) [1174]"
+1.058569,0.028417,,,,,,,,,,0.015625,0.536960,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

@@ -1,0 +1,8 @@
+==8210== NVPROF is profiling process 8210, command: ./binomialOptions 0
+==8210== Profiling application: ./binomialOptions 0
+==8210== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,KB,GB/s,,,,
+636.702836,0.006272,,,,,,,,,,20.000000,3.041053,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+636.711316,1.339555,1024,1,1,128,1,1,32,516,0,,,"GeForce GTX 1080 Ti (0)","1","7","binomialOptionsKernel(void) [1161]"
+638.052887,0.000544,,,,,,,,,,4.000000,7.012311,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
