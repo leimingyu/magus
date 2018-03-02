@@ -22,8 +22,7 @@ SMS ?= 30 35 50 52 60
 $(foreach sm,$(SMS),$(eval CUDA_FLAG += -gencode arch=compute_$(sm),code=sm_$(sm)))
 
 
-C_C = gcc
-CUD_C = $(CUDA_DIR)/bin/nvcc
+C_C = $(CUDA_DIR)/bin/nvcc -ccbin g++
 
 
 b+tree.out:	./main.o \
@@ -48,7 +47,7 @@ b+tree.out:	./main.o \
 main.o:	./common.h \
 		./main.h \
 		./main.c
-	$(C_C)	$(KERNEL_DIM) ./main.c \
+	$(C_C)	$(KERNEL_DIM) -I$(CUDA_DIR)/include -I$(CUDA_DIR)/samples/common/inc ./main.c \
 			-c \
 			-o ./main.o \
 			-O3
@@ -57,7 +56,7 @@ main.o:	./common.h \
 ./kernel/kernel_gpu_cuda_wrapper.o:	./common.h \
 									./kernel/kernel_gpu_cuda_wrapper.h \
 									./kernel/kernel_gpu_cuda_wrapper.cu
-	$(CUD_C) $(KERNEL_DIM) ./kernel/kernel_gpu_cuda_wrapper.cu \
+	$(C_C) $(KERNEL_DIM) ./kernel/kernel_gpu_cuda_wrapper.cu \
 				-c \
 				-o ./kernel/kernel_gpu_cuda_wrapper.o \
 				-O3 \
@@ -66,7 +65,7 @@ main.o:	./common.h \
 ./kernel/kernel_gpu_cuda_wrapper_2.o:	./common.h \
 										./kernel/kernel_gpu_cuda_wrapper_2.h \
 										./kernel/kernel_gpu_cuda_wrapper_2.cu
-	$(CUD_C) $(KERNEL_DIM) ./kernel/kernel_gpu_cuda_wrapper_2.cu \
+	$(C_C) $(KERNEL_DIM) ./kernel/kernel_gpu_cuda_wrapper_2.cu \
 				-c \
 				-o ./kernel/kernel_gpu_cuda_wrapper_2.o \
 				-O3 \
@@ -92,7 +91,7 @@ main.o:	./common.h \
 ./util/cuda/cuda.o:	./common.h \
 					./util/cuda/cuda.h \
 					./util/cuda/cuda.cu
-	$(CUD_C)	./util/cuda/cuda.cu \
+	$(C_C)	./util/cuda/cuda.cu \
 				-c \
 				-o ./util/cuda/cuda.o \
 				-O3 \

@@ -62,6 +62,12 @@
 // #include <sys/time.h>							// (in directory known to compiler)			needed by ???
 #include <math.h>									// (in directory known to compiler)			needed by log, pow
 #include <string.h>									// (in directory known to compiler)			needed by memset
+#include <sys/time.h>
+
+#include <cuda_runtime.h>
+//#include <helper_cuda.h>
+
+
 
 //======================================================================================================================================================150
 //	COMMON
@@ -1860,9 +1866,28 @@ main(	int argc,
 	// set GPU
 	// ------------------------------------------------------------60
 
-	int device = 0;
-	cudaSetDevice(device);
-	printf("Selecting device %d\n", device);
+
+	int devID = 0;                                                              
+	if(argc == 6) {                                                             
+			devID = atoi(argv[5]);                                                  
+	}                                                                           
+	printf("select device : %d\n", devID);                                      
+	cudaSetDevice(devID);                                                       
+
+	/*
+	cudaError_t error;                                                          
+	cudaDeviceProp deviceProp;                                                  
+
+	error = cudaGetDeviceProperties(&deviceProp, devID);                        
+	if (error != cudaSuccess){                                                                           
+			printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+							cudaGetErrorString(error), error, __LINE__);
+	}else{                                                                           
+			printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+							devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+	}           
+	*/
+
 
 	// ------------------------------------------------------------60
 	// read inputs
@@ -1952,8 +1977,11 @@ main(	int argc,
 
 
      pFile = fopen (output,"w+");
-     if (pFile==NULL) 
-       fputs ("Fail to open %s !\n",output);
+     if (pFile==NULL) {
+       //fputs ("Fail to open %s !\n",output);
+       printf("Fail to open %s !\n",output);
+		 } 
+
      fprintf(pFile,"******starting******\n");
      fclose(pFile);
 
@@ -2219,7 +2247,8 @@ main(	int argc,
 				pFile = fopen (output,"aw+");
 				if (pFile==NULL)
 				  {
-				    fputs ("Fail to open %s !\n",output);
+				    //fputs ("Fail to open %s !\n",output);
+				    printf("Fail to open %s !\n",output);
 				  }
 				
 				fprintf(pFile,"\n ******command: k count=%d \n",count);
@@ -2366,7 +2395,8 @@ main(	int argc,
 				pFile = fopen (output,"aw+");
 				if (pFile==NULL)
 				  {
-				    fputs ("Fail to open %s !\n",output);
+				    //fputs ("Fail to open %s !\n",output);
+				    printf("Fail to open %s !\n",output);
 				  }
 
 				fprintf(pFile,"\n******command: j count=%d, rSize=%d \n",count, rSize);				
