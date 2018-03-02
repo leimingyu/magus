@@ -1,0 +1,9 @@
+==15187== NVPROF is profiling process 15187, command: ./lbm 1 -i ../../datasets/lbm/short/input/120_120_150_ldc.of -o out -d 0
+==15187== Profiling application: ./lbm 1 -i ../../datasets/lbm/short/input/120_120_150_ldc.of -o out -d 0
+==15187== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+s,ms,,,,,,,,B,B,MB,MB/s,,,,
+1.040962,498.286288,,,,,,,,,,185.156250,371.586082,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.539338,498.126504,,,,,,,,,,185.156250,371.705276,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+2.180694,1.092085,120,150,1,120,1,1,40,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","performStreamCollide_kernel(float*, float*) [1169]"
+2.194303,464.268289,,,,,,,,,,185.156250,398.813045,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
