@@ -1,0 +1,14 @@
+==13344== NVPROF is profiling process 13344, command: ./simpleCUFFT_callback 0
+==13344== Profiling application: ./simpleCUFFT_callback 0
+==13344== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+s,us,,,,,,,,B,KB,B,GB/s,,,,
+1.240450,1.056000,,,,,,,,,,448,0.395107,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.240464,0.864000,,,,,,,,,,448,0.482908,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.243461,0.832000,,,,,,,,,,16,0.017910,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.243468,0.384000,,,,,,,,,,8,0.019403,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
+1.243517,5.793000,1,1,1,8,8,1,40,0,3.500000,,,"GeForce GTX 1080 Ti (0)","1","7","void composite_2way_fft<unsigned int=56, unsigned int=1, unsigned int=7, unsigned int=8, unsigned int=0, unsigned int=0, unsigned int=2, unsigned int=8, unsigned int=1, unsigned int=0, unsigned int, float>(kernel_arguments_t<unsigned int>) [1255]"
+1.243525,2.464000,1,1,1,8,8,1,40,0,3.500000,,,"GeForce GTX 1080 Ti (0)","1","7","void composite_2way_fft<unsigned int=56, unsigned int=1, unsigned int=7, unsigned int=8, unsigned int=0, unsigned int=0, unsigned int=2, unsigned int=8, unsigned int=1, unsigned int=0, unsigned int, float>(kernel_arguments_t<unsigned int>) [1257]"
+1.243542,9.120000,1,1,1,256,1,1,69,0,7.000000,,,"GeForce GTX 1080 Ti (0)","1","7","void spRadix0007A::kernel1MemCallback<unsigned int, float, fftDirection_t=1, unsigned int=256, unsigned int=3, CONSTANT, ALL, WRITEBACK>(kernel_parameters_t<callback_radix1_t, unsigned int, float>) [1260]"
+1.243555,4.352000,1,1,1,256,1,1,48,0,0.000000,,,"GeForce GTX 1080 Ti (0)","1","7","void spRadix0008A::kernel1Mem<unsigned int, float, fftDirection_t=1, unsigned int=256, unsigned int=4, CONSTANT, ALL, WRITEBACK>(kernel_parameters_t<fft_mem_radix1_t, unsigned int, float>) [1263]"
+1.243562,0.320000,,,,,,,,,,448,1.303852,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

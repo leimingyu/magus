@@ -1,0 +1,18 @@
+==13607== NVPROF is profiling process 13607, command: ./shfl_scan 0
+==13607== Profiling application: ./shfl_scan 0
+==13607== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,KB,B,MB,GB/s,,,,
+595.949747,0.000599,,,,,,,,,,0.000977,1.592111,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memset]"
+596.826109,0.672451,,,,,,,,,,0.250000,0.363061,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+597.528994,0.003360,256,1,1,256,1,1,16,0.000000,32,,,"GeForce GTX 1080 Ti (0)","1","7","shfl_scan_test(int*, int, int*) [1172]"
+597.539010,0.001344,1,1,1,256,1,1,16,0.000000,32,,,"GeForce GTX 1080 Ti (0)","1","7","shfl_scan_test(int*, int, int*) [1177]"
+597.544195,0.001856,255,1,1,256,1,1,8,0.015625,0,,,"GeForce GTX 1080 Ti (0)","1","7","uniform_add(int*, int*, int) [1182]"
+597.559235,0.615457,,,,,,,,,,0.250000,0.396682,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
+598.195621,0.001056,,,,,,,,,,0.000977,0.903101,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
+606.369172,0.043586,,,,,,,,,,7.910156,177.230348,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memset]"
+606.414647,0.043106,,,,,,,,,,7.910156,179.203869,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memset]"
+606.461049,0.032994,1080,1,1,120,1,1,32,0.500000,0,,,"GeForce GTX 1080 Ti (0)","1","7","shfl_intimage_rows(uint4*, uint4*) [1204]"
+606.514300,19.739025,,,,,,,,,,7.910156,0.391345,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
+627.678232,0.084357,60,1,1,32,8,1,25,1.125000,0,,,"GeForce GTX 1080 Ti (0)","1","7","shfl_vertical_shfl(unsigned int*, int, int) [1214]"
+627.777534,19.775475,,,,,,,,,,7.910156,0.390623,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

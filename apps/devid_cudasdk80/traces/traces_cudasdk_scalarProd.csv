@@ -1,0 +1,9 @@
+==6468== NVPROF is profiling process 6468, command: ./scalarProd 0
+==6468== Profiling application: ./scalarProd 0
+==6468== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,KB,B,MB,GB/s,,,,
+787.685854,10.768948,,,,,,,,,,4.000000,0.362733,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+798.538230,10.759667,,,,,,,,,,4.000000,0.363046,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+809.334123,0.026050,128,1,1,256,1,1,24,4.000000,0,,,"GeForce GTX 1080 Ti (0)","1","7","scalarProdGPU(float*, float*, float*, int, int) [1170]"
+809.380782,0.000640,,,,,,,,,,0.000977,1.490116,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
