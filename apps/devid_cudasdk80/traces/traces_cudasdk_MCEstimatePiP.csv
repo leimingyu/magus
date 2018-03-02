@@ -1,0 +1,9 @@
+==12585== NVPROF is profiling process 12585, command: ./MC_EstimatePiP 0
+==12585== Profiling application: ./MC_EstimatePiP 0
+==12585== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,KB,GB/s,,,,
+612.488714,2.298169,64,1,1,64,1,1,48,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","generate_seed_pseudo(unsigned __int64, unsigned __int64, unsigned __int64, curandOrdering, curandStateXORWOW*, unsigned int*) [2260]"
+615.130069,0.004800,64,1,1,64,1,1,29,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","void gen_sequenced<curandStateXORWOW, float, int, __operator_&__(float curand_uniform_noargs<curandStateXORWOW>(curandStateXORWOW*, int))>(curandStateXORWOW*, float*, unsigned long, unsigned long, int) [2271]"
+615.443333,0.003265,391,1,1,128,1,1,16,0,512,,,"GeForce GTX 1080 Ti (0)","1","7","void computeValue<float>(unsigned int*, float const *, unsigned int) [2281]"
+615.452966,0.000416,,,,,,,,,,1.527344,3.501415,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

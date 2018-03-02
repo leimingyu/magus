@@ -1,0 +1,8 @@
+==12218== NVPROF is profiling process 12218, command: ./boxFilterNPP 0
+==12218== Profiling application: ./boxFilterNPP 0
+==12218== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,us,,,,,,,,B,B,KB,MB/s,,,,
+787.586628,676.036000,,,,,,,,,,256.000000,369.802791,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+788.266760,12.448000,2,64,1,32,2,1,64,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","void ForEachTupleByteQuad<unsigned char, int=1, TupleByteQuadFunctor<unsigned char, int=1, FilterBoxReplicateBorder5x5QuadNew<unsigned char, int=1>>>(Tuple8<unsigned char, int=1>*, int, NppiSize, unsigned char) [1171]"
+788.281193,615.424000,,,,,,,,,,256.000000,406.224001,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
