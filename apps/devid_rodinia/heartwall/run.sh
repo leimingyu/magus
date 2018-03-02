@@ -1,2 +1,2 @@
 #!/bin/bash
-./heartwall ../data/heartwall/test.avi 20
+./heartwall ../data/heartwall/test.avi 20 $1

@@ -45,7 +45,7 @@ void write_data(	char* filename,
 
 	FILE* fid;
 	int i,j;
-	char c;
+	//char c;
 
 	//================================================================================80
 	//	OPEN FILE FOR READING
@@ -68,7 +68,7 @@ void write_data(	char* filename,
 	for(j=0; j<frames_processed;j++)
 	{
 		fprintf(fid, "\n---Frame %d---",j);
-		fprintf(fid, "\n--endo--\n",j);
+		fprintf(fid, "\n---End Frame %d---",j);
 		for(i=0; i<endoPoints; i++){
 			fprintf(fid, "%d\t", input_a[j+i*frameNo]);
 		}
@@ -77,7 +77,10 @@ void write_data(	char* filename,
 			// if(input_b[j*size+i] > 2000) input_b[j*size+i]=0;
 			fprintf(fid, "%d\t", input_b[j+i*frameNo]);
 		}
-		fprintf(fid, "\n--epi--\n",j);
+
+		//fprintf(fid, "\n--epi--\n",j);
+		fprintf(fid, "\n--epi--\n");
+
 		for(i=0; i<epiPoints; i++){
 			//if(input_2a[j*size_2+i] > 2000) input_2a[j*size_2+i]=0;
 			fprintf(fid, "%d\t", input_2a[j+i*frameNo]);
@@ -114,10 +117,12 @@ int main(int argc, char *argv []){
 	avi_t* frames;
 	fp* frame;
 
+	/*
 	if(argc!=3){
 		printf("ERROR: usage: heartwall <inputfile> <num of frames>\n");
 		exit(1);
 	}
+	*/
 
 	// open movie file
 	video_file_name = argv[1];
@@ -126,6 +131,14 @@ int main(int argc, char *argv []){
 		AVI_print_error((char *) "Error with AVI_open_input_file");
 		return -1;
 	}
+
+
+
+
+
+
+
+
 
 	// common
 	common.no_frames = AVI_video_frames(frames);
@@ -144,6 +157,33 @@ int main(int argc, char *argv []){
 		printf("ERROR: %d is an incorrect number of frames specified, select in the range of 0-%d\n", frames_processed, common.no_frames);
 		return 0;
 	}
+
+
+
+	// devid
+	int devID = 0;                                                              
+	if(argc == 4) {                                                             
+			devID = atoi(argv[3]);                                                  
+	}                                                                           
+	printf("select device : %d\n", devID);                                      
+	cudaSetDevice(devID);                                                       
+
+	cudaError_t error;                                                          
+	cudaDeviceProp deviceProp;                                                  
+
+	error = cudaGetDeviceProperties(&deviceProp, devID);                        
+	if (error != cudaSuccess){                                                                           
+			printf("cudaGetDeviceProperties returned error %s (code %d), line(%d)\n", 
+							cudaGetErrorString(error), error, __LINE__);
+	}else{                                                                           
+			printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", 
+							devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+	}           
+                                                                        
+	
+
+
+
 
 
 	//	HARDCODED INPUTS FROM MATLAB
