@@ -1,0 +1,21 @@
+==15065== NVPROF is profiling process 15065, command: ./cutcp -i ../../datasets/cutcp/small/input/watbox.sl40.pqr -o out_small -d 0
+==15065== Profiling application: ./cutcp -i ../../datasets/cutcp/small/input/watbox.sl40.pqr -o out_small -d 0
+==15065== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,KB,B,MB,GB/s,,,,
+618.117549,0.015809,,,,,,,,,,2.599609,160.584542,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memset]"
+618.209394,1.611953,,,,,,,,,,0.599731,0.363333,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+619.829060,0.000864,,,,,,,,,,0.000004,0.004312,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+619.845572,0.001120,,,,,,,,,,0.003834,3.342783,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+619.879046,0.261613,11,11,1,8,2,8,29,4.019531,0,,,"GeForce GTX 1080 Ti (0)","1","7","cuda_cutoff_potential_lattice6overlap(int, int, float4*, float, float, float, float*, int) [1180]"
+620.142035,0.326001,11,11,1,8,2,8,29,4.019531,0,,,"GeForce GTX 1080 Ti (0)","1","7","cuda_cutoff_potential_lattice6overlap(int, int, float4*, float, float, float, float*, int) [1190]"
+620.469380,0.383091,11,11,1,8,2,8,29,4.019531,0,,,"GeForce GTX 1080 Ti (0)","1","7","cuda_cutoff_potential_lattice6overlap(int, int, float4*, float, float, float, float*, int) [1200]"
+620.853815,0.434390,11,11,1,8,2,8,29,4.019531,0,,,"GeForce GTX 1080 Ti (0)","1","7","cuda_cutoff_potential_lattice6overlap(int, int, float4*, float, float, float, float*, int) [1210]"
+621.289581,0.444503,11,11,1,8,2,8,29,4.019531,0,,,"GeForce GTX 1080 Ti (0)","1","7","cuda_cutoff_potential_lattice6overlap(int, int, float4*, float, float, float, float*, int) [1220]"
+621.735396,0.442582,11,11,1,8,2,8,29,4.019531,0,,,"GeForce GTX 1080 Ti (0)","1","7","cuda_cutoff_potential_lattice6overlap(int, int, float4*, float, float, float, float*, int) [1230]"
+622.179322,0.440118,11,11,1,8,2,8,29,4.019531,0,,,"GeForce GTX 1080 Ti (0)","1","7","cuda_cutoff_potential_lattice6overlap(int, int, float4*, float, float, float, float*, int) [1240]"
+622.620784,0.393748,11,11,1,8,2,8,29,4.019531,0,,,"GeForce GTX 1080 Ti (0)","1","7","cuda_cutoff_potential_lattice6overlap(int, int, float4*, float, float, float, float*, int) [1250]"
+623.015876,0.333713,11,11,1,8,2,8,29,4.019531,0,,,"GeForce GTX 1080 Ti (0)","1","7","cuda_cutoff_potential_lattice6overlap(int, int, float4*, float, float, float, float*, int) [1260]"
+623.350965,0.271886,11,11,1,8,2,8,29,4.019531,0,,,"GeForce GTX 1080 Ti (0)","1","7","cuda_cutoff_potential_lattice6overlap(int, int, float4*, float, float, float, float*, int) [1270]"
+623.624259,0.206826,11,11,1,8,2,8,29,4.019531,0,,,"GeForce GTX 1080 Ti (0)","1","7","cuda_cutoff_potential_lattice6overlap(int, int, float4*, float, float, float, float*, int) [1280]"
+679.134671,6.464262,,,,,,,,,,2.599609,0.392726,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
