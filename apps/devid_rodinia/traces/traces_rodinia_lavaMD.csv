@@ -1,0 +1,11 @@
+==22525== NVPROF is profiling process 22525, command: ./lavaMD -boxes1d 10 -d 0
+==22525== Profiling application: ./lavaMD -boxes1d 10 -d 0
+==22525== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,KB,B,MB,MB/s,,,,
+611.252243,1.681015,,,,,,,,,,0.625610,372.162266,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+613.023247,8.209640,,,,,,,,,,3.051758,371.728579,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+621.302043,2.051370,,,,,,,,,,0.762939,371.917037,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+623.443050,8.211369,,,,,,,,,,3.051758,371.650307,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+631.659571,46.173333,1000,1,1,128,1,1,48,7.031250,0,,,"GeForce GTX 1080 Ti (0)","1","13","kernel_gpu_cuda(par_str, dim_str, box_str*, FOUR_VECTOR*, double*, FOUR_VECTOR*) [1175]"
+677.845257,7.644492,,,,,,,,,,3.051758,399.210021,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
