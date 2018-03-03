@@ -66,7 +66,7 @@ void ParseCommandLine(int argc, char ** argv)
 		int ch;
 		optarg = NULL;
 
-		while(!errflg && ((ch = getopt (argc, argv, "aCchql:d:t:s:brcLM")) != EOF))
+		while(!errflg && ((ch = getopt (argc, argv, "aCchqlG:d:t:s:brcLM")) != EOF))
 		{
 				switch  (ch)
 				{
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
 		ParseCommandLine(argc, argv);
 
 		// 
-		printf("select device : %d\n", gpuID);
+		printf("\n\n=>select device : %d\n\n", gpuID);
 		cudaSetDevice(gpuID);                                                       
 
 		/*
