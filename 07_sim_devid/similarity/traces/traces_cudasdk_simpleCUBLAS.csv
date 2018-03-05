@@ -1,0 +1,11 @@
+==12994== NVPROF is profiling process 12994, command: ./simpleCUBLAS 0
+==12994== Profiling application: ./simpleCUBLAS 0
+==12994== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+s,us,,,,,,,,KB,B,KB,MB/s,,,,
+1.050990,1.088000,,,,,,,,,,0.109375,98.172356,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.055437,776.167000,,,,,,,,,,295.410156,371.680941,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.056231,776.904000,,,,,,,,,,295.410156,371.328350,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.057028,776.584000,,,,,,,,,,295.410156,371.481359,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.109845,23.010000,3,5,1,128,1,1,120,12.250000,0,,,"GeForce GTX 1080 Ti (0)","1","7","maxwell_sgemm_128x64_raggedMn_nn [2305]"
+1.109869,697.763000,,,,,,,,,,295.410156,413.444795,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

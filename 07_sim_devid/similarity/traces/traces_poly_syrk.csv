@@ -1,0 +1,9 @@
+==15948== NVPROF is profiling process 15948, command: ./syrk.exe 0
+==15948== Profiling application: ./syrk.exe 0
+==15948== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+s,ms,,,,,,,,B,B,MB,MB/s,,,,
+1.235737,10.758166,,,,,,,,,,4.000000,371.810585,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.246595,10.761815,,,,,,,,,,4.000000,371.684516,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.257361,29.696194,32,128,1,32,8,1,28,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","syrk_kernel(float, float, float*, float*) [1167]"
+1.287081,9.868522,,,,,,,,,,4.000000,405.329186,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

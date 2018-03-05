@@ -1,0 +1,10 @@
+==13356== NVPROF is profiling process 13356, command: ./gemm.exe 0
+==13356== Profiling application: ./gemm.exe 0
+==13356== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,MB,MB/s,,,,
+607.207473,2.691562,,,,,,,,,,1.000000,371.531474,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+609.988767,2.687914,,,,,,,,,,1.000000,372.035712,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+612.767950,2.685705,,,,,,,,,,1.000000,372.341712,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+615.458167,0.888814,16,64,1,32,8,1,18,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","gemm_kernel(float*, float*, float*) [1168]"
+616.370246,2.494911,,,,,,,,,,1.000000,400.815901,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

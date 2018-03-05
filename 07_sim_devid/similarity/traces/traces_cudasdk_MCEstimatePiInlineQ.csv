@@ -1,0 +1,9 @@
+==12417== NVPROF is profiling process 12417, command: ./MC_EstimatePiInlineQ 0
+==12417== Profiling application: ./MC_EstimatePiInlineQ 0
+==12417== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,KB,GB/s,,,,
+594.649117,0.001056,,,,,,,,,,0.250000,0.225775,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+594.670527,1.659255,391,1,1,128,1,1,20,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","void initRNG<curandStateSobol32, unsigned int[32]>(curandStateSobol32*, unsigned int[32]*, unsigned int) [1171]"
+596.331574,0.298352,391,1,1,128,1,1,32,0,512,,,"GeForce GTX 1080 Ti (0)","1","7","void computeValue<float, curandStateSobol32>(unsigned int*, curandStateSobol32*, unsigned int) [1176]"
+596.631910,0.000480,,,,,,,,,,1.527344,3.034559,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

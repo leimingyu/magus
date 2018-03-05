@@ -1,0 +1,9 @@
+==12715== NVPROF is profiling process 12715, command: ./MC_EstimatePiQ 0
+==12715== Profiling application: ./MC_EstimatePiQ 0
+==12715== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,MB,GB/s,,,,
+716.353771,6.574296,,,,,,,,,,2.441406,0.362653,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+722.932484,0.062083,4,2,1,64,1,1,48,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","void gen_quasi<float, int, __operator_&__(_curand_uniform_noargs(unsigned int, int))>(float*, unsigned long, unsigned int, unsigned __int64, unsigned int*, int) [2260]"
+723.947102,0.004192,391,1,1,128,1,1,16,0,512,,,"GeForce GTX 1080 Ti (0)","1","7","void computeValue<float>(unsigned int*, float const *, unsigned int) [2271]"
+723.957342,0.000672,,,,,,,,,,0.001492,2.167542,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
