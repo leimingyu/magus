@@ -146,7 +146,7 @@ def main():
         file_content += "sleep " + str(wait_time) + "\n"
         file_content += "./run_client.py" + " \"" + app_cmd + "\" &\n"
 
-        #if i==2: break
+        #if i==10: break
 
     with open(outFile, "w+") as myfile:                                         
         myfile.write(file_content)
