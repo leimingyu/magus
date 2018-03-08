@@ -10,18 +10,90 @@ import math
 import time
 import Queue
 import ctypes
-import logging
 import operator
+import argparse
 
 import numpy as np
 import multiprocessing as mp
 
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 from multiprocessing import Pool, Value, Lock, Manager
 from subprocess import check_call, STDOUT, CalledProcessError
 
+
+parser = argparse.ArgumentParser(description='')
+parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim')
+
+args = parser.parse_args()
+
 DEVNULL = open(os.devnull, 'wb', 0)  # no std out
 magus_debug = False
+
+
+def check_key(app2dir, app2cmd, app2metric):
+    sameApps = True
+
+    # read the keys for each dict
+    key_dir = set(app2dir.keys())
+    key_cmd = set(app2cmd.keys())
+    key_metric = set(app2metric.keys())
+
+    #
+    # compare dir with cmd 
+    #
+    if key_dir <> key_cmd:
+        print "[Error] keys in app2dir and app2cmd are different!"
+        if len(key_dir) > len(key_cmd):
+            print "[Error] Missing keys for key_cmd" 
+
+        if len(key_dir) < len(key_cmd):
+            print "[Error] Missing keys for key_dir" 
+
+        belong2cmd = key_cmd - key_dir
+        belong2dir = key_dir - key_cmd
+
+        onlyincmd= list(belong2cmd)
+        onlyindir= list(belong2dir)
+        
+        if onlyincmd: # not empty
+            print("[Error] Missing keys: {}".format(onlyincmd)) 
+
+        if onlyindir: # not empty
+            print("[Error] Missing keys: {}".format(onlyindir)) 
+
+    else:
+        print "Keys in app2dir and app2cmd match!"
+
+    #
+    # compare dir with metric
+    #
+    if key_dir <> key_metric:
+        print "[Error] keys in app2dir and app2metric are different!"
+        if len(key_metric) > len(key_dir):
+            print "[Error] Missing keys for key_dir" 
+
+        if len(key_metric) < len(key_dir):
+            print "[Error] Missing keys for key_metric" 
+
+        belong2metric= key_metric - key_dir
+        belong2dir= key_dir - key_metric
+
+        onlyinmetric= list(belong2metric)
+        onlyindir= list(belong2dir)
+        
+        if onlyinmetric: # not empty
+            print("[Error] Missing keys: {}".format(onlyinmetric)) 
+
+        if onlyindir: # not empty
+            print("[Error] Missing keys: {}".format(onlyindir)) 
+
+    else:
+        print "Keys in app2dir and app2metric match!"
+
+    return sameApps
+
 
 
 class cd:
@@ -78,7 +150,6 @@ def run_remote(app_dir, app_cmd, devid=0):
 
 class Server(object):
     def __init__(self, hostname, port):
-        import logging
         self.logger = logging.getLogger("server")
         self.hostname = hostname
         self.port = port
@@ -166,6 +237,7 @@ class Server(object):
 
                 app_dir, app_cmd = data_split[0], data_split[1]
                 # print app_dir, app_cmd
+
 
                 #--------------------------------------------------------------
                 # 2) Scheduler
@@ -273,6 +345,24 @@ class Server(object):
     # server start
     #--------------------------------------------------------------------------
     def start(self):
+        if args.scheme == "rr":
+            self.logger.info("Round-Robin Scheduling")
+
+        if args.scheme == "ll":
+            self.logger.info("Least loaded Scheduling")
+
+        if args.scheme == "sim":
+            self.logger.info("Similarity Scheduling")
+            # read app2metric_dd, app2dir_dd, app2cmd_dd
+            app2dir = np.load('./similarity/app2dir_dd.npy').item()
+            app2cmd = np.load('./similarity/app2cmd_dd.npy').item()
+            app2metric = np.load('./similarity/app2metric_dd.npy').item()
+
+            if check_key(app2dir, app2cmd, app2metric):
+                self.logger.info("Looks good!")
+
+
+
         self.logger.debug("listening")
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # resue socket address
@@ -366,8 +456,6 @@ class Server(object):
 
 
 if __name__ == "__main__":
-    import logging
-    logging.basicConfig(level=logging.DEBUG)
     server = Server("0.0.0.0", 9000)
 
     try:
