@@ -13,7 +13,7 @@ appList = []
 #------------------------------------------------------------------------------
 # cuda sdk 8.0:  ``$./run.sh devid``
 #------------------------------------------------------------------------------
-appList.append(GPUApp_pb2.GPUApp(name='cudasdk-matrixMul', dir='',cmd=''))
+appList.append(GPUApp_pb2.GPUApp(name='cudasdk_matrixMul', dir='',cmd=''))
 appList.append(GPUApp_pb2.GPUApp(name='cudasdk_vectorAdd', dir='',cmd=''))
 appList.append(GPUApp_pb2.GPUApp(name='cudasdk_convolutionFFT2D', dir='',cmd=''))
 appList.append(GPUApp_pb2.GPUApp(name='cudasdk_convolutionSeparable', dir='',cmd=''))
