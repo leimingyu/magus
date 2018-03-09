@@ -11,22 +11,28 @@ import time
 import Queue
 import ctypes
 import operator
-import argparse
 
 import numpy as np
 import multiprocessing as mp
 
-import logging
-logging.basicConfig(level=logging.DEBUG)
-
 from multiprocessing import Pool, Value, Lock, Manager
 from subprocess import check_call, STDOUT, CalledProcessError
 
+# log
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
+# arguments
+import argparse
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim')
-
 args = parser.parse_args()
+
+# dict used for similarity scheme
+app2cmd = None
+app2dir = None
+app2metric = None
+
 
 DEVNULL = open(os.devnull, 'wb', 0)  # no std out
 magus_debug = False
@@ -180,6 +186,11 @@ class Server(object):
                 #print sorted_stat
                 target_dev = int(sorted_stat[0][0]) # the least loaded gpu
 
+        elif scheme == 'sim': # least load
+            print len(app2cmd)
+            print len(app2dir)
+            print len(app2metric)
+
         else:
             self.logger.debug("Unknown scheduling scheme!")
             sys.exit(1)
@@ -242,7 +253,8 @@ class Server(object):
                 #--------------------------------------------------------------
                 # 2) Scheduler
                 #--------------------------------------------------------------
-                target_gpu = self.scheduler(jobID, GpuStat_dd, scheme='ll')
+                #target_gpu = self.scheduler(jobID, GpuStat_dd, scheme='ll')
+                target_gpu = self.scheduler(jobID, GpuStat_dd, scheme=args.scheme)
                 self.logger.debug("TargetGPU-%r", target_gpu)
 
                 #-----------------------------------------
@@ -357,7 +369,6 @@ class Server(object):
             app2dir = np.load('./similarity/app2dir_dd.npy').item()
             app2cmd = np.load('./similarity/app2cmd_dd.npy').item()
             app2metric = np.load('./similarity/app2metric_dd.npy').item()
-
             if check_key(app2dir, app2cmd, app2metric):
                 self.logger.info("Looks good!")
 

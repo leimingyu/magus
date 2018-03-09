@@ -119,7 +119,7 @@ def main():
 
     if magus_debug:
         print wait_time_list
-        print len(wait_time_list)
+        #print len(wait_time_list)
 
     #
     # Generate script for clients 
@@ -135,9 +135,12 @@ def main():
         if i == 0:
             wait_time = 0 
         else:
-            wait_time = wait_time_list[i - 1] 
+            wait_time = wait_time_list[i - 1]   # add watiting time for current app 
 
-        app_cmd = str(app[1]) + ";" + str(app[2]) 
+
+        #app_cmd = str(app[1]) + ";" + str(app[2]) 
+        app_cmd = str(app[0]) # send the appName
+
 
         #
         # call run_client.py, 

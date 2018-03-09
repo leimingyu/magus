@@ -239,6 +239,9 @@ app2cmd_dd['rodinia_gaussian'] = './run.sh'
 app2dir_dd['rodinia_heartwall'] = '../apps/devid_rodinia/heartwall'
 app2cmd_dd['rodinia_heartwall'] = './run.sh'
 
+app2dir_dd['rodinia_hybridsort'] = '../apps/devid_rodinia/hybridsort'
+app2cmd_dd['rodinia_hybridsort'] = './run.sh'
+
 app2dir_dd['rodinia_hotspot'] = '../apps/devid_rodinia/hotspot'
 app2cmd_dd['rodinia_hotspot'] = './run.sh'
 
