@@ -431,8 +431,8 @@ class Server(object):
         #       2       0           0       -           -
         #       ...
         #----------------------------------------------------------------------
-        maxJobHist = 10000
-        rows, cols = maxJobHist, 5  # note: init with a large prefixed table
+        maxJobs = 10000
+        rows, cols = maxJobs, 5  # note: init with a large prefixed table
         d_arr = mp.Array(ctypes.c_double, rows * cols)
         arr = np.frombuffer(d_arr.get_obj())
         GpuJobTable = arr.reshape((rows, cols))
@@ -491,7 +491,7 @@ class Server(object):
             if jobID == total_jobs - 1:  # jobID starts from 0
                 process.join()  # make sure the last process ends
                 self.logger.debug("\n\nEnd Simulation\n\n")
-                if maxJobHist < total_jobs:
+                if maxJobs < total_jobs:
                     self.logger.debug(
                         "\n\nError! The total_jobs exceeds the limit!\n\n")
                 self.PrintGpuJobTable(GpuJobTable, total_jobs)
