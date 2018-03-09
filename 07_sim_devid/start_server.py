@@ -70,7 +70,8 @@ def check_key(app2dir, app2cmd, app2metric):
             print("[Error] Missing keys: {}".format(onlyindir)) 
 
     else:
-        print "Keys in app2dir and app2cmd match!"
+        #print "Keys in app2dir and app2cmd match!"
+        logging.info("Checking ... ")
 
     #
     # compare dir with metric
@@ -96,7 +97,8 @@ def check_key(app2dir, app2cmd, app2metric):
             print("[Error] Missing keys: {}".format(onlyindir)) 
 
     else:
-        print "Keys in app2dir and app2metric match!"
+        #print "Keys in app2dir and app2metric match!"
+        logging.info("Checking ... ")
 
     return sameApps
 
@@ -163,7 +165,16 @@ class Server(object):
         self.lock = Lock()
         self.manager = Manager()
 
-    def scheduler(self, jobID, GpuStat_dd, scheme='rr'):
+    def find_least_loaded_node(self, GpuStat_dd):
+        with self.lock:
+            # sort the dd in ascending order
+            sorted_stat = sorted(GpuStat_dd.items(), key=operator.itemgetter(1))
+            #print sorted_stat
+            target_dev = int(sorted_stat[0][0]) # the least loaded gpu
+            target_dev_jobs = int(sorted_stat[0][1])
+        return target_dev, target_dev_jobs
+
+    def scheduler(self, appName, jobID, GpuStat_dd, scheme='rr'):
         self.logger.debug("(Monitoring)")
         target_dev = 0
 
@@ -180,16 +191,31 @@ class Server(object):
             target_dev = jobID % self.gpuNum
 
         elif scheme == 'll': # least load
-            with self.lock:
-                # sort the dd in ascending order
-                sorted_stat = sorted(GpuStat_dd.items(), key=operator.itemgetter(1))
-                #print sorted_stat
-                target_dev = int(sorted_stat[0][0]) # the least loaded gpu
+            target_dev,_ = self.find_least_loaded_node(GpuStat_dd)
 
-        elif scheme == 'sim': # least load
-            print len(app2cmd)
-            print len(app2dir)
-            print len(app2metric)
+        elif scheme == 'sim': # similarity-based scheme 
+            #print app2metric[appName]
+            metric_array = app2metric[appName].as_matrix()
+            #print type(metric_array)
+            #print metric_array.size 
+
+            #
+            # check gpu node metrics
+            # 1) use 'll' to find the vacant node
+            # 2) Given all nodes are busy, select node with the least euclidean distance
+            current_dev, current_jobs = self.find_least_loaded_node(GpuStat_dd)
+            
+            if current_jobs == 0:
+                target_dev = current_dev
+            elif current_jobs > 0:
+                # select the least similar app
+                pass
+
+            else:
+                self.logger.debug("[Error!] gpu node job is negative! Existing...")
+                sys.exit(1)
+
+
 
         else:
             self.logger.debug("Unknown scheduling scheme!")
@@ -243,18 +269,26 @@ class Server(object):
 
                 logger.debug("Received data %r", data)
 
-                data_split = data.split(';')
-                # print data_split
+                appName = data
 
-                app_dir, app_cmd = data_split[0], data_split[1]
+                #------------------------------------#
+                # get the app_dir, app_cmd, app_metric
+                #------------------------------------#
+                app_dir = app2dir[appName]
+                app_cmd = app2cmd[appName]
+
+                #data_split = data.split(';')
+                #print data_split
+
+                #app_dir, app_cmd = data_split[0], data_split[1]
                 # print app_dir, app_cmd
 
 
                 #--------------------------------------------------------------
-                # 2) Scheduler
+                # 2) Scheduler : different schemes
                 #--------------------------------------------------------------
                 #target_gpu = self.scheduler(jobID, GpuStat_dd, scheme='ll')
-                target_gpu = self.scheduler(jobID, GpuStat_dd, scheme=args.scheme)
+                target_gpu = self.scheduler(appName, jobID, GpuStat_dd, scheme=args.scheme)
                 self.logger.debug("TargetGPU-%r", target_gpu)
 
                 #-----------------------------------------
@@ -357,6 +391,14 @@ class Server(object):
     # server start
     #--------------------------------------------------------------------------
     def start(self):
+        # read app2metric_dd, app2dir_dd, app2cmd_dd
+        global app2dir
+        global app2cmd
+        global app2metric
+
+        app2dir = np.load('./similarity/app2dir_dd.npy').item()
+        app2cmd = np.load('./similarity/app2cmd_dd.npy').item()
+
         if args.scheme == "rr":
             self.logger.info("Round-Robin Scheduling")
 
@@ -365,9 +407,6 @@ class Server(object):
 
         if args.scheme == "sim":
             self.logger.info("Similarity Scheduling")
-            # read app2metric_dd, app2dir_dd, app2cmd_dd
-            app2dir = np.load('./similarity/app2dir_dd.npy').item()
-            app2cmd = np.load('./similarity/app2cmd_dd.npy').item()
             app2metric = np.load('./similarity/app2metric_dd.npy').item()
             if check_key(app2dir, app2cmd, app2metric):
                 self.logger.info("Looks good!")
