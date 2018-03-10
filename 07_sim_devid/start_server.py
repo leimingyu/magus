@@ -47,61 +47,60 @@ def check_key(app2dir, app2cmd, app2metric):
     key_metric = set(app2metric.keys())
 
     #
-    # compare dir with cmd 
+    # compare dir with cmd
     #
-    if key_dir <> key_cmd:
+    if key_dir != key_cmd:
         print "[Error] keys in app2dir and app2cmd are different!"
         if len(key_dir) > len(key_cmd):
-            print "[Error] Missing keys for key_cmd" 
+            print "[Error] Missing keys for key_cmd"
 
         if len(key_dir) < len(key_cmd):
-            print "[Error] Missing keys for key_dir" 
+            print "[Error] Missing keys for key_dir"
 
         belong2cmd = key_cmd - key_dir
         belong2dir = key_dir - key_cmd
 
-        onlyincmd= list(belong2cmd)
-        onlyindir= list(belong2dir)
-        
-        if onlyincmd: # not empty
-            print("[Error] Missing keys: {}".format(onlyincmd)) 
+        onlyincmd = list(belong2cmd)
+        onlyindir = list(belong2dir)
 
-        if onlyindir: # not empty
-            print("[Error] Missing keys: {}".format(onlyindir)) 
+        if onlyincmd:  # not empty
+            print("[Error] Missing keys: {}".format(onlyincmd))
+
+        if onlyindir:  # not empty
+            print("[Error] Missing keys: {}".format(onlyindir))
 
     else:
-        #print "Keys in app2dir and app2cmd match!"
+        # print "Keys in app2dir and app2cmd match!"
         logging.info("Checking ... ")
 
     #
     # compare dir with metric
     #
-    if key_dir <> key_metric:
+    if key_dir != key_metric:
         print "[Error] keys in app2dir and app2metric are different!"
         if len(key_metric) > len(key_dir):
-            print "[Error] Missing keys for key_dir" 
+            print "[Error] Missing keys for key_dir"
 
         if len(key_metric) < len(key_dir):
-            print "[Error] Missing keys for key_metric" 
+            print "[Error] Missing keys for key_metric"
 
-        belong2metric= key_metric - key_dir
-        belong2dir= key_dir - key_metric
+        belong2metric = key_metric - key_dir
+        belong2dir = key_dir - key_metric
 
-        onlyinmetric= list(belong2metric)
-        onlyindir= list(belong2dir)
-        
-        if onlyinmetric: # not empty
-            print("[Error] Missing keys: {}".format(onlyinmetric)) 
+        onlyinmetric = list(belong2metric)
+        onlyindir = list(belong2dir)
 
-        if onlyindir: # not empty
-            print("[Error] Missing keys: {}".format(onlyindir)) 
+        if onlyinmetric:  # not empty
+            print("[Error] Missing keys: {}".format(onlyinmetric))
+
+        if onlyindir:  # not empty
+            print("[Error] Missing keys: {}".format(onlyindir))
 
     else:
-        #print "Keys in app2dir and app2metric match!"
+        # print "Keys in app2dir and app2metric match!"
         logging.info("Checking ... ")
 
     return sameApps
-
 
 
 class cd:
@@ -120,19 +119,19 @@ class cd:
         os.chdir(self.savedPath)
 
 
-##def run_remote(app_dir, app_cmd, devid=0):
+# def run_remote(app_dir, app_cmd, devid=0):
 ##    rcuda_select_dev = "RCUDA_DEVICE_" + str(devid) + "=mcx1.coe.neu.edu:" + str(devid)
 ##    cmd_str = rcuda_select_dev + " " + str(app_cmd)
 ##
 ##    startT = time.time()
-##    with cd(app_dir):
-##        try:
+# with cd(app_dir):
+# try:
 ##            check_call(cmd_str, stdout=DEVNULL, stderr=STDOUT, shell=True)
-##        except CalledProcessError as e:
+# except CalledProcessError as e:
 ##            raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
 ##    endT = time.time()
 ##
-##    return [startT, endT]
+# return [startT, endT]
 
 
 def run_remote(app_dir, app_cmd, devid=0):
@@ -161,20 +160,23 @@ class Server(object):
         self.logger = logging.getLogger("server")
         self.hostname = hostname
         self.port = port
-        self.gpuNum = 12         # Note:  gpus in cluster
+        self.gpuNum = 1         # Note:  gpus in cluster
+        #self.gpuNum = 12         # Note:  gpus in cluster
         self.lock = Lock()
         self.manager = Manager()
 
     def find_least_loaded_node(self, GpuStat_dd):
         with self.lock:
             # sort the dd in ascending order
-            sorted_stat = sorted(GpuStat_dd.items(), key=operator.itemgetter(1))
-            #print sorted_stat
-            target_dev = int(sorted_stat[0][0]) # the least loaded gpu
+            sorted_stat = sorted(
+                GpuStat_dd.items(),
+                key=operator.itemgetter(1))
+            # print sorted_stat
+            target_dev = int(sorted_stat[0][0])  # the least loaded gpu
             target_dev_jobs = int(sorted_stat[0][1])
         return target_dev, target_dev_jobs
 
-    def scheduler(self, appName, jobID, GpuStat_dd, scheme='rr'):
+    def scheduler(self, appName, jobID, GpuStat_dd, GpuMetric_dd, scheme='rr'):
         self.logger.debug("(Monitoring)")
         target_dev = 0
 
@@ -186,46 +188,45 @@ class Server(object):
             for key, value in dict(GpuStat_dd).iteritems():
                 print("{}\t{}".format(key, value))
 
-        
-        if scheme == 'rr': # round-robin
+        if scheme == 'rr':  # round-robin
             target_dev = jobID % self.gpuNum
 
-        elif scheme == 'll': # least load
-            target_dev,_ = self.find_least_loaded_node(GpuStat_dd)
+        elif scheme == 'll':  # least load
+            target_dev, _ = self.find_least_loaded_node(GpuStat_dd)
 
-        elif scheme == 'sim': # similarity-based scheme 
-            #print app2metric[appName]
+        elif scheme == 'sim':  # similarity-based scheme
+            # print app2metric[appName]
             metric_array = app2metric[appName].as_matrix()
-            #print type(metric_array)
-            #print metric_array.size 
+            # print type(metric_array)
+            # print metric_array.size
 
             #
             # check gpu node metrics
             # 1) use 'll' to find the vacant node
-            # 2) Given all nodes are busy, select node with the least euclidean distance
+            # 2) Given all nodes are busy, select node with the least euclidean
+            # distance
             current_dev, current_jobs = self.find_least_loaded_node(GpuStat_dd)
-            
+
             if current_jobs == 0:
                 target_dev = current_dev
             elif current_jobs > 0:
-                # select the least similar app
-                pass
+                #
+                # select the least similar GPU node to run 
+                #
+                print "hello"
+
+                #pass
 
             else:
-                self.logger.debug("[Error!] gpu node job is negative! Existing...")
+                self.logger.debug(
+                    "[Error!] gpu node job is negative! Existing...")
                 sys.exit(1)
-
-
 
         else:
             self.logger.debug("Unknown scheduling scheme!")
             sys.exit(1)
 
         return target_dev
-
-
-
-
 
     def PrintGpuJobTable(self, GpuJobTable, total_jobs):
         #--------------------------------------------------------------
@@ -245,7 +246,7 @@ class Server(object):
     # run gpu job
     #--------------------------------------------------------------------------
     def handleWorkload(self, connection, address, jobID,
-                       GpuJobTable, GpuStat_dd):
+                       GpuJobTable, GpuStat_dd, GpuMetric_dd):
         '''
         schedule workloads on the gpu
         '''
@@ -257,7 +258,7 @@ class Server(object):
             logger.debug("Connected")
             while True:
                 #--------------------------------------------------------------
-                # 1) receive data
+                # receive data
                 #--------------------------------------------------------------
                 data = connection.recv(1024)
                 if data == "":
@@ -272,23 +273,22 @@ class Server(object):
                 appName = data
 
                 #------------------------------------#
-                # get the app_dir, app_cmd, app_metric
+                # get the app_dir, app_cmd
                 #------------------------------------#
                 app_dir = app2dir[appName]
                 app_cmd = app2cmd[appName]
 
                 #data_split = data.split(';')
-                #print data_split
-
+                # print data_split
                 #app_dir, app_cmd = data_split[0], data_split[1]
                 # print app_dir, app_cmd
 
+                #--------------------------------------------------------------
+                # Scheduler : different schemes
+                #--------------------------------------------------------------
+                target_gpu = self.scheduler(appName, jobID, 
+                        GpuStat_dd, GpuMetric_dd, scheme=args.scheme)
 
-                #--------------------------------------------------------------
-                # 2) Scheduler : different schemes
-                #--------------------------------------------------------------
-                #target_gpu = self.scheduler(jobID, GpuStat_dd, scheme='ll')
-                target_gpu = self.scheduler(appName, jobID, GpuStat_dd, scheme=args.scheme)
                 self.logger.debug("TargetGPU-%r", target_gpu)
 
                 #-----------------------------------------
@@ -305,11 +305,11 @@ class Server(object):
                 #--------------------------------------------------------------
                 # 3) add job to Gpu Node
                 #--------------------------------------------------------------
-                #with self.lock:
+                # with self.lock:
                 #    GpuNodeStatus[target_gpu,
                 #                  0] = GpuNodeStatus[target_gpu, 0] + 1
 
-                GpuStat_dd[target_gpu] = GpuStat_dd[target_gpu] + 1 
+                GpuStat_dd[target_gpu] = GpuStat_dd[target_gpu] + 1
 
                 #--------------------------------------------------------------
                 # 3) work on the job
@@ -331,7 +331,7 @@ class Server(object):
                 # 4) delete the job to Gpu Node Status
                 #--------------------------------------------------------------
                 with self.lock:
-                    GpuStat_dd[target_gpu] = GpuStat_dd[target_gpu] - 1 
+                    GpuStat_dd[target_gpu] = GpuStat_dd[target_gpu] - 1
 
                 #--------------------------------------------------------------
                 # update job timing table
@@ -411,8 +411,6 @@ class Server(object):
             if check_key(app2dir, app2cmd, app2metric):
                 self.logger.info("Looks good!")
 
-
-
         self.logger.debug("listening")
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # resue socket address
@@ -448,13 +446,26 @@ class Server(object):
         #       ...
         #----------------------------------------------------------------------
         GpuStat_dd = self.manager.dict()
-        #print type(GpuStat_dd)
+        # print type(GpuStat_dd)
 
         for i in xrange(self.gpuNum):
-            GpuStat_dd[i] = 0 
+            GpuStat_dd[i] = 0
 
-        ##for key, value in dict(GpuStat_dd).iteritems():
-        ##    print key, value
+        #----------------------------------------------------------------------
+        # 3) gpu node metrics
+        #----------------------------------------------------------------------
+        GpuMetric_dd = self.manager.dict()
+
+        # for each gpu, allocate 32 (max jobs per gpu) x 26 (metrics for earch
+        # jobs)
+        for i in xrange(self.gpuNum):
+            GpuMetric_dd[i] = np.zeros((32, 26))
+
+        # print len(GpuMetric_dd)
+        # print GpuMetric_dd[0].shape
+
+        # for key, value in dict(GpuStat_dd).iteritems():
+        # print key, value
 
         #self.logger.debug("%r ", type(gpuTable))
         #self.logger.debug("%r ", gpuTable.dtype)
@@ -479,7 +490,7 @@ class Server(object):
             # schedule the workload to the target GPU
             #-----------------------------------------
             process = mp.Process(target=self.handleWorkload,
-                                 args=(conn, address, jobID, GpuJobTable, GpuStat_dd))
+                                 args=(conn, address, jobID, GpuJobTable, GpuStat_dd, GpuMetric_dd))
 
             process.daemon = False
             process.start()
@@ -497,9 +508,9 @@ class Server(object):
                 self.PrintGpuJobTable(GpuJobTable, total_jobs)
 
                 ##
-                ## also print the Gpu Node Status
+                # also print the Gpu Node Status
                 ##
-                #with self.lock:
+                # with self.lock:
                 #    print("\nGpuID\tActiveJobs")
                 #    for gid in xrange(self.gpuNum):
                 #        print("{}\t{}".format(gid, GpuNodeStatus[gid, 0]))
