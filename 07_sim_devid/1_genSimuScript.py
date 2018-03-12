@@ -98,10 +98,11 @@ def main():
     apps_list = get_appinfo('./prepare/app_info.bin')
 
     if magus_debug: 
+        print "\n[DEBUG] Check 5 app info : "
         dump_applist(apps_list[:5]) # print the 1st 5 appinfo
 
     apps_num = len(apps_list)
-    print "Total GPU Applications : " + str(apps_num)
+    print("\n[LOG] Total GPU Applications : {}.".format(apps_num))
 
     #
     # 2) schedule app starting time 
@@ -110,6 +111,7 @@ def main():
     ##apps_start_list = getAppStartTime(apps_num, interval_sec=5, pattern="fixed")
 
     if magus_debug:
+        print "\n[DEBUG] App start time : "
         print apps_start_list
     
     #
@@ -118,6 +120,7 @@ def main():
     wait_time_list = [ (apps_start_list[i] - apps_start_list[i-1]) for i in xrange(1, apps_num)]
 
     if magus_debug:
+        print "\n[DEBUG] App wait time : "
         print wait_time_list
         #print len(wait_time_list)
 
@@ -131,6 +134,7 @@ def main():
     pid = 1
     total_apps = len(apps_list) - 1
     
+    count_jobs = 0
     for i, app in enumerate(apps_list):
         if i == 0:
             wait_time = 0 
@@ -149,7 +153,11 @@ def main():
         file_content += "sleep " + str(wait_time) + "\n"
         file_content += "./run_client.py" + " \"" + app_cmd + "\" &\n"
 
-        #if i==10: break
+        count_jobs = i
+
+        if i==4: break
+
+    print("\n[LOG] Generate total jobs = {}.".format(count_jobs + 1))
 
     with open(outFile, "w+") as myfile:                                         
         myfile.write(file_content)
