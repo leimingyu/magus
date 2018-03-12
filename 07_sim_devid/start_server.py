@@ -36,9 +36,34 @@ app2metric = None
 
 # parameters
 JobsPerGPU = 6
+LARGE_NUM = 1e9
 
 DEVNULL = open(os.devnull, 'wb', 0)  # no std out
 magus_debug = False
+
+
+def find_row_for_currentJob(GpuMetricStat_array, jobID):
+    """
+    Stat array is 32 x 2 where 1st col is status and 2nd col is the jobID
+    """
+    (rows, cols) = GpuMetricStat_array.shape
+
+    target_row = 0
+    FOUND_ROW = False
+    for i in xrange(rows):
+        # find the active job
+        if GpuMetricStat_array[i,1] == jobID  and GpuMetricStat_array[i,0] == 1:
+            target_row = i
+            FOUND_ROW = True
+            break
+
+    if not FOUND_ROW:
+        print "\n[ERROR] : No record for jobID in GpuMetricStat_dd! Something is wrong."
+        sys.exit(1)
+            
+    return target_row
+
+
 
 
 def check_availrow_metricarray(stat_array):
@@ -185,18 +210,22 @@ class Server(object):
         self.lock = Lock()
         self.manager = Manager()
 
-    def find_least_loaded_node(self, GpuStat_dd):
+    def find_least_loaded_node(self, GpuJobs_dd):
         with self.lock:
             # sort the dd in ascending order
             sorted_stat = sorted(
-                GpuStat_dd.items(),
+                GpuJobs_dd.items(),
                 key=operator.itemgetter(1))
             # print sorted_stat
             target_dev = int(sorted_stat[0][0])  # the least loaded gpu
             target_dev_jobs = int(sorted_stat[0][1])
         return target_dev, target_dev_jobs
 
-    def scheduler(self, appName, jobID, GpuStat_dd, GpuMetric_dd, GpuMetricStat_dd, scheme='rr'):
+
+    #-------------------------------------------------------------------------#
+    # 
+    #-------------------------------------------------------------------------#
+    def scheduler(self, appName, jobID, GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd, scheme='rr'):
         """
         Decide whitch gpu to allocate the job.
         """
@@ -208,19 +237,19 @@ class Server(object):
         #--------------------------------
         with self.lock:
             print("\nGpuID\tActiveJobs")
-            for key, value in dict(GpuStat_dd).iteritems():
+            for key, value in dict(GpuJobs_dd).iteritems():
                 print("{}\t{}".format(key, value))
 
         if scheme == 'rr':  # round-robin
             target_dev = jobID % self.gpuNum
 
         elif scheme == 'll':  # least load
-            target_dev, _ = self.find_least_loaded_node(GpuStat_dd)
+            target_dev, _ = self.find_least_loaded_node(GpuJobs_dd)
 
         elif scheme == 'sim':  # similarity-based scheme
             # print app2metric[appName]
             appMetric = app2metric[appName].as_matrix()
-            print appMetric 
+            #print appMetric 
             #print appMetric.size
 
             #-------------------------#
@@ -229,7 +258,7 @@ class Server(object):
             # 2) Given all nodes are busy, select node with the least euclidean
             # distance
             #-------------------------#
-            current_dev, current_jobs = self.find_least_loaded_node(GpuStat_dd)
+            current_dev, current_jobs = self.find_least_loaded_node(GpuJobs_dd)
 
             if current_jobs == 0:
                 target_dev = current_dev
@@ -279,26 +308,59 @@ class Server(object):
                 # what is each GPU's (max) metric ?  
                 #
                 with self.lock:
-                    print "\nCheck GpuMetric_dd"
+                    print "\nCheck GpuMetric_dd\n"
                     #for key, value in GpuMetric_dd.iteritems():
                     #    print key
 
+                    min_dist = LARGE_NUM # a quite large number
 
-                    min_dist = 1e9 # a quite large number
                     for i in xrange(self.gpuNum): 
-                        # max metric for each gpu along the column
-                        current_gpu_metric = np.amax(GpuMetric_dd[i], axis=0)
+                        #
+                        # max column metric for each gpu in the numpy array
+                        currentGpuMetric = np.amax(GpuMetric_dd[i], axis=0)
 
-                        # eucledian dist between current_gpu and app_metric
-                        # TODO
-                        #print current_metric_array[0,:]
+                        # 
+                        # euclidian dist (currentGpuMetric, appMetric)
+                        dist = np.linalg.norm(currentGpuMetric - appMetric)
+                        print "euclidian dist: %f  ( GPU %d )" % (dist, i)
+
+                        #
+                        # select the least dist 
+                        if dist < min_dist:
+                            min_dist =  dist
+                            target_dev = i
+
+                    #
+                    # after selection,  1) add current appMetric to GpuMetric
+                    #                   2) update GpuMetricStat
+
+                    # =====================
+                    # find the row to write
+                    # =====================
+                    avail_row = check_availrow_metricarray(GpuMetric_dd[target_dev])
 
 
+                    #========================
+                    # add metric to the GpuMetric
+                    #========================
+                    GpuMetric_array = GpuMetric_dd[target_dev]
+                    GpuMetric_array[avail_row,:] = appMetric 
+                    GpuMetric_dd[target_dev] = GpuMetric_array 
 
-                print "hello"
+                    #========================
+                    # update stat in GpuMetricStat (32 x 2, stat + jobID)
+                    #========================
+                    GpuMetricStat_array = GpuMetricStat_dd[target_dev]
+                    GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
+                    GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
 
-                #pass
+                #
+                # log
+                #
+                self.logger.debug("\n[Similarity] select GPU %r\n", target_dev)
 
+
+                    
             else:
                 self.logger.debug(
                     "[Error!] gpu node job is negative! Existing...")
@@ -310,6 +372,10 @@ class Server(object):
 
         return target_dev
 
+
+    #-------------------------------------------------------------------------#
+    # 
+    #-------------------------------------------------------------------------#
     def PrintGpuJobTable(self, GpuJobTable, total_jobs):
         #--------------------------------------------------------------
         # gpu job table : 5 columns
@@ -324,11 +390,11 @@ class Server(object):
                                                       GpuJobTable[row, 4],
                                                       GpuJobTable[row, 4] - GpuJobTable[row, 3]))
 
-    #--------------------------------------------------------------------------
+    #-------------------------------------------------------------------------#
     # Run incoming workload
-    #--------------------------------------------------------------------------
+    #-------------------------------------------------------------------------#
     def handleWorkload(self, connection, address, jobID,
-                       GpuJobTable, GpuStat_dd, GpuMetric_dd, GpuMetricStat_dd):
+                       GpuJobTable, GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd):
         '''
         schedule workloads on the gpu
         '''
@@ -366,19 +432,17 @@ class Server(object):
                 # print app_dir, app_cmd
 
                 #--------------------------------------------------------------
-                # 3) scheduler : different schemes
+                # 3) scheduler : with different schemes
                 #--------------------------------------------------------------
                 target_gpu = self.scheduler(appName, jobID, 
-                        GpuStat_dd, GpuMetric_dd, GpuMetricStat_dd,
+                        GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd,
                         scheme=args.scheme)
 
                 self.logger.debug("TargetGPU-%r", target_gpu)
 
                 #-----------------------------------------
-                # 2) update gpu job table
-                #
-                # 5 columns:
-                #    jobid      gpu     status      starT       endT
+                # 4) update gpu job table
+                # (columns)   jobid      gpu     status      starT       endT
                 #-----------------------------------------
                 # Assign job to the target GPU
                 GpuJobTable[jobID, 0] = jobID
@@ -386,21 +450,16 @@ class Server(object):
                 GpuJobTable[jobID, 2] = 0
 
                 #--------------------------------------------------------------
-                # 3) add job to Gpu Node
+                # 5) add job to Gpu Node
                 #--------------------------------------------------------------
-                # with self.lock:
-                #    GpuNodeStatus[target_gpu,
-                #                  0] = GpuNodeStatus[target_gpu, 0] + 1
+                with self.lock:
+                    GpuJobs_dd[target_gpu] = GpuJobs_dd[target_gpu] + 1
 
-                GpuStat_dd[target_gpu] = GpuStat_dd[target_gpu] + 1
 
                 #--------------------------------------------------------------
-                # 3) work on the job
+                # 6) work on the job
                 #--------------------------------------------------------------
-                [startT, endT] = run_remote(
-                    app_dir=app_dir, app_cmd=app_cmd, devid=target_gpu)
-                #print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
-
+                [startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_gpu)
                 #print("{} to {} = {:.3f} seconds".format(startT, endT, endT - startT))
                 self.logger.debug(
                     "(Job {}) {} to {} = {:.3f} seconds".format(
@@ -411,21 +470,31 @@ class Server(object):
                 #--------------------------------------------------------------
 
                 #--------------------------------------------------------------
-                # 4) delete the job to Gpu Node Status
+                # 7) delete the job, update GpuMetric 
                 #--------------------------------------------------------------
                 with self.lock:
-                    GpuStat_dd[target_gpu] = GpuStat_dd[target_gpu] - 1
+                    GpuJobs_dd[target_gpu] = GpuJobs_dd[target_gpu] - 1 
+
+                    #========================
+                    # Find the corresponding row for the current jobID 
+                    #========================
+                    GpuMetricStat_array = GpuMetricStat_dd[target_gpu]
+                    #
+                    # find the right row to update
+                    myrow = find_row_for_currentJob(GpuMetricStat_array, jobID)
+                    #
+                    # reset the metric stat
+                    GpuMetricStat_array[myrow, : ] = np.array([0, -1])
+                    GpuMetricStat_dd[target_gpu] = GpuMetricStat_array 
+                    #
+                    # del metric in the GpuMetric / reset to zeros
+                    GpuMetric_array = GpuMetric_dd[target_gpu]
+                    GpuMetric_array[myrow,:] = np.zeros((1,26))
+                    GpuMetric_dd[target_gpu] = GpuMetric_array 
+
 
                 #--------------------------------------------------------------
-                # update job timing table
-                #--------------------------------------------------------------
-                # jobTimingTable[jobID, 0] = 1  # done
-                ##jobTimingTable[jobID, 1] = startT
-                ##jobTimingTable[jobID, 2] = endT
-                ##self.logger.debug("%r ", jobTimingTable[:])
-
-                #--------------------------------------------------------------
-                # update gpu job table
+                # 8) update gpu job table
                 #
                 # 5 columns:
                 #    jobid      gpu     status      starT       endT
@@ -528,11 +597,11 @@ class Server(object):
         #       2               0
         #       ...
         #----------------------------------------------------------------------
-        GpuStat_dd = self.manager.dict()
-        # print type(GpuStat_dd)
+        GpuJobs_dd = self.manager.dict()
+        # print type(GpuJobs_dd)
 
         for i in xrange(self.gpuNum):
-            GpuStat_dd[i] = 0
+            GpuJobs_dd[i] = 0
 
         #----------------------------------------------------------------------
         # 3) gpu node metrics
@@ -560,7 +629,9 @@ class Server(object):
         GpuMetricStat_dd = self.manager.dict()
 
         for i in xrange(self.gpuNum):
-            GpuMetricStat_dd[i] = np.zeros((JobsPerGPU, 2))
+            np_array = np.zeros((JobsPerGPU, 2))
+            np_array[:,1] = -1  # the 2nd col for jobID is init with -1
+            GpuMetricStat_dd[i] = np_array
 
 
 
@@ -569,7 +640,7 @@ class Server(object):
         # print len(GpuMetric_dd)
         # print GpuMetric_dd[0].shape
 
-        # for key, value in dict(GpuStat_dd).iteritems():
+        # for key, value in dict(GpuJobs_dd).iteritems():
         # print key, value
 
         #self.logger.debug("%r ", type(gpuTable))
@@ -597,7 +668,7 @@ class Server(object):
             #-----------------------------------------
             process = mp.Process(target=self.handleWorkload,
                                  args=(conn, address, jobID, 
-                                     GpuJobTable, GpuStat_dd,
+                                     GpuJobTable, GpuJobs_dd,
                                      GpuMetric_dd, GpuMetricStat_dd))
 
             process.daemon = False
