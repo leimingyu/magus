@@ -11,6 +11,7 @@ import time
 import Queue
 import ctypes
 import operator
+import copy # deepcopy
 
 import numpy as np
 import multiprocessing as mp
@@ -25,7 +26,7 @@ logging.basicConfig(level=logging.DEBUG)
 # arguments
 import argparse
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim')
+parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf')
 parser.add_argument('-j', dest='jobs', default=0, help='jobs to simulate')
 args = parser.parse_args()
 
@@ -33,6 +34,7 @@ args = parser.parse_args()
 app2cmd = None
 app2dir = None
 app2metric = None
+app2trace = None
 
 # parameters
 JobsPerGPU = 6
@@ -40,6 +42,210 @@ LARGE_NUM = 1e9
 
 DEVNULL = open(os.devnull, 'wb', 0)  # no std out
 magus_debug = False
+
+
+
+def getruntime(appTraceList):
+    """
+    Return the difference between 1st api start and last api end.
+    """
+    return appTraceList[-1][2] - appTraceList[0][1]
+
+
+def update_trace_offset(tracelist, offset):
+    """
+    Adjust the starting time (add offset) to each api call in the traceList.
+    """
+    for eachApi in tracelist:
+        eachApi[1] += offset
+        eachApi[2] += offset
+
+def update_trace_api(tracelist, api_index, offset):
+    """
+    Adjust the starting time (starting from api_index) in the traceList.
+    """
+    for pid in xrange(len(tracelist)):
+        if pid >= api_index:
+            tracelist[pid][1] += offset
+            tracelist[pid][2] += offset
+
+
+def adjust_prevTraceTable_api(traceTable, apiID, newStart, oldStart):
+    offset = newStart - oldStart
+    for api_id, apiCall in enumerate(traceTable):
+        # for each api that start before oldStart, remain the same
+        # that start after oldStart, add an offset
+        myStart, myEnd = apiCall[1], apiCall[2]
+        if myStart >= oldStart:
+            # add offset
+            traceTable[api_id][1] += offset
+            traceTable[api_id][2] += offset
+
+
+#
+#
+#
+def model_contention(prevTraceList, newapi, copyEngineNum=2):
+    """
+    For the newapi, look for contention duing apiStart and apiEnd.
+    Default configuration assumes the copy engine number is 2.
+    """
+    curType, curStart, curEnd = newapi[0], newapi[1], newapi[2]
+
+    #print "\n(Current Api)"
+    #print curType, curStart, curEnd
+
+    contentionCount = 0
+    adjCurrent, adjTraceTab = False, False
+
+    # iterate all the apps in the traceTable
+    for apiID, apiCall in enumerate(prevTraceList):
+        preType, preStart, preEnd = apiCall[0], apiCall[1], apiCall[2]
+
+        if (curStart < preEnd <= curEnd) or (curStart <= preStart < curEnd) or (curStart > preStart and curEnd < preEnd):
+            if preType == curType:
+                contentionCount = contentionCount + 1
+                if preStart <= curStart:  # delay current api till the end of prevEnd
+                    # print "adjust new api"
+                    adjCurrent = True
+                    newStart = preEnd
+                    oldStart = curStart
+                else:  # move the app in traceTable after current api
+                    # print "adjust app in traceTable"
+                    adjTraceTab = True
+                    newStart = curEnd
+                    oldStart = preStart
+                # find out whether current api has any contention with previous application's api calls 
+                return contentionCount, adjCurrent, adjTraceTab, newStart, oldStart, apiID
+
+
+            if ((preType == 'h2d' and curType == 'd2h') or (preType == 'd2h' and curType == 'h2d')) and (copyEngineNum == 1):
+                contentionCount = contentionCount + 1
+                # Duplicate previous operations
+                if preStart <= curStart:  # delay current api till the end of prevEnd
+                    #print "adjust new api"
+                    adjCurrent = True
+                    newStart = prevEnd
+                    oldStart = curStart
+                else:  # move the app in traceTable after current api
+                    #print "adjust app in traceTable"
+                    adjTraceTab = True
+                    newStart = curEnd
+                    oldStart = preStart
+                return contentionCount, adjCurrent, adjTraceTab, newStart, oldStart, apiID
+
+    return contentionCount, adjCurrent, adjTraceTab, None, None, None
+
+
+
+def predict_perf(prev_trace_org, current_trace_org):
+    """
+    Predict performance impact between two application traces
+    """
+    prev_trace = copy.deepcopy(prev_trace_org)
+    current_trace = copy.deepcopy(current_trace_org)
+
+    AvgSlowDown = 0
+
+    #===============#
+    # record the orginal runtime 
+    #===============#
+    orgTime = []
+    prev_rt = getruntime(prev_trace)
+    orgTime.append(prev_rt)
+    ##print "\n=> prev app runtime : %f" % prev_rt
+
+    current_rt = getruntime(current_trace)
+    ##print "=> current app runtime : %f" % current_rt
+    orgTime.append(current_rt)
+
+    #===============#
+    # figure out when to start the coming workload
+    #===============#
+    # get the ending time of 1st api (for prev app) : [apitype, start, end, .... ]
+    prevapp_type  = prev_trace[0][0]
+    prevapp_start = prev_trace[0][1]
+    prevapp_end   = prev_trace[0][2]
+
+    newapp_type = current_trace[0][0]
+
+    simulate_startPos = None
+    extra_delay_for_newapp = 0.
+
+    if prevapp_type == newapp_type:
+        # when there is contention, start after prev ends
+        simulate_startPos = prevapp_end
+        # [Note] count in the starting delay
+        extra_delay_for_newapp = prevapp_end - prevapp_start
+    else:
+        # if different, assume they start at the same time
+        simulate_startPos = prevapp_start
+
+    newapp_start = current_trace[0][1] # update new app api starting point
+
+    prev_cur_diff = simulate_startPos - newapp_start  # the amount to adjust the starting point
+
+    newapp_trace = copy.deepcopy(current_trace)
+
+    # sync newapp timing with traceTable
+    update_trace_offset(newapp_trace, prev_cur_diff)
+
+    #===============#
+    # analyze the contention for each API 
+    #===============#
+    for i in xrange(len(newapp_trace)):
+        api = newapp_trace[i]
+        CheckContention = True
+
+        while CheckContention:
+            #
+            # check contention for current api call
+            #
+            contentionCount, adjCurrent, adjTraceTab, newStart, oldStart, apiID = model_contention(prev_trace, api)
+
+            if contentionCount == 0:
+                CheckContention = False  # move to the next api
+            else:
+                # there are contention for current api
+                #print contentionCount, adjCurrent, adjTraceTab, newStart, appID, apiID
+
+                if adjCurrent:
+                    #print "=>adjust current api"
+                    #print "before updating api"
+                    #print newapp_trace
+
+                    api_offset = newStart - api[1]
+                    update_trace_api(newapp_trace, i, api_offset)  # update new app trace list
+
+                    #print "after updating api"
+                    #print newapp_trace
+
+                if adjTraceTab:
+                    adjust_prevTraceTable_api(prev_trace, apiID, newStart, oldStart)
+
+    #=====================================================#
+    # measure slowdown ratio for each application
+    #=====================================================#
+    newTime = []
+    myRuntime = getruntime(prev_trace)
+    ##print "\n=> prev app runtime (after adjustment) : %f" % myRuntime 
+    newTime.append(myRuntime)
+
+    # add adjusted timing for new app + with extra starting delay
+    newTime.append(getruntime(newapp_trace) + extra_delay_for_newapp) 
+    ##print "\n=> current app runtime (after adjustment) : %f" % getruntime(newapp_trace)
+    
+    #=====================================================#
+    # measure slowdown ratio for each application
+    #=====================================================#
+    slowdown_ratio = []
+    for i, newT in enumerate(newTime):
+        sdr = float(newT) / orgTime[i] - 1.   # compute slowdown ratio
+        slowdown_ratio.append(sdr)
+
+    AvgSlowDown = sum(slowdown_ratio) / float(len(newTime))
+
+    return AvgSlowDown
 
 
 def find_row_for_currentJob(GpuMetricStat_array, jobID):
@@ -225,7 +431,11 @@ class Server(object):
     #-------------------------------------------------------------------------#
     # 
     #-------------------------------------------------------------------------#
-    def scheduler(self, appName, jobID, GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd, scheme='rr'):
+    def scheduler(self, appName, jobID, 
+            GpuJobs_dd, 
+            GpuMetric_dd, GpuMetricStat_dd, 
+            GpuTraces_dd,
+            scheme='rr'):
         """
         Decide whitch gpu to allocate the job.
         """
@@ -246,7 +456,10 @@ class Server(object):
         elif scheme == 'll':  # least load
             target_dev, _ = self.find_least_loaded_node(GpuJobs_dd)
 
-        elif scheme == 'sim':  # similarity-based scheme
+        #---------------------------------------------------------------------#
+        # Similarity 
+        #---------------------------------------------------------------------#
+        elif scheme == 'sim': 
             # print app2metric[appName]
             appMetric = app2metric[appName].as_matrix()
             #print appMetric 
@@ -358,13 +571,80 @@ class Server(object):
                 # log
                 #
                 self.logger.debug("\n[Similarity] select GPU %r\n", target_dev)
-
-
                     
             else:
                 self.logger.debug(
                     "[Error!] gpu node job is negative! Existing...")
                 sys.exit(1)
+
+        #---------------------------------------------------------------------#
+        # Performance Model
+        #---------------------------------------------------------------------#
+        elif scheme == 'perf':  # performance model 
+            print "running perfModel"
+            #
+            # read app trace
+            current_app_trace = app2trace[appName]
+            #print len(current_app_trace)
+
+            #-------------------------#
+            # 1) use 'll' to find the vacant node
+            # 2) Given all nodes are busy, select node with the least performance impact 
+            #-------------------------#
+            current_dev, current_jobs = self.find_least_loaded_node(GpuJobs_dd)
+
+
+            #-----------#
+            # use vacant gpu when there is no worloads 
+            #-----------#
+            if current_jobs == 0:
+                target_dev = current_dev
+                
+                #-------------------------#
+                # add job trace to the GpuTraces
+                #-------------------------#
+                with self.lock:
+                    GpuTraces_dd[target_dev] = app2trace[appName]
+
+            #-----------#
+            # When there has been active jobs running on current device,
+            # use performance 
+            #-----------#
+            elif current_jobs > 0:
+
+                AvgSlowDown_list = []
+                for gid in xrange(self.gpuNum): 
+                    AvgSlowDown = predict_perf(GpuTraces_dd[gid], current_app_trace)
+                    #print AvgSlowDown
+                    AvgSlowDown_list.append(AvgSlowDown)
+
+                #========#
+                # look for the smallest slowdown
+                #========#
+                min_slowdown = LARGE_NUM
+                for devid, slowdown_ratio in enumerate(AvgSlowDown_list):
+                    if slowdown_ratio < min_slowdown:
+                        min_slowdown = slowdown_ratio
+                        target_dev = devid
+
+                #=========#
+                # update trace on that node (TODO)
+                #=========#
+
+
+
+
+            else:
+                self.logger.debug(
+                    "[Error!] gpu job is negative! Existing...")
+                sys.exit(1)
+
+
+        #---------------------------------------------------------------------#
+        # DINN Model 
+        #---------------------------------------------------------------------#
+        elif scheme == 'dinn':  # deep interference performance model 
+            print "dinn"
 
         else:
             self.logger.debug("Unknown scheduling scheme!")
@@ -394,7 +674,8 @@ class Server(object):
     # Run incoming workload
     #-------------------------------------------------------------------------#
     def handleWorkload(self, connection, address, jobID,
-                       GpuJobTable, GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd):
+                       GpuJobTable, GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd,
+                       GpuTraces_dd):
         '''
         schedule workloads on the gpu
         '''
@@ -436,6 +717,7 @@ class Server(object):
                 #--------------------------------------------------------------
                 target_gpu = self.scheduler(appName, jobID, 
                         GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd,
+                        GpuTraces_dd,
                         scheme=args.scheme)
 
                 self.logger.debug("TargetGPU-%r", target_gpu)
@@ -475,22 +757,23 @@ class Server(object):
                 with self.lock:
                     GpuJobs_dd[target_gpu] = GpuJobs_dd[target_gpu] - 1 
 
-                    #========================
-                    # Find the corresponding row for the current jobID 
-                    #========================
-                    GpuMetricStat_array = GpuMetricStat_dd[target_gpu]
-                    #
-                    # find the right row to update
-                    myrow = find_row_for_currentJob(GpuMetricStat_array, jobID)
-                    #
-                    # reset the metric stat
-                    GpuMetricStat_array[myrow, : ] = np.array([0, -1])
-                    GpuMetricStat_dd[target_gpu] = GpuMetricStat_array 
-                    #
-                    # del metric in the GpuMetric / reset to zeros
-                    GpuMetric_array = GpuMetric_dd[target_gpu]
-                    GpuMetric_array[myrow,:] = np.zeros((1,26))
-                    GpuMetric_dd[target_gpu] = GpuMetric_array 
+                    if args.scheme == "sim":
+                        #========================
+                        # Find the corresponding row for the current jobID 
+                        #========================
+                        GpuMetricStat_array = GpuMetricStat_dd[target_gpu]
+                        #
+                        # find the right row to update
+                        myrow = find_row_for_currentJob(GpuMetricStat_array, jobID)
+                        #
+                        # reset the metric stat
+                        GpuMetricStat_array[myrow, : ] = np.array([0, -1])
+                        GpuMetricStat_dd[target_gpu] = GpuMetricStat_array 
+                        #
+                        # del metric in the GpuMetric / reset to zeros
+                        GpuMetric_array = GpuMetric_dd[target_gpu]
+                        GpuMetric_array[myrow,:] = np.zeros((1,26))
+                        GpuMetric_dd[target_gpu] = GpuMetric_array 
 
 
                 #--------------------------------------------------------------
@@ -547,6 +830,7 @@ class Server(object):
         global app2dir
         global app2cmd
         global app2metric
+        global app2trace
 
         app2dir = np.load('./similarity/app2dir_dd.npy').item()
         app2cmd = np.load('./similarity/app2cmd_dd.npy').item()
@@ -558,10 +842,21 @@ class Server(object):
             self.logger.info("Least loaded Scheduling")
 
         if args.scheme == "sim":
-            self.logger.info("Similarity Scheduling")
+            self.logger.info("Scheduling based on Similarity")
             app2metric = np.load('./similarity/app2metric_dd.npy').item()
             if check_key(app2dir, app2cmd, app2metric):
                 self.logger.info("Looks good!")
+
+        if args.scheme == "perf":
+            self.logger.info("Scheduling using Performance Model")
+            app2trace = np.load('./perfmodel/app2trace_dd.npy').item()
+            self.logger.info("Total GPU applications = %r",len(app2trace))
+            #print app2trace['cudasdk_MCEstimatePiP']
+
+
+
+
+
 
         self.logger.debug("listening")
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -633,7 +928,38 @@ class Server(object):
             np_array[:,1] = -1  # the 2nd col for jobID is init with -1
             GpuMetricStat_dd[i] = np_array
 
+        ###----------------------------------------------------------------------
+        ### 5) gpu node trace status
+        ###
+        ### // for each gpu, allocate 32 (rows / jobs) x 3 ( status + jobID + start_time)
+        ### for each gpu, allocate 1 job : 3 columns = status + jobID 
+        ### since we only use the latest trace to model the performance impact
+        ###----------------------------------------------------------------------
+        ##GpuTracesStat_dd = self.manager.dict()
 
+        ##for i in xrange(self.gpuNum):
+        ##    #gpu_trace_list = []
+        ##    #for j in xrange(32):
+        ##    #    gpu_trace_list.append([0,0,0])
+
+        ##    #print len(gpu_trace_list)
+        ##    #print len(gpu_trace_list[0])
+        ##    #GpuTracesStat_dd[i] = gpu_trace_list 
+
+        #----------------------------------------------------------------------
+        # 6) gpu node traces 
+        #
+        # // for each gpu, allocate 32 (max jobs per gpu) x [] 
+        # // jobs)
+        #----------------------------------------------------------------------
+        GpuTraces_dd = self.manager.dict()
+
+        for i in xrange(self.gpuNum):
+            #gputraces = [[] for j in xrange(32)]
+            #print len(gputraces)
+            #print len(gputraces[0])
+            #GpuTraces_dd[i] = gputraces 
+            GpuTraces_dd[i] = [] 
 
 
 
@@ -669,7 +995,8 @@ class Server(object):
             process = mp.Process(target=self.handleWorkload,
                                  args=(conn, address, jobID, 
                                      GpuJobTable, GpuJobs_dd,
-                                     GpuMetric_dd, GpuMetricStat_dd))
+                                     GpuMetric_dd, GpuMetricStat_dd,
+                                     GpuTraces_dd))
 
             process.daemon = False
             process.start()
