@@ -37,7 +37,8 @@ app2metric = None
 app2trace = None
 
 # parameters
-JobsPerGPU = 6
+#JobsPerGPU = 6
+JobsPerGPU = 32
 LARGE_NUM = 1e9
 
 DEVNULL = open(os.devnull, 'wb', 0)  # no std out
@@ -411,8 +412,8 @@ class Server(object):
         self.hostname = hostname
         self.port = port
         #self.gpuNum = 1         # Note:  gpus in cluster
-        self.gpuNum = 2        # Note:  gpus in cluster
-        #self.gpuNum = 12         # Note:  gpus in cluster
+        #self.gpuNum = 2        # Note:  gpus in cluster
+        self.gpuNum = 12         # Note:  gpus in cluster
         self.lock = Lock()
         self.manager = Manager()
 
@@ -628,9 +629,10 @@ class Server(object):
                         target_dev = devid
 
                 #=========#
-                # update trace on that node (TODO)
+                # update trace on that node 
                 #=========#
-
+                with self.lock:
+                    GpuTraces_dd[target_dev] = current_app_trace 
 
 
 
@@ -752,7 +754,7 @@ class Server(object):
                 #--------------------------------------------------------------
 
                 #--------------------------------------------------------------
-                # 7) delete the job, update GpuMetric 
+                # 7) delete the job, update Gpu Node information
                 #--------------------------------------------------------------
                 with self.lock:
                     GpuJobs_dd[target_gpu] = GpuJobs_dd[target_gpu] - 1 
@@ -774,6 +776,14 @@ class Server(object):
                         GpuMetric_array = GpuMetric_dd[target_gpu]
                         GpuMetric_array[myrow,:] = np.zeros((1,26))
                         GpuMetric_dd[target_gpu] = GpuMetric_array 
+
+                    #==================
+                    # Note: for perf model, we use the latest trace for the gpu
+                    # when there is no job running, the new trace will be added
+                    # There is no need to del it. 
+                    # 1) If currently there is only job, the new app will be added
+                    # 2) If there was some jobs running, only the new job is added 
+                    #==================
 
 
                 #--------------------------------------------------------------
