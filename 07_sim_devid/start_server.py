@@ -23,6 +23,8 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 import tensorflow as tf
+# turn off debugging logs. options: 0/1/2/3 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 
 #===========#
 # arguments
@@ -729,16 +731,39 @@ class Server(object):
                     GpuTraces_dd[target_dev]    = current_trace 
                     GpuDinnFeats_dd[target_dev] = current_dinnfeats 
             elif current_jobs > 0: # when there are active jobs running
+                pred_array = None
                 # select the good candidates among all the gpus using dpModel 
                 with self.lock:
-                    reset_graph()
+                    #reset_graph()
                     sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
                     dpModel = dinn(sess) # init a dinn class
                     X_input = getCombo(GpuDinnFeats_dd, current_dinnfeats)
-                    print X_input.shape
+                    #print X_input.shape
                     # predict using the deep learning model
                     test_results = dpModel.test(X_input, ckpt_model='./dinn/models/dinn_final.ckpt')
-                    print test_results
+                    pred_array = test_results[0] # NOTE: test_results is a list
+
+                if pred_array is None:
+                    print(">>> Error! pred_array is None!")
+
+                #print pred_array.shape
+                good_list = []
+                for i in xrange(self.gpuNum):
+                    #print pred_array[i,0], pred_array[i,1]
+                    [bad,good] = pred_array[i,:]
+                    if good > bad:
+                        good_list.append(i)
+                print good_list
+
+                if len(good_list) == 1: # when there is only one candidate
+                    target_dev = int(good_list[0])
+                else: # either there are 2+ options or 0 options
+                    # apply performance model 
+                    print ">>> run perf model"
+                    ## TODO
+
+
+                    #select_best(test_results)
 
 
                 #AvgSlowDown_list = []
