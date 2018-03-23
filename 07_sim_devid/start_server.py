@@ -19,18 +19,50 @@ import multiprocessing as mp
 from multiprocessing import Pool, Value, Lock, Manager
 from subprocess import check_call, STDOUT, CalledProcessError
 
-# log
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
+import tensorflow as tf
+
+#===========#
 # arguments
+#===========#
 import argparse
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf')
+parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn')
 parser.add_argument('-j', dest='jobs', default=0, help='jobs to simulate')
 args = parser.parse_args()
 
+
+#===========#
+# DINN model
+#===========#
+#dpModel = None
+app2dinnfeats = None
+gpu_options = None
+
+if args.scheme == "dinn":
+    sys.path.append('./dinn')
+    from model import dinn, reset_graph
+    reset_graph()
+    gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.3)
+    # turn off the init msg
+
+    #sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+    #dpModel = dinn(sess)  # init a dinn class
+
+
+### Warning: use 0.3 gpu memory. Overuse will impact the coming workloads. 
+##print("Run Tensorflow [GPU]\n")
+##gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.3)
+##sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+##dpModel = dinn(sess)  # init a dinn class
+
+
+
+#=================================#
 # dict used for similarity scheme
+#=================================#
 app2cmd = None
 app2dir = None
 app2metric = None
@@ -81,6 +113,40 @@ def adjust_prevTraceTable_api(traceTable, apiID, newStart, oldStart):
             # add offset
             traceTable[api_id][1] += offset
             traceTable[api_id][2] += offset
+
+#-----------------------------------------------------------------------------#
+# 
+#-----------------------------------------------------------------------------#
+def getCombo(GpuDinnFeats, current_dinnfeats):
+    GpuDinnFeats_dd = dict(GpuDinnFeats)
+
+    X= None
+    count = 0
+    # app1 (running app) + app2 (waiting app)
+    for key, value in GpuDinnFeats_dd.iteritems():
+        #print value
+        combo = np.append(value, current_dinnfeats)
+        #print combo.shape
+        if count == 0:
+            X= combo
+        else:
+            X= np.vstack((X, combo))
+        count = count + 1
+
+    #print "X_input shape"
+    #print X_input.shape
+
+    #
+    # test X_input on deep learning model
+    #
+
+    #print X_input
+
+    #test_results = dpModel.test(X_input, ckpt_model='./dinn/models/dinn_final.ckpt')
+    #print test_results
+
+
+    return X
 
 
 #
@@ -412,8 +478,8 @@ class Server(object):
         self.hostname = hostname
         self.port = port
         #self.gpuNum = 1         # Note:  gpus in cluster
-        #self.gpuNum = 2        # Note:  gpus in cluster
-        self.gpuNum = 12         # Note:  gpus in cluster
+        self.gpuNum = 2        # Note:  gpus in cluster
+        #self.gpuNum = 12         # Note:  gpus in cluster
         self.lock = Lock()
         self.manager = Manager()
 
@@ -434,14 +500,15 @@ class Server(object):
     #-------------------------------------------------------------------------#
     def scheduler(self, appName, jobID, 
             GpuJobs_dd, 
-            GpuMetric_dd, GpuMetricStat_dd, 
-            GpuTraces_dd,
+            GpuMetric_dd, GpuMetricStat_dd,
+            GpuTraces_dd, GpuDinnFeats_dd,
             scheme='rr'):
         """
         Decide whitch gpu to allocate the job.
         """
         self.logger.debug("(Monitoring)")
         target_dev = 0
+        global gpu_options 
 
         #--------------------------------
         # check current GPU Node Status
@@ -582,9 +649,7 @@ class Server(object):
         # Performance Model
         #---------------------------------------------------------------------#
         elif scheme == 'perf':  # performance model 
-            print "running perfModel"
-            #
-            # read app trace
+            #print "running perfModel"
             current_app_trace = app2trace[appName]
             #print len(current_app_trace)
 
@@ -593,7 +658,6 @@ class Server(object):
             # 2) Given all nodes are busy, select node with the least performance impact 
             #-------------------------#
             current_dev, current_jobs = self.find_least_loaded_node(GpuJobs_dd)
-
 
             #-----------#
             # use vacant gpu when there is no worloads 
@@ -643,12 +707,65 @@ class Server(object):
 
 
         #---------------------------------------------------------------------#
-        # DINN Model 
+        # DINN Model : 
+        # 1) filter out good candidate to co-run, 
+        # 2) then use perfmodel to select the best
         #---------------------------------------------------------------------#
         elif scheme == 'dinn':  # deep interference performance model 
-            print "dinn"
+            print "running <dinn>"
+            current_dinnfeats = app2dinnfeats[appName]
+            #print current_dinnfeats
+            current_trace = app2trace[appName]
 
-        else:
+            #-----------------------------------------------------------------#
+            # 1) use 'll' to find the vacant node
+            # 2) Given all nodes are busy, select node with least perf impact 
+            #-----------------------------------------------------------------#
+            current_dev, current_jobs = self.find_least_loaded_node(GpuJobs_dd)
+
+            if current_jobs == 0:
+                target_dev = current_dev
+                with self.lock:
+                    GpuTraces_dd[target_dev]    = current_trace 
+                    GpuDinnFeats_dd[target_dev] = current_dinnfeats 
+            elif current_jobs > 0: # when there are active jobs running
+                # select the good candidates among all the gpus using dpModel 
+                with self.lock:
+                    reset_graph()
+                    sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+                    dpModel = dinn(sess) # init a dinn class
+                    X_input = getCombo(GpuDinnFeats_dd, current_dinnfeats)
+                    print X_input.shape
+                    # predict using the deep learning model
+                    test_results = dpModel.test(X_input, ckpt_model='./dinn/models/dinn_final.ckpt')
+                    print test_results
+
+
+                #AvgSlowDown_list = []
+                #for gid in xrange(self.gpuNum): 
+                #    AvgSlowDown = predict_perf(GpuTraces_dd[gid], current_app_trace)
+                #    #print AvgSlowDown
+                #    AvgSlowDown_list.append(AvgSlowDown)
+
+                ##========#
+                ## look for the smallest slowdown
+                ##========#
+                #min_slowdown = LARGE_NUM
+                #for devid, slowdown_ratio in enumerate(AvgSlowDown_list):
+                #    if slowdown_ratio < min_slowdown:
+                #        min_slowdown = slowdown_ratio
+                #        target_dev = devid
+
+                ##=========#
+                ## update trace on that node 
+                ##=========#
+                #with self.lock:
+                #    GpuTraces_dd[target_dev] = current_app_trace 
+            else: # in case the job number is < 0
+                self.logger.debug(
+                    "[Error!] gpu job is negative! Existing...")
+                sys.exit(1)
+        else: # when the scheme is not defined
             self.logger.debug("Unknown scheduling scheme!")
             sys.exit(1)
 
@@ -677,7 +794,7 @@ class Server(object):
     #-------------------------------------------------------------------------#
     def handleWorkload(self, connection, address, jobID,
                        GpuJobTable, GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd,
-                       GpuTraces_dd):
+                       GpuTraces_dd, GpuDinnFeats_dd):
         '''
         schedule workloads on the gpu
         '''
@@ -709,17 +826,12 @@ class Server(object):
                 app_dir = app2dir[appName]
                 app_cmd = app2cmd[appName]
 
-                #data_split = data.split(';')
-                # print data_split
-                #app_dir, app_cmd = data_split[0], data_split[1]
-                # print app_dir, app_cmd
-
                 #--------------------------------------------------------------
                 # 3) scheduler : with different schemes
                 #--------------------------------------------------------------
                 target_gpu = self.scheduler(appName, jobID, 
                         GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd,
-                        GpuTraces_dd,
+                        GpuTraces_dd, GpuDinnFeats_dd,
                         scheme=args.scheme)
 
                 self.logger.debug("TargetGPU-%r", target_gpu)
@@ -841,9 +953,12 @@ class Server(object):
         global app2cmd
         global app2metric
         global app2trace
+        global app2dinnfeats
 
         app2dir = np.load('./similarity/app2dir_dd.npy').item()
         app2cmd = np.load('./similarity/app2cmd_dd.npy').item()
+
+        #dpModel = None
 
         if args.scheme == "rr":
             self.logger.info("Round-Robin Scheduling")
@@ -863,9 +978,18 @@ class Server(object):
             self.logger.info("Total GPU applications = %r",len(app2trace))
             #print app2trace['cudasdk_MCEstimatePiP']
 
-
-
-
+        if args.scheme == "dinn":
+            #### Warning: use 0.2 gpu memory. Overuse will impact the coming workloads. 
+            ##reset_graph()
+            ##gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.2)
+            ##sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+            ##dpModel = dinn(sess)  # init a dinn class
+            self.logger.info("Scheduling using Deep Interference Neural Net Model (DINN) with Performance Model")
+            self.logger.info("Loading dinn model features ...")
+            app2dinnfeats = np.load('./dinn/app2dinnFeats_dd.npy').item()
+            self.logger.info("Loading performance model features ...")
+            app2trace = np.load('./perfmodel/app2trace_dd.npy').item()
+            self.logger.info("Total GPU applications = %r",len(app2dinnfeats))
 
 
         self.logger.debug("listening")
@@ -963,14 +1087,15 @@ class Server(object):
         # // jobs)
         #----------------------------------------------------------------------
         GpuTraces_dd = self.manager.dict()
-
         for i in xrange(self.gpuNum):
-            #gputraces = [[] for j in xrange(32)]
-            #print len(gputraces)
-            #print len(gputraces[0])
-            #GpuTraces_dd[i] = gputraces 
             GpuTraces_dd[i] = [] 
 
+        #----------------------------------------------------------------------
+        # 7) gpu node dinn feats 
+        #----------------------------------------------------------------------
+        GpuDinnFeats_dd = self.manager.dict()
+        for i in xrange(self.gpuNum):
+            GpuDinnFeats_dd[i] = [] 
 
 
         # print len(GpuMetric_dd)
@@ -1006,7 +1131,8 @@ class Server(object):
                                  args=(conn, address, jobID, 
                                      GpuJobTable, GpuJobs_dd,
                                      GpuMetric_dd, GpuMetricStat_dd,
-                                     GpuTraces_dd))
+                                     GpuTraces_dd, GpuDinnFeats_dd
+                                     ))
 
             process.daemon = False
             process.start()
@@ -1038,7 +1164,6 @@ class Server(object):
 
 
 if __name__ == "__main__":
-
     if int(args.jobs) <=0 :
         logging.info("Simulation jobs should be >= 1. (Existing!)")
         sys.exit(1)
