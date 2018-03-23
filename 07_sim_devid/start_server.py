@@ -753,39 +753,29 @@ class Server(object):
                     [bad,good] = pred_array[i,:]
                     if good > bad:
                         good_list.append(i)
-                print good_list
+                #print good_list
 
                 if len(good_list) == 1: # when there is only one candidate
                     target_dev = int(good_list[0])
                 else: # either there are 2+ options or 0 options
-                    # apply performance model 
-                    print ">>> run perf model"
-                    ## TODO
+                    #print ">>> run perf model"
+                    AvgSlowDown_list = []
+                    for gid in good_list:
+                        AvgSlowDown = predict_perf(GpuTraces_dd[gid], current_trace)
+                        AvgSlowDown_list.append(AvgSlowDown)
+                    #print AvgSlowDown_list
 
+                    # look for the smallest slowdown
+                    min_slowdown = LARGE_NUM
+                    for idx, slowdown_ratio in enumerate(AvgSlowDown_list):
+                        if slowdown_ratio < min_slowdown:
+                            min_slowdown = slowdown_ratio
+                            target_dev = int(good_list[idx])
+                    # update trace on that node 
+                    with self.lock:
+                        GpuTraces_dd[target_dev] = current_trace 
+                        GpuDinnFeats_dd[target_dev] = current_dinnfeats 
 
-                    #select_best(test_results)
-
-
-                #AvgSlowDown_list = []
-                #for gid in xrange(self.gpuNum): 
-                #    AvgSlowDown = predict_perf(GpuTraces_dd[gid], current_app_trace)
-                #    #print AvgSlowDown
-                #    AvgSlowDown_list.append(AvgSlowDown)
-
-                ##========#
-                ## look for the smallest slowdown
-                ##========#
-                #min_slowdown = LARGE_NUM
-                #for devid, slowdown_ratio in enumerate(AvgSlowDown_list):
-                #    if slowdown_ratio < min_slowdown:
-                #        min_slowdown = slowdown_ratio
-                #        target_dev = devid
-
-                ##=========#
-                ## update trace on that node 
-                ##=========#
-                #with self.lock:
-                #    GpuTraces_dd[target_dev] = current_app_trace 
             else: # in case the job number is < 0
                 self.logger.debug(
                     "[Error!] gpu job is negative! Existing...")
