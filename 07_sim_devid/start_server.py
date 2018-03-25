@@ -15,6 +15,7 @@ import copy # deepcopy
 
 import numpy as np
 import multiprocessing as mp
+from random import randint
 
 from multiprocessing import Pool, Value, Lock, Manager
 from subprocess import check_call, STDOUT, CalledProcessError
@@ -39,26 +40,20 @@ args = parser.parse_args()
 #===========#
 # DINN model
 #===========#
-#dpModel = None
 app2dinnfeats = None
 gpu_options = None
+TFconfig = None
+#gpu_to_run = 7 #  7 to 11
 
 if args.scheme == "dinn":
     sys.path.append('./dinn')
     from model import dinn, reset_graph
     reset_graph()
-    gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.3)
-    # turn off the init msg
-
-    #sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-    #dpModel = dinn(sess)  # init a dinn class
-
-
-### Warning: use 0.3 gpu memory. Overuse will impact the coming workloads. 
-##print("Run Tensorflow [GPU]\n")
-##gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.3)
-##sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-##dpModel = dinn(sess)  # init a dinn class
+    #gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.5) # gpu memory usage
+    #gpu_options = tf.GPUOptions(allow_growth=True) # gpu memory usage
+    TFconfig = tf.ConfigProto()
+    TFconfig.intra_op_parallelism_threads = 4
+    TFconfig.inter_op_parallelism_threads = 44
 
 
 
@@ -480,8 +475,9 @@ class Server(object):
         self.hostname = hostname
         self.port = port
         #self.gpuNum = 1         # Note:  gpus in cluster
-        self.gpuNum = 2        # Note:  gpus in cluster
+        #self.gpuNum = 2        # Note:  gpus in cluster
         #self.gpuNum = 12         # Note:  gpus in cluster
+        self.gpuNum = 6         # Note:  gpus in cluster
         self.lock = Lock()
         self.manager = Manager()
 
@@ -503,7 +499,7 @@ class Server(object):
     def scheduler(self, appName, jobID, 
             GpuJobs_dd, 
             GpuMetric_dd, GpuMetricStat_dd,
-            GpuTraces_dd, GpuDinnFeats_dd,
+            GpuTraces_dd, GpuDinnFeats_dd, gpu_to_run,
             scheme='rr'):
         """
         Decide whitch gpu to allocate the job.
@@ -511,6 +507,8 @@ class Server(object):
         self.logger.debug("(Monitoring)")
         target_dev = 0
         global gpu_options 
+        global TFconfig
+        #global gpu_to_run
 
         #--------------------------------
         # check current GPU Node Status
@@ -714,7 +712,6 @@ class Server(object):
         # 2) then use perfmodel to select the best
         #---------------------------------------------------------------------#
         elif scheme == 'dinn':  # deep interference performance model 
-            print "running <dinn>"
             current_dinnfeats = app2dinnfeats[appName]
             #print current_dinnfeats
             current_trace = app2trace[appName]
@@ -731,17 +728,31 @@ class Server(object):
                     GpuTraces_dd[target_dev]    = current_trace 
                     GpuDinnFeats_dd[target_dev] = current_dinnfeats 
             elif current_jobs > 0: # when there are active jobs running
+                print ">>> running DINN"
                 pred_array = None
                 # select the good candidates among all the gpus using dpModel 
                 with self.lock:
-                    #reset_graph()
-                    sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+                    ### randomly pick 7-11 gpu
+                    ##tf_dev = randint(7,11) 
+                    ##os.environ['CUDA_VISIBLE_DEVICES'] = str(tf_dev) 
+
+                    ### from 7 to 11
+                    ##os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_to_run.value) 
+                    ##gpu_to_run.value = gpu_to_run.value + 1
+                    ##if gpu_to_run.value == 12:
+                    ##    gpu_to_run.value = 6
+
+
+                    
+                    #sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+                    sess = tf.Session(config=TFconfig)
                     dpModel = dinn(sess) # init a dinn class
                     X_input = getCombo(GpuDinnFeats_dd, current_dinnfeats)
                     #print X_input.shape
                     # predict using the deep learning model
                     test_results = dpModel.test(X_input, ckpt_model='./dinn/models/dinn_final.ckpt')
                     pred_array = test_results[0] # NOTE: test_results is a list
+                    reset_graph()
 
                 if pred_array is None:
                     print(">>> Error! pred_array is None!")
@@ -809,7 +820,7 @@ class Server(object):
     #-------------------------------------------------------------------------#
     def handleWorkload(self, connection, address, jobID,
                        GpuJobTable, GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd,
-                       GpuTraces_dd, GpuDinnFeats_dd):
+                       GpuTraces_dd, GpuDinnFeats_dd, gpu_to_run):
         '''
         schedule workloads on the gpu
         '''
@@ -846,7 +857,7 @@ class Server(object):
                 #--------------------------------------------------------------
                 target_gpu = self.scheduler(appName, jobID, 
                         GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd,
-                        GpuTraces_dd, GpuDinnFeats_dd,
+                        GpuTraces_dd, GpuDinnFeats_dd, gpu_to_run,
                         scheme=args.scheme)
 
                 self.logger.debug("TargetGPU-%r", target_gpu)
@@ -1112,6 +1123,12 @@ class Server(object):
         for i in xrange(self.gpuNum):
             GpuDinnFeats_dd[i] = [] 
 
+        #----------------------------------------------------------------------
+        # 8) node to run tf 
+        #----------------------------------------------------------------------
+        gpu_to_run = Value('i', 6) 
+        ##print gpu_to_run.value
+        ##print type(gpu_to_run.value)
 
         # print len(GpuMetric_dd)
         # print GpuMetric_dd[0].shape
@@ -1146,7 +1163,7 @@ class Server(object):
                                  args=(conn, address, jobID, 
                                      GpuJobTable, GpuJobs_dd,
                                      GpuMetric_dd, GpuMetricStat_dd,
-                                     GpuTraces_dd, GpuDinnFeats_dd
+                                     GpuTraces_dd, GpuDinnFeats_dd,gpu_to_run,
                                      ))
 
             process.daemon = False
@@ -1160,8 +1177,8 @@ class Server(object):
                 process.join()  # make sure the last process ends
 
                 # wait for 30s
-                self.logger.debug("\n\nWait 30 seconds before ending.\n\n")
-                time.sleep(30)
+                self.logger.debug("\n\nWait ?? seconds before ending.\n\n")
+                time.sleep(200)
 
                 self.logger.debug("\n\nEnd Simulation\n\n")
                 if maxJobs < total_jobs:
