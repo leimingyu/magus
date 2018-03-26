@@ -1178,14 +1178,17 @@ class Server(object):
             if jobID == total_jobs - 1:  # jobID starts from 0
                 process.join()  # make sure the last process ends
 
-                # wait for 30s
                 self.logger.debug("\n\nWait 10 seconds before ending.\n\n")
                 time.sleep(10)
 
-                # check the Gpu
                 with self.lock:
-                    for i in self.gpu
-                    GpuJobs_dd[target_gpu] = GpuJobs_dd[target_gpu] - 1 
+                    GpuJobs_dict = dict(GpuJobs_dd)
+                    activeJobNum = 0
+                    for key, value in GpuJobs_dict.iteritems():
+                        print value
+                        activeJobNum = activeJobNum + value
+
+                    print activeJobNum
 
                 self.logger.debug("\n\nEnd Simulation\n\n")
                 if maxJobs < total_jobs:
