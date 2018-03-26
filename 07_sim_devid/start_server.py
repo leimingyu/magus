@@ -1181,8 +1181,8 @@ class Server(object):
                 self.logger.debug("\n\nWait 10 seconds before ending.\n\n")
                 time.sleep(10)
 
+                self.logger.debug("\n\nWaiting for jobs to end. Grab a coffee if you like.\n\n")
                 AllFinish = False
-
                 while not AllFinish:
                     with self.lock:
                         GpuJobs_dict = dict(GpuJobs_dd)
@@ -1199,13 +1199,6 @@ class Server(object):
                         "\n\nError! The total_jobs exceeds the limit!\n\n")
                 self.PrintGpuJobTable(GpuJobTable, total_jobs)
 
-                ##
-                # also print the Gpu Node Status
-                ##
-                # with self.lock:
-                #    print("\nGpuID\tActiveJobs")
-                #    for gid in xrange(self.gpuNum):
-                #        print("{}\t{}".format(gid, GpuNodeStatus[gid, 0]))
 
 
 if __name__ == "__main__":
