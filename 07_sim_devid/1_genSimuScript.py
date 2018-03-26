@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys,os,stat,time,math,random
+import copy
 import socket
 import multiprocessing as mp
 
@@ -12,6 +13,46 @@ import GPUApp_pb2
 DEVNULL = open(os.devnull, 'wb', 0) # no std out
 #magus_debug = False 
 magus_debug = True 
+
+def gen_app_seq(apps_list, wait_time_list, outFile="xxx.sh", test_num = 0):
+    file_content="#!/bin/bash" + "\n"
+
+    pid = 1
+    total_apps = len(apps_list) - 1
+    
+    count_jobs = 0
+    for i, app in enumerate(apps_list):
+        if i == 0:
+            wait_time = 0 
+        else:
+            wait_time = wait_time_list[i - 1]   # add watiting time for current app 
+
+
+        #app_cmd = str(app[1]) + ";" + str(app[2]) 
+        #app_cmd = str(app[0]) # send the appName
+        app_cmd = str(app) # send the appName
+
+
+        #
+        # call run_client.py, 
+        # with options: app_cmd, wait time and & (running in bg)
+        #
+        file_content += "sleep " + str(wait_time) + "\n"
+        file_content += "./run_client.py" + " \"" + app_cmd + "\" &\n"
+
+        count_jobs = i
+
+        if test_num <> 0 and i == test_num:
+            break
+
+    print("\n[LOG] Generate total jobs = {}.".format(count_jobs + 1))
+
+    with open(outFile, "w+") as myfile:                                         
+        myfile.write(file_content)
+
+    st = os.stat(outFile)
+    os.chmod(outFile, st.st_mode | stat.S_IEXEC)
+
 
 #------------------------------------------------------------------------------
 # read appinfo from protobuf
@@ -104,8 +145,34 @@ def main():
     apps_num = len(apps_list)
     print("\n[LOG] Total GPU Applications : {}.".format(apps_num))
 
-    print apps_list
 
+    #----------
+    #  3 different app launch sequences
+    #----------
+    # test 1
+    print "\ntest1"
+    app_v1 = [v[0] for v in apps_list]
+    print app_v1[:3]
+
+    # test 2
+    print "\ntest2"
+    random.seed(a=321)
+    idx = [i for i in xrange(0, apps_num)]
+    #print idx
+    random.shuffle(idx)
+    #print idx
+    app_v2 = [app_v1[i] for i in idx]
+    print app_v2[:3]
+
+    # test 3
+    print "\ntest3"
+    random.seed(a=830)
+    idx = [i for i in xrange(0, apps_num)]
+    #print idx
+    random.shuffle(idx)
+    #print idx
+    app_v3 = [app_v1[i] for i in idx]
+    print app_v3[:3]
 
 
 
@@ -129,51 +196,12 @@ def main():
         print wait_time_list
         #print len(wait_time_list)
 
-    #
+    #------------------------------
     # Generate script for clients 
-    #
-    outFile="2_dispatch_clients.sh"
-
-    file_content="#!/bin/bash" + "\n"
-
-    pid = 1
-    total_apps = len(apps_list) - 1
-    
-    count_jobs = 0
-    for i, app in enumerate(apps_list):
-        if i == 0:
-            wait_time = 0 
-        else:
-            wait_time = wait_time_list[i - 1]   # add watiting time for current app 
-
-
-        #app_cmd = str(app[1]) + ";" + str(app[2]) 
-        app_cmd = str(app[0]) # send the appName
-
-
-        #
-        # call run_client.py, 
-        # with options: app_cmd, wait time and & (running in bg)
-        #
-        file_content += "sleep " + str(wait_time) + "\n"
-        file_content += "./run_client.py" + " \"" + app_cmd + "\" &\n"
-
-        count_jobs = i
-
-        if i==10: break
-
-    print("\n[LOG] Generate total jobs = {}.".format(count_jobs + 1))
-
-    with open(outFile, "w+") as myfile:                                         
-        myfile.write(file_content)
-
-    st = os.stat(outFile)
-    os.chmod(outFile, st.st_mode | stat.S_IEXEC)
-
-    #
-    # terminate simulation
-    #
-    #send2server('end_simulation', 3) # wait for 3 seconds
+    #------------------------------
+    gen_app_seq(app_v1, wait_time_list, outFile="2_runseq1.sh")
+    gen_app_seq(app_v2, wait_time_list, outFile="2_runseq2.sh")
+    gen_app_seq(app_v3, wait_time_list, outFile="2_runseq3.sh")
 
 
 
