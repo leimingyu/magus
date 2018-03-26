@@ -1181,16 +1181,19 @@ class Server(object):
                 self.logger.debug("\n\nWait 10 seconds before ending.\n\n")
                 time.sleep(10)
 
-                with self.lock:
-                    GpuJobs_dict = dict(GpuJobs_dd)
-                    activeJobNum = 0
-                    for key, value in GpuJobs_dict.iteritems():
-                        print value
-                        activeJobNum = activeJobNum + value
+                AllFinish = False
 
-                    print activeJobNum
+                while not AllFinish:
+                    with self.lock:
+                        GpuJobs_dict = dict(GpuJobs_dd)
+                        activeJobNum = 0
+                        for key, value in GpuJobs_dict.iteritems():
+                            activeJobNum = activeJobNum + value
+                        if activeJobNum ==0:
+                            AllFinish = True
 
                 self.logger.debug("\n\nEnd Simulation\n\n")
+
                 if maxJobs < total_jobs:
                     self.logger.debug(
                         "\n\nError! The total_jobs exceeds the limit!\n\n")
