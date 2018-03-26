@@ -104,6 +104,11 @@ def main():
     apps_num = len(apps_list)
     print("\n[LOG] Total GPU Applications : {}.".format(apps_num))
 
+    print apps_list
+
+
+
+
     #
     # 2) schedule app starting time 
     #
@@ -155,7 +160,7 @@ def main():
 
         count_jobs = i
 
-        if i==4: break
+        if i==10: break
 
     print("\n[LOG] Generate total jobs = {}.".format(count_jobs + 1))
 
