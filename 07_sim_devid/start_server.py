@@ -477,7 +477,9 @@ class Server(object):
         #self.gpuNum = 1         # Note:  gpus in cluster
         #self.gpuNum = 2        # Note:  gpus in cluster
         #self.gpuNum = 12         # Note:  gpus in cluster
-        self.gpuNum = 6         # Note:  gpus in cluster
+        #self.gpuNum = 6         # Note:  gpus in cluster
+        #self.gpuNum = 4         # Note:  gpus in cluster
+        self.gpuNum = 2         # Note:  gpus in cluster
         self.lock = Lock()
         self.manager = Manager()
 
@@ -1177,8 +1179,13 @@ class Server(object):
                 process.join()  # make sure the last process ends
 
                 # wait for 30s
-                self.logger.debug("\n\nWait ?? seconds before ending.\n\n")
-                time.sleep(200)
+                self.logger.debug("\n\nWait 10 seconds before ending.\n\n")
+                time.sleep(10)
+
+                # check the Gpu
+                with self.lock:
+                    for i in self.gpu
+                    GpuJobs_dd[target_gpu] = GpuJobs_dd[target_gpu] - 1 
 
                 self.logger.debug("\n\nEnd Simulation\n\n")
                 if maxJobs < total_jobs:
@@ -1197,7 +1204,7 @@ class Server(object):
 
 if __name__ == "__main__":
     if int(args.jobs) <=0 :
-        logging.info("Simulation jobs should be >= 1. (Existing!)")
+        logging.info("Simulation jobs should be >= 1 (-j). Supported schemes : rr/ll/sim/perf/dinn (-s) (Existing!)")
         sys.exit(1)
 
     server = Server("0.0.0.0", 9000)
