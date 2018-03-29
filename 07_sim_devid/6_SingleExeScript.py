@@ -54,6 +54,27 @@ def gen_app_seq(apps_list, wait_time_list, outFile="xxx.sh", test_num = 0):
     os.chmod(outFile, st.st_mode | stat.S_IEXEC)
 
 
+def gen_single(app, outFile="xxx.sh"):
+    file_content="#!/bin/bash" + "\n"
+    
+    # 10 tests
+    for i in xrange(10):
+        if i == 0:
+            wait_time = 0 
+        else:
+            wait_time = 1 
+
+        app_cmd = str(app) # send the appName
+
+        file_content += "sleep " + str(wait_time) + "\n"
+        file_content += "../run_client.py" + " \"" + app_cmd + "\" \n"
+
+    with open(outFile, "w+") as myfile:                                         
+        myfile.write(file_content)
+
+    st = os.stat(outFile)
+    os.chmod(outFile, st.st_mode | stat.S_IEXEC)
+
 #------------------------------------------------------------------------------
 # read appinfo from protobuf
 #------------------------------------------------------------------------------
@@ -199,10 +220,20 @@ def main():
     #------------------------------
     # Generate script for clients 
     #------------------------------
-    gen_app_seq(app_v1, wait_time_list, outFile="6_seq1.sh")
-    gen_app_seq(app_v2, wait_time_list, outFile="6_seq2.sh")
-    gen_app_seq(app_v3, wait_time_list, outFile="6_seq3.sh")
 
+    #gen_app_seq(app_v1, wait_time_list, outFile="6_seq1.sh")
+    #gen_app_seq(app_v2, wait_time_list, outFile="6_seq2.sh")
+    #gen_app_seq(app_v3, wait_time_list, outFile="6_seq3.sh")
+
+    # mkdir
+
+    out_dir="s1"
+    if not os.path.exists(out_dir): os.makedirs(out_dir)
+
+    for i, app in enumerate(app_v1):
+        out_file = "./" + out_dir + "/" + str(i) + "-" + str(app) + ".sh"
+        #print out_file
+        gen_single(app, out_file)
 
 
 if __name__ == "__main__":
