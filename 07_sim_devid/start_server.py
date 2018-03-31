@@ -476,9 +476,11 @@ class Server(object):
         self.port = port
         #self.gpuNum = 1         # Note:  gpus in cluster
         #self.gpuNum = 2        # Note:  gpus in cluster
+        
         #self.gpuNum = 12         # Note:  gpus in cluster
         #self.gpuNum = 6         # Note:  gpus in cluster
         #self.gpuNum = 4         # Note:  gpus in cluster
+        #self.gpuNum = 6         # Note:  gpus in cluster
         self.gpuNum = 2         # Note:  gpus in cluster
         self.lock = Lock()
         self.manager = Manager()
@@ -1178,8 +1180,8 @@ class Server(object):
             if jobID == total_jobs - 1:  # jobID starts from 0
                 process.join()  # make sure the last process ends
 
-                self.logger.debug("\n\nWait 10 seconds before ending.\n\n")
-                time.sleep(10)
+                self.logger.debug("\n\nWait 1 seconds before ending.\n\n")
+                time.sleep(1)
 
                 self.logger.debug("\n\nWaiting for jobs to end. Grab a coffee if you like.\n\n")
                 AllFinish = False
@@ -1197,6 +1199,7 @@ class Server(object):
                 if maxJobs < total_jobs:
                     self.logger.debug(
                         "\n\nError! The total_jobs exceeds the limit!\n\n")
+
                 self.PrintGpuJobTable(GpuJobTable, total_jobs)
 
 
