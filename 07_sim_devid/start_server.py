@@ -503,7 +503,7 @@ class Server(object):
     def scheduler(self, appName, jobID, 
             GpuJobs_dd, 
             GpuMetric_dd, GpuMetricStat_dd,
-            GpuTraces_dd, GpuDinnFeats_dd, gpu_to_run,
+            GpuTraces_dd, GpuDinnFeats_dd, gpu_to_run, dinn_num,
             scheme='rr'):
         """
         Decide whitch gpu to allocate the job.
@@ -733,63 +733,97 @@ class Server(object):
                     GpuDinnFeats_dd[target_dev] = current_dinnfeats 
             elif current_jobs > 0: # when there are active jobs running
                 print ">>> running DINN"
-                pred_array = None
-                # select the good candidates among all the gpus using dpModel 
+                DINN_2_PERF = False
+
                 with self.lock:
-                    ### randomly pick 7-11 gpu
-                    ##tf_dev = randint(7,11) 
-                    ##os.environ['CUDA_VISIBLE_DEVICES'] = str(tf_dev) 
+                    if dinn_num.value == 0: # check the limit
+                        DINN_2_PERF = True
 
-                    ### from 7 to 11
-                    ##os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_to_run.value) 
-                    ##gpu_to_run.value = gpu_to_run.value + 1
-                    ##if gpu_to_run.value == 12:
-                    ##    gpu_to_run.value = 6
-
-
-                    
-                    #sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-                    sess = tf.Session(config=TFconfig)
-                    dpModel = dinn(sess) # init a dinn class
-                    X_input = getCombo(GpuDinnFeats_dd, current_dinnfeats)
-                    #print X_input.shape
-                    # predict using the deep learning model
-                    test_results = dpModel.test(X_input, ckpt_model='./dinn/models/dinn_final.ckpt')
-                    pred_array = test_results[0] # NOTE: test_results is a list
-                    reset_graph()
-
-                if pred_array is None:
-                    print(">>> Error! pred_array is None!")
-
-                #print pred_array.shape
-                good_list = []
-                for i in xrange(self.gpuNum):
-                    #print pred_array[i,0], pred_array[i,1]
-                    [bad,good] = pred_array[i,:]
-                    if good > bad:
-                        good_list.append(i)
-                #print good_list
-
-                if len(good_list) == 1: # when there is only one candidate
-                    target_dev = int(good_list[0])
-                else: # either there are 2+ options or 0 options
-                    #print ">>> run perf model"
+                if DINN_2_PERF:
+                    print ">>> fall back to perf model"
                     AvgSlowDown_list = []
-                    for gid in good_list:
+                    for gid in xrange(self.gpuNum): 
                         AvgSlowDown = predict_perf(GpuTraces_dd[gid], current_trace)
                         AvgSlowDown_list.append(AvgSlowDown)
-                    #print AvgSlowDown_list
-
+                    #========#
                     # look for the smallest slowdown
+                    #========#
                     min_slowdown = LARGE_NUM
-                    for idx, slowdown_ratio in enumerate(AvgSlowDown_list):
+                    for devid, slowdown_ratio in enumerate(AvgSlowDown_list):
                         if slowdown_ratio < min_slowdown:
                             min_slowdown = slowdown_ratio
-                            target_dev = int(good_list[idx])
+                            target_dev = devid
+                    #=========#
+                    # update trace on that node 
+                    #=========#
+                    with self.lock:
+                        GpuTraces_dd[target_dev]    = current_app_trace 
+                        GpuDinnFeats_dd[target_dev] = current_dinnfeats 
+
+                #==========#
+                # USE DINN
+                #==========#
+                else:
+                    pred_array = None
+                    # update asap
+                    with self.lock:
+                        dinn_num.value = dinn_num.value - 1:
+
+                    # select the good candidates among all the gpus using dpModel 
+                    with self.lock:
+                        ### randomly pick 7-11 gpu
+                        ##tf_dev = randint(7,11) 
+                        ##os.environ['CUDA_VISIBLE_DEVICES'] = str(tf_dev) 
+
+                        ### from 7 to 11
+                        ##os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_to_run.value) 
+                        ##gpu_to_run.value = gpu_to_run.value + 1
+                        ##if gpu_to_run.value == 12:
+                        ##    gpu_to_run.value = 6
+                        
+                        #sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+                        sess = tf.Session(config=TFconfig)
+                        dpModel = dinn(sess) # init a dinn class
+                        X_input = getCombo(GpuDinnFeats_dd, current_dinnfeats)
+                        #print X_input.shape
+                        # predict using the deep learning model
+                        test_results = dpModel.test(X_input, ckpt_model='./dinn/models/dinn_final.ckpt')
+                        pred_array = test_results[0] # NOTE: test_results is a list
+                        reset_graph()
+
+                    # double check
+                    if pred_array is None:
+                        print(">>> Error! pred_array is None!")
+
+                    good_list = []
+                    for i in xrange(self.gpuNum):
+                        #print pred_array[i,0], pred_array[i,1]
+                        [bad,good] = pred_array[i,:]
+                        if good > bad:
+                            good_list.append(i)
+
+                    if len(good_list) == 1: # when there is only one candidate
+                        target_dev = int(good_list[0])
+                    else: # either there are 2+ options or 0 options
+                        #print ">>> run perf model"
+                        AvgSlowDown_list = []
+                        for gid in good_list:
+                            AvgSlowDown = predict_perf(GpuTraces_dd[gid], current_trace)
+                            AvgSlowDown_list.append(AvgSlowDown)
+                        #print AvgSlowDown_list
+
+                        # look for the smallest slowdown
+                        min_slowdown = LARGE_NUM
+                        for idx, slowdown_ratio in enumerate(AvgSlowDown_list):
+                            if slowdown_ratio < min_slowdown:
+                                min_slowdown = slowdown_ratio
+                                target_dev = int(good_list[idx])
+
                     # update trace on that node 
                     with self.lock:
                         GpuTraces_dd[target_dev] = current_trace 
                         GpuDinnFeats_dd[target_dev] = current_dinnfeats 
+                        dinn_num.value = dinn_num.value + 1: # update the dinn_num
 
             else: # in case the job number is < 0
                 self.logger.debug(
@@ -824,7 +858,7 @@ class Server(object):
     #-------------------------------------------------------------------------#
     def handleWorkload(self, connection, address, jobID,
                        GpuJobTable, GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd,
-                       GpuTraces_dd, GpuDinnFeats_dd, gpu_to_run):
+                       GpuTraces_dd, GpuDinnFeats_dd, gpu_to_run, dinn_num):
         '''
         schedule workloads on the gpu
         '''
@@ -861,7 +895,7 @@ class Server(object):
                 #--------------------------------------------------------------
                 target_gpu = self.scheduler(appName, jobID, 
                         GpuJobs_dd, GpuMetric_dd, GpuMetricStat_dd,
-                        GpuTraces_dd, GpuDinnFeats_dd, gpu_to_run,
+                        GpuTraces_dd, GpuDinnFeats_dd, gpu_to_run, dinn_num,
                         scheme=args.scheme)
 
                 self.logger.debug("TargetGPU-%r", target_gpu)
@@ -1131,6 +1165,13 @@ class Server(object):
         # 8) node to run tf 
         #----------------------------------------------------------------------
         gpu_to_run = Value('i', 6) 
+
+        #----------------------------------------------------------------------
+        # 9) processes to run dinn 
+        #   NOTE: max 4 dinns
+        #----------------------------------------------------------------------
+        dinn_num = Value('i', 4) 
+
         ##print gpu_to_run.value
         ##print type(gpu_to_run.value)
 
@@ -1167,8 +1208,7 @@ class Server(object):
                                  args=(conn, address, jobID, 
                                      GpuJobTable, GpuJobs_dd,
                                      GpuMetric_dd, GpuMetricStat_dd,
-                                     GpuTraces_dd, GpuDinnFeats_dd,gpu_to_run,
-                                     ))
+                                     GpuTraces_dd, GpuDinnFeats_dd,gpu_to_run, dinn_num))
 
             process.daemon = False
             process.start()
