@@ -32,7 +32,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 #===========#
 import argparse
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn')
+parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn/simp')
 parser.add_argument('-j', dest='jobs', default=0, help='jobs to simulate')
 args = parser.parse_args()
 
@@ -44,6 +44,10 @@ app2dinnfeats = None
 gpu_options = None
 TFconfig = None
 #gpu_to_run = 7 #  7 to 11
+
+#sys.path.append('./dinn')
+#from model import dinn, reset_graph
+#reset_graph()
 
 if args.scheme == "dinn":
     sys.path.append('./dinn')
@@ -543,6 +547,7 @@ class Server(object):
             # 2) Given all nodes are busy, select node with the least euclidean
             # distance
             #-------------------------#
+            #current_dev, current_jobs = self.find_least_loaded_node(GpuJobs_dd)
             current_dev, current_jobs = self.find_least_loaded_node(GpuJobs_dd)
 
             if current_jobs == 0:
@@ -731,65 +736,77 @@ class Server(object):
                 with self.lock:
                     GpuTraces_dd[target_dev]    = current_trace 
                     GpuDinnFeats_dd[target_dev] = current_dinnfeats 
+
             elif current_jobs > 0: # when there are active jobs running
-                print ">>> running DINN"
-                DINN_2_PERF = False
+                #print ">>> running DINN"
+
+
+                #DINN_2_PERF = False
+                DINN_2_LL = False
 
                 with self.lock:
                     if dinn_num.value == 0: # check the limit
-                        DINN_2_PERF = True
+                        #DINN_2_PERF = True
+                        DINN_2_LL = True
 
-                if DINN_2_PERF:
-                    print ">>> fall back to perf model"
-                    AvgSlowDown_list = []
-                    for gid in xrange(self.gpuNum): 
-                        AvgSlowDown = predict_perf(GpuTraces_dd[gid], current_trace)
-                        AvgSlowDown_list.append(AvgSlowDown)
-                    #========#
-                    # look for the smallest slowdown
-                    #========#
-                    min_slowdown = LARGE_NUM
-                    for devid, slowdown_ratio in enumerate(AvgSlowDown_list):
-                        if slowdown_ratio < min_slowdown:
-                            min_slowdown = slowdown_ratio
-                            target_dev = devid
-                    #=========#
-                    # update trace on that node 
-                    #=========#
-                    with self.lock:
-                        GpuTraces_dd[target_dev]    = current_app_trace 
-                        GpuDinnFeats_dd[target_dev] = current_dinnfeats 
+                if DINN_2_LL:
+                    target_dev = current_dev
+                    GpuTraces_dd[target_dev] = current_trace 
+                    GpuDinnFeats_dd[target_dev] = current_dinnfeats 
+
+                ##if DINN_2_PERF:
+                ##    print ">>> fall back to perf model"
+                ##    AvgSlowDown_list = []
+                ##    for gid in xrange(self.gpuNum): 
+                ##        AvgSlowDown = predict_perf(GpuTraces_dd[gid], current_trace)
+                ##        AvgSlowDown_list.append(AvgSlowDown)
+                ##    #========#
+                ##    # look for the smallest slowdown
+                ##    #========#
+                ##    min_slowdown = LARGE_NUM
+                ##    for devid, slowdown_ratio in enumerate(AvgSlowDown_list):
+                ##        if slowdown_ratio < min_slowdown:
+                ##            min_slowdown = slowdown_ratio
+                ##            target_dev = devid
+                ##    #=========#
+                ##    # update trace on that node 
+                ##    #=========#
+                ##    with self.lock:
+                ##        GpuTraces_dd[target_dev]    = current_trace 
+                ##        GpuDinnFeats_dd[target_dev] = current_dinnfeats 
 
                 #==========#
                 # USE DINN
                 #==========#
                 else:
+                    print ">>> running DINN"
                     pred_array = None
                     # update asap
                     with self.lock:
-                        dinn_num.value = dinn_num.value - 1:
+                        dinn_num.value = dinn_num.value - 1
 
-                    # select the good candidates among all the gpus using dpModel 
-                    with self.lock:
-                        ### randomly pick 7-11 gpu
-                        ##tf_dev = randint(7,11) 
-                        ##os.environ['CUDA_VISIBLE_DEVICES'] = str(tf_dev) 
+                    ### select the good candidates among all the gpus using dpModel 
+                    ##with self.lock:
+                    ##    ### randomly pick 7-11 gpu
+                    ##    ##tf_dev = randint(7,11) 
+                    ##    ##os.environ['CUDA_VISIBLE_DEVICES'] = str(tf_dev) 
 
-                        ### from 7 to 11
-                        ##os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_to_run.value) 
-                        ##gpu_to_run.value = gpu_to_run.value + 1
-                        ##if gpu_to_run.value == 12:
-                        ##    gpu_to_run.value = 6
-                        
-                        #sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-                        sess = tf.Session(config=TFconfig)
-                        dpModel = dinn(sess) # init a dinn class
-                        X_input = getCombo(GpuDinnFeats_dd, current_dinnfeats)
-                        #print X_input.shape
-                        # predict using the deep learning model
-                        test_results = dpModel.test(X_input, ckpt_model='./dinn/models/dinn_final.ckpt')
-                        pred_array = test_results[0] # NOTE: test_results is a list
-                        reset_graph()
+                    ##    ### from 7 to 11
+                    ##    os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_to_run.value) 
+                    ##    gpu_to_run.value = gpu_to_run.value + 1
+                    ##    if gpu_to_run.value == 12:
+                    ##        gpu_to_run.value = 8  # start from gpu 8
+
+                    #sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+                    sess = tf.Session(config=TFconfig)
+                    dpModel = dinn(sess) # init a dinn class
+                    X_input = getCombo(GpuDinnFeats_dd, current_dinnfeats)
+                    #print X_input.shape
+                    # predict using the deep learning model
+                    test_results = dpModel.test(X_input, ckpt_model='./dinn/models/dinn_final.ckpt')
+                    pred_array = test_results[0] # NOTE: test_results is a list
+                    sess.close()
+                    reset_graph()
 
                     # double check
                     if pred_array is None:
@@ -823,7 +840,7 @@ class Server(object):
                     with self.lock:
                         GpuTraces_dd[target_dev] = current_trace 
                         GpuDinnFeats_dd[target_dev] = current_dinnfeats 
-                        dinn_num.value = dinn_num.value + 1: # update the dinn_num
+                        dinn_num.value = dinn_num.value + 1 # update the dinn_num
 
             else: # in case the job number is < 0
                 self.logger.debug(
@@ -935,7 +952,7 @@ class Server(object):
                 with self.lock:
                     GpuJobs_dd[target_gpu] = GpuJobs_dd[target_gpu] - 1 
 
-                    if args.scheme == "sim":
+                    if args.scheme == "sim" or args.schem == "simp":
                         #========================
                         # Find the corresponding row for the current jobID 
                         #========================
@@ -1041,6 +1058,13 @@ class Server(object):
             app2trace = np.load('./perfmodel/app2trace_dd.npy').item()
             self.logger.info("Total GPU applications = %r",len(app2trace))
             #print app2trace['cudasdk_MCEstimatePiP']
+
+        if args.scheme == "simp":
+            self.logger.info("Scheduling based on SIMP (Similarity +  Performance Model)")
+            app2metric = np.load('./similarity/app2metric_dd.npy').item()
+            app2trace = np.load('./perfmodel/app2trace_dd.npy').item()
+
+
 
         if args.scheme == "dinn":
             #### Warning: use 0.2 gpu memory. Overuse will impact the coming workloads. 
@@ -1164,13 +1188,14 @@ class Server(object):
         #----------------------------------------------------------------------
         # 8) node to run tf 
         #----------------------------------------------------------------------
-        gpu_to_run = Value('i', 6) 
+        #gpu_to_run = Value('i', 6) 
+        gpu_to_run = Value('i', 8) 
 
         #----------------------------------------------------------------------
         # 9) processes to run dinn 
         #   NOTE: max 4 dinns
         #----------------------------------------------------------------------
-        dinn_num = Value('i', 4) 
+        dinn_num = Value('i', 1) 
 
         ##print gpu_to_run.value
         ##print type(gpu_to_run.value)
