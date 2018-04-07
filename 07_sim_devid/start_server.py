@@ -1044,7 +1044,7 @@ class Server(object):
                 with self.lock:
                     GpuJobs_dd[target_gpu] = GpuJobs_dd[target_gpu] - 1 
 
-                    if args.scheme == "sim" or args.schem == "simp":
+                    if args.scheme == "sim" or args.scheme == "simp":
                         #========================
                         # Find the corresponding row for the current jobID 
                         #========================
