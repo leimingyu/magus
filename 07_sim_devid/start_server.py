@@ -759,7 +759,7 @@ class Server(object):
             # When there has been active jobs running on current device,
             # use performance 
             #-----------#
-            elif current_jobs > 0:
+            elif firstdev_jobs > 0:
 
                 if firstdev_jobs == secnddev_jobs:
                     AvgSlowDown_list = []
