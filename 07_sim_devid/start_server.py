@@ -490,8 +490,14 @@ class Server(object):
         self.manager = Manager()
 
     def find_least_loaded_node(self, GpuJobs_dd, topK=1):
-        ll_dev_list = []
-        ll_dev_jobs = []
+        if topK == 1:
+            ll_dev_list = None 
+            ll_dev_jobs = None 
+
+        if topK >= 2:
+            ll_dev_list = []
+            ll_dev_jobs = []
+
         with self.lock:
             # sort the dd in ascending order
             sorted_stat = sorted(
@@ -502,10 +508,15 @@ class Server(object):
             if topK > len(sorted_stat):
                 print "Error! topK is too large."
                 sys.exit(1)
+            
+            if topK == 1:
+                ll_dev_list = int(sorted_stat[0][0])
+                ll_dev_jobs = int(sorted_stat[0][1])
 
-            for i in xrange(topK):
-                ll_dev_list.append(int(sorted_stat[i][0]))
-                ll_dev_jobs.append(int(sorted_stat[i][1]))
+            if topK >= 2:
+                for i in xrange(topK):
+                    ll_dev_list.append(int(sorted_stat[i][0]))
+                    ll_dev_jobs.append(int(sorted_stat[i][1]))
 
         return ll_dev_list, ll_dev_jobs 
 
