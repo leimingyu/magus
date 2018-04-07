@@ -542,7 +542,7 @@ class Server(object):
         # check current GPU Node Status
         #--------------------------------
         with self.lock:
-            print("\nGpuID\tActiveJobs (job %d)", jobID)
+            print("\nGpuID\tActiveJobs (job {})", jobID)
             for key, value in dict(GpuJobs_dd).iteritems():
                 print("{}\t{}".format(key, value))
 
