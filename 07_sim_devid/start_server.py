@@ -542,7 +542,7 @@ class Server(object):
         # check current GPU Node Status
         #--------------------------------
         with self.lock:
-            print("\nGpuID\tActiveJobs")
+            print("\nGpuID\tActiveJobs (job %d)", jobID)
             for key, value in dict(GpuJobs_dd).iteritems():
                 print("{}\t{}".format(key, value))
 
@@ -1018,7 +1018,7 @@ class Server(object):
                         GpuTraces_dd, GpuDinnFeats_dd, gpu_to_run, dinn_num,
                         scheme=args.scheme)
 
-                self.logger.debug("TargetGPU-%r", target_gpu)
+                self.logger.debug("TargetGPU-%r (job %r)", target_gpu, jobID)
 
                 #-----------------------------------------
                 # 4) update gpu job table
