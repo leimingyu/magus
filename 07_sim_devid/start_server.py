@@ -489,16 +489,25 @@ class Server(object):
         self.lock = Lock()
         self.manager = Manager()
 
-    def find_least_loaded_node(self, GpuJobs_dd):
+    def find_least_loaded_node(self, GpuJobs_dd, topK=1):
+        ll_dev_list = []
+        ll_dev_jobs = []
         with self.lock:
             # sort the dd in ascending order
             sorted_stat = sorted(
                 GpuJobs_dd.items(),
                 key=operator.itemgetter(1))
             # print sorted_stat
-            target_dev = int(sorted_stat[0][0])  # the least loaded gpu
-            target_dev_jobs = int(sorted_stat[0][1])
-        return target_dev, target_dev_jobs
+
+            if topK > len(sorted_stat):
+                print "Error! topK is too large."
+                sys.exit(1)
+
+            for i in xrange(topK):
+                ll_dev_list.append(int(sorted_stat[i][0]))
+                ll_dev_jobs.append(int(sorted_stat[i][1]))
+
+        return ll_dev_list, ll_dev_jobs 
 
 
     #-------------------------------------------------------------------------#
@@ -678,7 +687,7 @@ class Server(object):
                 # add job trace to the GpuTraces
                 #-------------------------#
                 with self.lock:
-                    GpuTraces_dd[target_dev] = app2trace[appName]
+                    GpuTraces_dd[target_dev] = current_app_trace 
 
             #-----------#
             # When there has been active jobs running on current device,
@@ -713,6 +722,89 @@ class Server(object):
                 self.logger.debug(
                     "[Error!] gpu job is negative! Existing...")
                 sys.exit(1)
+
+
+        #---------------------------------------------------------------------#
+        # SIMP 
+        #---------------------------------------------------------------------#
+        elif scheme == 'simp':  
+            appMetric = app2metric[appName].as_matrix() # get metric
+            current_app_trace = app2trace[appName] # get trace
+
+            lldev_list, lldev_jobs = self.find_least_loaded_node(GpuJobs_dd, topK=2)
+            
+            first_ll_node_job = lldev_jobs[0]
+
+            # check the 1st ll node
+            if first_ll_node_job == 0:
+                target_dev = lldev_list[0] # use the 1st ll device 
+                with self.lock:
+                    avail_row = 0
+                    # add metric to the GpuMetric
+                    GpuMetric_array = GpuMetric_dd[target_dev]
+                    GpuMetric_array[avail_row,:] = appMetric 
+                    GpuMetric_dd[target_dev] = GpuMetric_array 
+                    GpuMetricStat_array = GpuMetricStat_dd[target_dev]
+                    GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
+                    GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
+                    # add trace to the gpu
+                    GpuTraces_dd[target_dev] = current_app_trace 
+
+            elif first_ll_node_job == 1: # use perfmodel 
+                AvgSlowDown_list = []
+                for gid in xrange(self.gpuNum): 
+                    AvgSlowDown = predict_perf(GpuTraces_dd[gid], current_app_trace)
+                    #print AvgSlowDown
+                    AvgSlowDown_list.append(AvgSlowDown)
+                # look for the smallest slowdown
+                min_slowdown = LARGE_NUM
+                for devid, slowdown_ratio in enumerate(AvgSlowDown_list):
+                    if slowdown_ratio < min_slowdown:
+                        min_slowdown = slowdown_ratio
+                        target_dev = devid
+
+                with self.lock:
+                    # update trace on that node 
+                    GpuTraces_dd[target_dev] = current_app_trace 
+                    # find the row to write
+                    avail_row = check_availrow_metricarray(GpuMetric_dd[target_dev])
+                    GpuMetric_array = GpuMetric_dd[target_dev]
+                    GpuMetric_array[avail_row,:] = appMetric 
+                    GpuMetric_dd[target_dev] = GpuMetric_array 
+                    GpuMetricStat_array = GpuMetricStat_dd[target_dev]
+                    GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
+                    GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
+
+            elif first_ll_node_job >=2 : # use similarity
+                with self.lock:
+                    min_dist = LARGE_NUM # a quite large number
+                    for i in xrange(self.gpuNum): 
+                        # max column metric for each gpu in the numpy array
+                        currentGpuMetric = np.amax(GpuMetric_dd[i], axis=0)
+                        # euclidian dist 
+                        dist = np.linalg.norm(currentGpuMetric - appMetric)
+                        #print "euclidian dist: %f  ( GPU %d )" % (dist, i)
+                        if dist < min_dist:
+                            min_dist =  dist
+                            target_dev = i
+                    # update trace on the device
+                    GpuTraces_dd[target_dev] = current_app_trace 
+
+                # find the row to write
+                avail_row = check_availrow_metricarray(GpuMetric_dd[target_dev])
+                GpuMetric_array = GpuMetric_dd[target_dev]
+                GpuMetric_array[avail_row,:] = appMetric 
+                GpuMetric_dd[target_dev] = GpuMetric_array 
+                GpuMetricStat_array = GpuMetricStat_dd[target_dev]
+                GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
+                GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
+
+            else:
+                self.logger.debug(
+                    "[Error!] gpu job is negative! Existing... (simp)")
+                sys.exit(1)
+
+
 
 
         #---------------------------------------------------------------------#
