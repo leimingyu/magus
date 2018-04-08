@@ -32,7 +32,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 #===========#
 import argparse
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn/simp/perf1/perf2')
+parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn/simp/perf1/perf2/rr_perf')
 parser.add_argument('-j', dest='jobs', default=0, help='jobs to simulate')
 args = parser.parse_args()
 
@@ -483,9 +483,9 @@ class Server(object):
         
         #self.gpuNum = 12         # Note:  gpus in cluster
         #self.gpuNum = 6         # Note:  gpus in cluster
-        self.gpuNum = 4         # Note:  gpus in cluster
+        #self.gpuNum = 4         # Note:  gpus in cluster
         #self.gpuNum = 6         # Note:  gpus in cluster
-        #self.gpuNum = 2         # Note:  gpus in cluster
+        self.gpuNum = 2         # Note:  gpus in cluster
         self.lock = Lock()
         self.manager = Manager()
 
@@ -551,6 +551,35 @@ class Server(object):
 
         elif scheme == 'll':  # least load
             target_dev, _ = self.find_least_loaded_node(GpuJobs_dd)
+
+        elif scheme == 'rr_perf':
+            _, lldev_jobs = self.find_least_loaded_node(GpuJobs_dd)
+            current_app_trace = app2trace[appName]
+
+            if lldev_jobs == 0:
+                target_dev = jobID % self.gpuNum
+            else:
+                # apply perf model
+
+                AvgSlowDown_list = []
+                for gid in xrange(self.gpuNum): 
+                    AvgSlowDown = predict_perf(GpuTraces_dd[gid], current_app_trace)
+                    AvgSlowDown_list.append(AvgSlowDown)
+                #========#
+                # look for the smallest slowdown
+                #========#
+                min_slowdown = LARGE_NUM
+                for devid, slowdown_ratio in enumerate(AvgSlowDown_list):
+                    if slowdown_ratio < min_slowdown:
+                        min_slowdown = slowdown_ratio
+                        target_dev = devid
+
+            #=========#
+            # update trace on that node 
+            #=========#
+            with self.lock:
+                GpuTraces_dd[target_dev] = current_app_trace 
+
 
         #---------------------------------------------------------------------#
         # Similarity 
@@ -1267,7 +1296,7 @@ class Server(object):
             if check_key(app2dir, app2cmd, app2metric):
                 self.logger.info("Looks good!")
 
-        if args.scheme in ["perf", "perf1", "perf2"]:
+        if args.scheme in ["perf", "perf1", "perf2", "rr_perf"]:
             self.logger.info("Scheduling using Performance Model")
             app2trace = np.load('./perfmodel/app2trace_dd.npy').item()
             self.logger.info("Total GPU applications = %r",len(app2trace))
