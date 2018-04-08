@@ -583,6 +583,7 @@ class Server(object):
 
         elif scheme == 'rrSim':
             lldev, lldev_jobs = self.find_least_loaded_node(GpuJobs_dd)
+            appMetric = app2metric[appName].as_matrix()
 
             if lldev_jobs == 0:
                 target_dev = jobID % self.gpuNum
@@ -598,7 +599,6 @@ class Server(object):
 
             else:
                 # apply sim 
-                appMetric = app2metric[appName].as_matrix()
                 with self.lock:
                     min_dist = LARGE_NUM # a quite large number
                     for i in xrange(self.gpuNum): 
