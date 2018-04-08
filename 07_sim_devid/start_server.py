@@ -483,9 +483,9 @@ class Server(object):
         
         #self.gpuNum = 12         # Note:  gpus in cluster
         #self.gpuNum = 6         # Note:  gpus in cluster
-        #self.gpuNum = 4         # Note:  gpus in cluster
+        self.gpuNum = 4         # Note:  gpus in cluster
         #self.gpuNum = 6         # Note:  gpus in cluster
-        self.gpuNum = 2         # Note:  gpus in cluster
+        #self.gpuNum = 2         # Note:  gpus in cluster
         self.lock = Lock()
         self.manager = Manager()
 
