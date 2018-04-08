@@ -32,7 +32,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 #===========#
 import argparse
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn/simp/perf1/perf2/rrPerf/rrSim/llSim')
+parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn/simp/perf1/perf2/rrPerf/rrSim/llSim/llSim1')
 parser.add_argument('-j', dest='jobs', default=0, help='jobs to simulate')
 args = parser.parse_args()
 
@@ -627,6 +627,56 @@ class Server(object):
                     #========================
                     # update stat in GpuMetricStat (32 x 2, stat + jobID)
                     #========================
+                    GpuMetricStat_array = GpuMetricStat_dd[target_dev]
+                    GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
+                    GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
+
+        #========================
+        # 
+        #========================
+        elif scheme == 'llSim1':
+            lldev, lldev_jobs = self.find_least_loaded_node(GpuJobs_dd, topK=2)
+            appMetric = app2metric[appName].as_matrix()
+
+            diff = lldev_jobs[1] - lldev_jobs[0]
+
+            if lldev_jobs[0] == 0 or diff <= 1:
+                target_dev = lldev[0]
+                with self.lock:
+                    # if there is no jobs on current device, use the 1st row
+                    avail_row = 0
+                    GpuMetric_array = GpuMetric_dd[target_dev]
+                    GpuMetric_array[avail_row,:] = appMetric 
+                    GpuMetric_dd[target_dev] = GpuMetric_array 
+                    GpuMetricStat_array = GpuMetricStat_dd[target_dev]
+                    GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
+                    GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
+            else:
+                # apply sim 
+                with self.lock:
+                    min_dist = LARGE_NUM # a quite large number
+                    for i in xrange(self.gpuNum): 
+                        # max column metric for each gpu in the numpy array
+                        currentGpuMetric = np.amax(GpuMetric_dd[i], axis=0)
+                        # euclidian dist (currentGpuMetric, appMetric)
+                        dist = np.linalg.norm(currentGpuMetric - appMetric)
+                        #print "euclidian dist: %f  ( GPU %d )" % (dist, i)
+
+                        #
+                        # select the least dist 
+                        if dist < min_dist:
+                            min_dist =  dist
+                            target_dev = i
+                    # =====================
+                    # find the row to write
+                    # =====================
+                    avail_row = check_availrow_metricarray(GpuMetric_dd[target_dev])
+                    #========================
+                    # add metric to the GpuMetric
+                    #========================
+                    GpuMetric_array = GpuMetric_dd[target_dev]
+                    GpuMetric_array[avail_row,:] = appMetric 
+                    GpuMetric_dd[target_dev] = GpuMetric_array 
                     GpuMetricStat_array = GpuMetricStat_dd[target_dev]
                     GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
                     GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
@@ -1330,7 +1380,7 @@ class Server(object):
                 with self.lock:
                     GpuJobs_dd[target_gpu] = GpuJobs_dd[target_gpu] - 1 
 
-                    if args.scheme in ["sim", "simp", "rrSim", "llSim"]:
+                    if args.scheme in ["sim", "simp", "rrSim", "llSim", "llSim1"]:
                         #========================
                         # Find the corresponding row for the current jobID 
                         #========================
@@ -1425,7 +1475,7 @@ class Server(object):
         if args.scheme == "ll":
             self.logger.info("Least loaded Scheduling")
 
-        if args.scheme in ["sim", "rrSim", "llSim"]:
+        if args.scheme in ["sim", "rrSim", "llSim", "llSim1"]:
             self.logger.info("Scheduling based on Similarity")
             app2metric = np.load('./similarity/app2metric_dd.npy').item()
             if check_key(app2dir, app2cmd, app2metric):
