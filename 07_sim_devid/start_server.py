@@ -587,15 +587,51 @@ class Server(object):
 
             if lldev_jobs == 0:
                 target_dev = jobID % self.gpuNum
-                with self.lock:
-                    # if there is no jobs on current device, use the 1st row
-                    avail_row = 0
-                    GpuMetric_array = GpuMetric_dd[target_dev]
-                    GpuMetric_array[avail_row,:] = appMetric 
-                    GpuMetric_dd[target_dev] = GpuMetric_array 
-                    GpuMetricStat_array = GpuMetricStat_dd[target_dev]
-                    GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
-                    GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
+
+                target_dev_jobs = dict(GpuJobs_dd)[target_dev]
+                if target_dev_jobs == 0:
+                    with self.lock:
+                        # if there is no jobs on current device, use the 1st row
+                        avail_row = 0
+                        GpuMetric_array = GpuMetric_dd[target_dev]
+                        GpuMetric_array[avail_row,:] = appMetric 
+                        GpuMetric_dd[target_dev] = GpuMetric_array 
+                        GpuMetricStat_array = GpuMetricStat_dd[target_dev]
+                        GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
+                        GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
+                else:
+                    # apply sim 
+                    with self.lock:
+                        min_dist = LARGE_NUM # a quite large number
+                        for i in xrange(self.gpuNum): 
+                            # max column metric for each gpu in the numpy array
+                            currentGpuMetric = np.amax(GpuMetric_dd[i], axis=0)
+                            # euclidian dist (currentGpuMetric, appMetric)
+                            dist = np.linalg.norm(currentGpuMetric - appMetric)
+                            #print "euclidian dist: %f  ( GPU %d )" % (dist, i)
+
+                            #
+                            # select the least dist 
+                            if dist < min_dist:
+                                min_dist =  dist
+                                target_dev = i
+                        # =====================
+                        # find the row to write
+                        # =====================
+                        avail_row = check_availrow_metricarray(GpuMetric_dd[target_dev])
+                        #========================
+                        # add metric to the GpuMetric
+                        #========================
+                        GpuMetric_array = GpuMetric_dd[target_dev]
+                        GpuMetric_array[avail_row,:] = appMetric 
+                        GpuMetric_dd[target_dev] = GpuMetric_array 
+                        #========================
+                        # update stat in GpuMetricStat (32 x 2, stat + jobID)
+                        #========================
+                        GpuMetricStat_array = GpuMetricStat_dd[target_dev]
+                        GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
+                        GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
+
 
             else:
                 # apply sim 
