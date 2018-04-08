@@ -32,7 +32,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 #===========#
 import argparse
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn/simp/perf1/perf2/rr_perf')
+parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn/simp/perf1/perf2/rrPerf')
 parser.add_argument('-j', dest='jobs', default=0, help='jobs to simulate')
 args = parser.parse_args()
 
@@ -552,7 +552,7 @@ class Server(object):
         elif scheme == 'll':  # least load
             target_dev, _ = self.find_least_loaded_node(GpuJobs_dd)
 
-        elif scheme == 'rr_perf':
+        elif scheme == 'rrPerf':
             _, lldev_jobs = self.find_least_loaded_node(GpuJobs_dd)
             current_app_trace = app2trace[appName]
 
@@ -1296,7 +1296,7 @@ class Server(object):
             if check_key(app2dir, app2cmd, app2metric):
                 self.logger.info("Looks good!")
 
-        if args.scheme in ["perf", "perf1", "perf2", "rr_perf"]:
+        if args.scheme in ["perf", "perf1", "perf2", "rrPerf"]:
             self.logger.info("Scheduling using Performance Model")
             app2trace = np.load('./perfmodel/app2trace_dd.npy').item()
             self.logger.info("Total GPU applications = %r",len(app2trace))
