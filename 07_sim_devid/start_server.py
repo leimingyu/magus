@@ -582,10 +582,20 @@ class Server(object):
 
 
         elif scheme == 'rrSim':
-            _, lldev_jobs = self.find_least_loaded_node(GpuJobs_dd)
+            lldev, lldev_jobs = self.find_least_loaded_node(GpuJobs_dd)
 
             if lldev_jobs == 0:
                 target_dev = jobID % self.gpuNum
+                with self.lock:
+                    # if there is no jobs on current device, use the 1st row
+                    avail_row = 0
+                    GpuMetric_array = GpuMetric_dd[target_dev]
+                    GpuMetric_array[avail_row,:] = appMetric 
+                    GpuMetric_dd[target_dev] = GpuMetric_array 
+                    GpuMetricStat_array = GpuMetricStat_dd[target_dev]
+                    GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
+                    GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
+
             else:
                 # apply sim 
                 appMetric = app2metric[appName].as_matrix()
