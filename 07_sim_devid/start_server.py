@@ -640,7 +640,7 @@ class Server(object):
 
             diff = lldev_jobs[1] - lldev_jobs[0]
 
-            if lldev_jobs[0] == 0 or diff <= 1:
+            if lldev_jobs[0] == 0: 
                 target_dev = lldev[0]
                 with self.lock:
                     # if there is no jobs on current device, use the 1st row
@@ -651,6 +651,19 @@ class Server(object):
                     GpuMetricStat_array = GpuMetricStat_dd[target_dev]
                     GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
                     GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
+
+            elif lldev_jobs[0] > 0 and diff <=1:
+                target_dev = lldev[0]
+                with self.lock:
+                    avail_row = check_availrow_metricarray(GpuMetric_dd[target_dev])
+                    GpuMetric_array = GpuMetric_dd[target_dev]
+                    GpuMetric_array[avail_row,:] = appMetric 
+                    GpuMetric_dd[target_dev] = GpuMetric_array 
+                    GpuMetricStat_array = GpuMetricStat_dd[target_dev]
+                    GpuMetricStat_array[avail_row, : ] = np.array([1, jobID])
+                    GpuMetricStat_dd[target_dev] = GpuMetricStat_array 
+
+
             else:
                 # apply sim 
                 with self.lock:
