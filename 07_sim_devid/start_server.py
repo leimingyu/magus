@@ -32,7 +32,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 #===========#
 import argparse
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn/simp/perf1/perf2/rrPerf/rrSim/llSim/llSim1')
+parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn/simp/perf1/perf2/rrPerf/rrSim/llSim/llSim1/llPerf')
 parser.add_argument('-j', dest='jobs', default=0, help='jobs to simulate')
 args = parser.parse_args()
 
@@ -1071,6 +1071,48 @@ class Server(object):
                     "[Error!] gpu job is negative! Existing...")
                 sys.exit(1)
 
+        #---------------------------------------------------------------------#
+        # llPerf 
+        #---------------------------------------------------------------------#
+        elif scheme == 'llPerf':  # performance model 
+            current_app_trace = app2trace[appName]
+            twodev, twodev_jobs = self.find_least_loaded_node(GpuJobs_dd, topK=2)
+
+            diff = twodev_jobs[1] - twodev_jobs[0]
+
+            if twodev_jobs[0] == 0:
+                target_dev = twodev[0] 
+                with self.lock:
+                    GpuTraces_dd[target_dev] = current_app_trace 
+
+            elif diff >= 2:
+                target_dev = twodev[0] 
+                with self.lock:
+                    GpuTraces_dd[target_dev] = current_app_trace 
+
+            else:
+                AvgSlowDown_list = []
+                for gid in xrange(self.gpuNum):
+                    AvgSlowDown = predict_perf(GpuTraces_dd[gid], current_app_trace)
+                    #print AvgSlowDown
+                    AvgSlowDown_list.append(AvgSlowDown)
+
+                #========#
+                # look for the smallest slowdown
+                #========#
+                min_slowdown = LARGE_NUM
+                for devid, slowdown_ratio in enumerate(AvgSlowDown_list):
+                    if slowdown_ratio < min_slowdown:
+                        min_slowdown = slowdown_ratio
+                        target_dev = devid
+
+                #=========#
+                # update trace on that node 
+                #=========#
+                with self.lock:
+                    GpuTraces_dd[target_dev] = current_app_trace 
+
+
 
         #---------------------------------------------------------------------#
         # SIMP 
@@ -1494,7 +1536,7 @@ class Server(object):
             if check_key(app2dir, app2cmd, app2metric):
                 self.logger.info("Looks good!")
 
-        if args.scheme in ["perf", "perf1", "perf2", "rrPerf"]:
+        if args.scheme in ["perf", "perf1", "perf2", "rrPerf", "llPerf"]:
             self.logger.info("Scheduling using Performance Model")
             app2trace = np.load('./perfmodel/app2trace_dd.npy').item()
             self.logger.info("Total GPU applications = %r",len(app2trace))
