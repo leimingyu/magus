@@ -560,7 +560,8 @@ class Server(object):
             elif lldev_jobs >= 2:
                 # wait for 
                 while True:
-                    time.sleep(0.5)
+                    #time.sleep(0.5)
+                    time.sleep(1)
                     cur_lldev, cur_jobs = self.find_least_loaded_node(GpuJobs_dd)
                     if cur_jobs <=1:
                         target_dev = cur_lldev
