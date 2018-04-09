@@ -32,7 +32,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 #===========#
 import argparse
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn/simp/perf1/perf2/rrPerf/rrSim/llSim/llSim1/llPerf')
+parser.add_argument('-s', dest='scheme', default='rr', help='rr/ll/sim/perf/dinn/simp/perf1/perf2/rrPerf/rrSim/llSim/llSim1/llPerf/lldelay')
 parser.add_argument('-j', dest='jobs', default=0, help='jobs to simulate')
 args = parser.parse_args()
 
@@ -551,6 +551,33 @@ class Server(object):
 
         elif scheme == 'll':  # least load
             target_dev, _ = self.find_least_loaded_node(GpuJobs_dd)
+
+        elif scheme == 'lldelay':  # least load with delay
+            lldev, lldev_jobs = self.find_least_loaded_node(GpuJobs_dd)
+
+            if lldev_jobs < 2:
+                target_dev = lldev
+            elif lldev_jobs >= 2:
+                # wait for 
+                while True:
+                    time.sleep(0.5)
+                    cur_lldev, cur_jobs = self.find_least_loaded_node(GpuJobs_dd)
+                    if cur_jobs <=1:
+                        target_dev = cur_lldev
+                        break
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         elif scheme == 'rrPerf':
             _, lldev_jobs = self.find_least_loaded_node(GpuJobs_dd)
@@ -1527,7 +1554,7 @@ class Server(object):
         if args.scheme == "rr":
             self.logger.info("Round-Robin Scheduling")
 
-        if args.scheme == "ll":
+        if args.scheme in ["ll", "lldelay"]:
             self.logger.info("Least loaded Scheduling")
 
         if args.scheme in ["sim", "rrSim", "llSim", "llSim1"]:
