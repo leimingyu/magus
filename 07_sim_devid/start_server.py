@@ -548,15 +548,18 @@ class Server(object):
 
         if scheme == 'rr':  # round-robin
             target_dev = jobID % self.gpuNum
+            with self.lock: GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
 
         elif scheme == 'll':  # least load
             target_dev, _ = self.find_least_loaded_node(GpuJobs_dd)
+            with self.lock: GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
 
         elif scheme == 'lldelay':  # least load with delay
             lldev, lldev_jobs = self.find_least_loaded_node(GpuJobs_dd)
 
             if lldev_jobs < 2:
                 target_dev = lldev
+                with self.lock: GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
             elif lldev_jobs >= 2:
                 # wait for 
                 while True:
@@ -565,6 +568,7 @@ class Server(object):
                     cur_lldev, cur_jobs = self.find_least_loaded_node(GpuJobs_dd)
                     if cur_jobs <=1:
                         target_dev = cur_lldev
+                        with self.lock: GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                         break
 
 
@@ -602,6 +606,8 @@ class Server(object):
                         min_slowdown = slowdown_ratio
                         target_dev = devid
 
+            with self.lock: GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
+
             #=========#
             # update trace on that node 
             #=========#
@@ -618,6 +624,7 @@ class Server(object):
             if lldev_jobs == 0:
                 target_dev = lldev 
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     # if there is no jobs on current device, use the 1st row
                     avail_row = 0
                     GpuMetric_array = GpuMetric_dd[target_dev]
@@ -642,6 +649,8 @@ class Server(object):
                         if dist < min_dist:
                             min_dist =  dist
                             target_dev = i
+
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     # =====================
                     # find the row to write
                     # =====================
@@ -671,6 +680,7 @@ class Server(object):
             if lldev_jobs[0] == 0: 
                 target_dev = lldev[0]
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     # if there is no jobs on current device, use the 1st row
                     avail_row = 0
                     GpuMetric_array = GpuMetric_dd[target_dev]
@@ -683,6 +693,7 @@ class Server(object):
             elif lldev_jobs[0] > 0 and diff <=1:
                 target_dev = lldev[0]
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     avail_row = check_availrow_metricarray(GpuMetric_dd[target_dev])
                     GpuMetric_array = GpuMetric_dd[target_dev]
                     GpuMetric_array[avail_row,:] = appMetric 
@@ -708,6 +719,8 @@ class Server(object):
                         if dist < min_dist:
                             min_dist =  dist
                             target_dev = i
+
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     # =====================
                     # find the row to write
                     # =====================
@@ -732,6 +745,7 @@ class Server(object):
                 target_dev_jobs = dict(GpuJobs_dd)[target_dev]
                 if target_dev_jobs == 0:
                     with self.lock:
+                        GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                         # if there is no jobs on current device, use the 1st row
                         avail_row = 0
                         GpuMetric_array = GpuMetric_dd[target_dev]
@@ -756,6 +770,8 @@ class Server(object):
                             if dist < min_dist:
                                 min_dist =  dist
                                 target_dev = i
+
+                        GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                         # =====================
                         # find the row to write
                         # =====================
@@ -790,6 +806,8 @@ class Server(object):
                         if dist < min_dist:
                             min_dist =  dist
                             target_dev = i
+
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     # =====================
                     # find the row to write
                     # =====================
@@ -833,6 +851,8 @@ class Server(object):
                 # update GpuMetricStat
                 #-------------------------#
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
+
                     # if there is no jobs on current device, use the 1st row
                     avail_row = 0
 
@@ -899,6 +919,7 @@ class Server(object):
                     # after selection,  1) add current appMetric to GpuMetric
                     #                   2) update GpuMetricStat
 
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     # =====================
                     # find the row to write
                     # =====================
@@ -953,6 +974,7 @@ class Server(object):
                 # add job trace to the GpuTraces
                 #-------------------------#
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev] = current_app_trace 
 
             #-----------#
@@ -980,6 +1002,7 @@ class Server(object):
                 # update trace on that node 
                 #=========#
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev] = current_app_trace 
 
 
@@ -1008,6 +1031,7 @@ class Server(object):
                 # add job trace to the GpuTraces
                 #-------------------------#
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev] = current_app_trace 
 
             #-----------#
@@ -1042,6 +1066,7 @@ class Server(object):
                 # update trace on that node 
                 #=========#
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev] = current_app_trace 
 
 
@@ -1062,6 +1087,7 @@ class Server(object):
             if firstdev_jobs == 0:
                 target_dev = twodev[0] 
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev] = current_app_trace 
             elif firstdev_jobs > 0:
                 if abs(firstdev_jobs - secnddev_jobs) <= 1: # job number difference <=1
@@ -1090,6 +1116,7 @@ class Server(object):
                 # update trace on that node 
                 #=========#
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev] = current_app_trace 
 
 
@@ -1111,11 +1138,13 @@ class Server(object):
             if twodev_jobs[0] == 0:
                 target_dev = twodev[0] 
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev] = current_app_trace 
 
             elif diff >= 2:
                 target_dev = twodev[0] 
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev] = current_app_trace 
 
             else:
@@ -1138,6 +1167,7 @@ class Server(object):
                 # update trace on that node 
                 #=========#
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev] = current_app_trace 
 
 
@@ -1158,6 +1188,7 @@ class Server(object):
             if first_ll_node_job == 0:
                 target_dev = lldev_list[0] # use the 1st ll device 
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     avail_row = 0
                     # add metric to the GpuMetric
                     GpuMetric_array = GpuMetric_dd[target_dev]
@@ -1183,6 +1214,7 @@ class Server(object):
                         target_dev = devid
 
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     # update trace on that node 
                     GpuTraces_dd[target_dev] = current_app_trace 
                     # find the row to write
@@ -1207,6 +1239,7 @@ class Server(object):
                             min_dist =  dist
                             target_dev = i
                     # update trace on the device
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev] = current_app_trace 
 
                 # find the row to write
@@ -1245,6 +1278,7 @@ class Server(object):
             if current_jobs == 0:
                 target_dev = current_dev
                 with self.lock:
+                    GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev]    = current_trace 
                     GpuDinnFeats_dd[target_dev] = current_dinnfeats 
 
@@ -1262,6 +1296,8 @@ class Server(object):
 
                 if DINN_2_LL:
                     target_dev = current_dev
+                    with self.lock:
+                        GpuJobs_dd[target_dev] = GpuJobs_dd[target_dev] + 1
                     GpuTraces_dd[target_dev] = current_trace 
                     GpuDinnFeats_dd[target_dev] = current_dinnfeats 
 
@@ -1440,8 +1476,8 @@ class Server(object):
                 #--------------------------------------------------------------
                 # 5) add job to Gpu Node
                 #--------------------------------------------------------------
-                with self.lock:
-                    GpuJobs_dd[target_gpu] = GpuJobs_dd[target_gpu] + 1
+                #with self.lock:
+                #    GpuJobs_dd[target_gpu] = GpuJobs_dd[target_gpu] + 1
 
 
                 #--------------------------------------------------------------
