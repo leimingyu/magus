@@ -1,0 +1,8 @@
+==18669== NVPROF is profiling process 18669, command: ./MC_EstimatePiInlineP 0
+==18669== Profiling application: ./MC_EstimatePiInlineP 0
+==18669== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,KB,GB/s,,,,
+556.382371,2.992999,391,1,1,128,1,1,32,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","initRNG(curandStateXORWOW*, unsigned int) [1168]"
+559.376938,0.012225,391,1,1,128,1,1,15,0,512,,,"GeForce GTX 1080 Ti (0)","1","7","void computeValue<float>(unsigned int*, curandStateXORWOW*, unsigned int) [1173]"
+559.391211,0.000864,,,,,,,,,,1.527344,1.685866,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

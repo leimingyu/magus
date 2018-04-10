@@ -1,0 +1,1136 @@
+INFO:root:Listening
+INFO:server:Least loaded Scheduling
+DEBUG:server:listening
+DEBUG:server:Got connection : ('127.0.0.1', 39236) ( job 0 )
+DEBUG:server:Started process <Process(Process-2, started)>
+DEBUG:process-('127.0.0.1', 39236):Connected
+DEBUG:process-('127.0.0.1', 39236):Received data 'cudasdk_matrixMul'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 0)
+DEBUG:server:Got connection : ('127.0.0.1', 39238) ( job 1 )
+DEBUG:server:Started process <Process(Process-3, started)>
+DEBUG:process-('127.0.0.1', 39238):Connected
+DEBUG:process-('127.0.0.1', 39238):Received data 'cudasdk_vectorAdd'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 1)
+DEBUG:server:(Job 0) 1523143577.04 to 1523143578.67 = 1.629 seconds
+DEBUG:process-('127.0.0.1', 39236):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39236):Closing socket
+
+GpuID	ActiveJobs (job 0)
+0	0
+1	0
+DEBUG:server:Got connection : ('127.0.0.1', 39240) ( job 2 )
+DEBUG:server:Started process <Process(Process-4, started)>
+DEBUG:process-('127.0.0.1', 39240):Connected
+DEBUG:process-('127.0.0.1', 39240):Received data 'cudasdk_convolutionFFT2D'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 2)
+DEBUG:server:(Job 1) 1523143578.03 to 1523143579.86 = 1.832 seconds
+DEBUG:process-('127.0.0.1', 39238):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39238):Closing socket
+
+GpuID	ActiveJobs (job 1)
+0	1
+1	0
+DEBUG:server:Got connection : ('127.0.0.1', 39242) ( job 3 )
+DEBUG:server:Started process <Process(Process-5, started)>
+DEBUG:process-('127.0.0.1', 39242):Connected
+DEBUG:process-('127.0.0.1', 39242):Received data 'cudasdk_convolutionSeparable'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 3)
+DEBUG:server:Got connection : ('127.0.0.1', 39246) ( job 4 )
+DEBUG:server:Started process <Process(Process-6, started)>
+DEBUG:process-('127.0.0.1', 39246):Connected
+DEBUG:process-('127.0.0.1', 39246):Received data 'cudasdk_convolutionTexture'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 4)
+DEBUG:server:Got connection : ('127.0.0.1', 39248) ( job 5 )
+DEBUG:server:Started process <Process(Process-7, started)>
+DEBUG:process-('127.0.0.1', 39248):Connected
+DEBUG:process-('127.0.0.1', 39248):Received data 'cudasdk_dct8x8'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 5)
+DEBUG:server:(Job 3) 1523143580.03 to 1523143582.18 = 2.156 seconds
+DEBUG:process-('127.0.0.1', 39242):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39242):Closing socket
+
+GpuID	ActiveJobs (job 3)
+0	1
+1	0
+DEBUG:server:(Job 4) 1523143581.03 to 1523143582.36 = 1.337 seconds
+DEBUG:process-('127.0.0.1', 39246):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39246):Closing socket
+
+GpuID	ActiveJobs (job 4)
+0	1
+1	1
+DEBUG:server:(Job 5) 1523143582.03 to 1523143582.98 = 0.955 seconds
+DEBUG:process-('127.0.0.1', 39248):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39248):Closing socket
+
+GpuID	ActiveJobs (job 5)
+0	2
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39250) ( job 6 )
+DEBUG:server:Started process <Process(Process-8, started)>
+DEBUG:process-('127.0.0.1', 39250):Connected
+DEBUG:process-('127.0.0.1', 39250):Received data 'cudasdk_dwtHaar1D'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 6)
+DEBUG:server:(Job 6) 1523143583.03 to 1523143583.49 = 0.462 seconds
+DEBUG:process-('127.0.0.1', 39250):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39250):Closing socket
+
+GpuID	ActiveJobs (job 6)
+0	1
+1	0
+DEBUG:server:Got connection : ('127.0.0.1', 39252) ( job 7 )
+DEBUG:server:Started process <Process(Process-9, started)>
+DEBUG:process-('127.0.0.1', 39252):Connected
+DEBUG:process-('127.0.0.1', 39252):Received data 'cudasdk_dxtc'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 7)
+DEBUG:server:(Job 2) 1523143579.03 to 1523143584.07 = 5.039 seconds
+DEBUG:process-('127.0.0.1', 39240):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39240):Closing socket
+
+GpuID	ActiveJobs (job 2)
+0	0
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39254) ( job 8 )
+DEBUG:server:Started process <Process(Process-10, started)>
+DEBUG:process-('127.0.0.1', 39254):Connected
+DEBUG:process-('127.0.0.1', 39254):Received data 'cudasdk_stereoDisparity'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 8)
+DEBUG:server:(Job 7) 1523143584.03 to 1523143585.57 = 1.535 seconds
+DEBUG:process-('127.0.0.1', 39252):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39252):Closing socket
+
+GpuID	ActiveJobs (job 7)
+0	1
+1	0
+DEBUG:server:Got connection : ('127.0.0.1', 39256) ( job 9 )
+DEBUG:server:Started process <Process(Process-11, started)>
+DEBUG:process-('127.0.0.1', 39256):Connected
+DEBUG:process-('127.0.0.1', 39256):Received data 'cudasdk_binomialOptions'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 9)
+DEBUG:server:Got connection : ('127.0.0.1', 39258) ( job 10 )
+DEBUG:server:Started process <Process(Process-12, started)>
+DEBUG:process-('127.0.0.1', 39258):Connected
+DEBUG:process-('127.0.0.1', 39258):Received data 'cudasdk_BlackScholes'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 10)
+DEBUG:server:Got connection : ('127.0.0.1', 39260) ( job 11 )
+DEBUG:server:Started process <Process(Process-13, started)>
+DEBUG:process-('127.0.0.1', 39260):Connected
+DEBUG:process-('127.0.0.1', 39260):Received data 'cudasdk_quasirandomGenerator'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 11)
+DEBUG:server:(Job 10) 1523143587.03 to 1523143588.63 = 1.593 seconds
+DEBUG:process-('127.0.0.1', 39258):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39258):Closing socket
+
+GpuID	ActiveJobs (job 10)
+0	1
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39262) ( job 12 )
+DEBUG:server:Started process <Process(Process-14, started)>
+DEBUG:process-('127.0.0.1', 39262):Connected
+DEBUG:process-('127.0.0.1', 39262):Received data 'cudasdk_SobolQRNG'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 12)
+DEBUG:server:(Job 11) 1523143588.03 to 1523143589.35 = 1.322 seconds
+DEBUG:process-('127.0.0.1', 39260):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39260):Closing socket
+
+GpuID	ActiveJobs (job 11)
+0	2
+1	1
+DEBUG:server:(Job 12) 1523143589.03 to 1523143589.73 = 0.692 seconds
+DEBUG:process-('127.0.0.1', 39262):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39262):Closing socket
+
+GpuID	ActiveJobs (job 12)
+0	1
+1	2
+DEBUG:server:Got connection : ('127.0.0.1', 39264) ( job 13 )
+DEBUG:server:Started process <Process(Process-15, started)>
+DEBUG:process-('127.0.0.1', 39264):Connected
+DEBUG:process-('127.0.0.1', 39264):Received data 'cudasdk_c++11Cuda'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 13)
+DEBUG:server:(Job 13) 1523143590.03 to 1523143590.76 = 0.722 seconds
+DEBUG:process-('127.0.0.1', 39264):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39264):Closing socket
+
+GpuID	ActiveJobs (job 13)
+0	1
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39268) ( job 14 )
+DEBUG:server:Started process <Process(Process-16, started)>
+DEBUG:process-('127.0.0.1', 39268):Connected
+DEBUG:process-('127.0.0.1', 39268):Received data 'cudasdk_concurrentKernels'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 14)
+DEBUG:server:(Job 14) 1523143591.04 to 1523143591.48 = 0.448 seconds
+DEBUG:process-('127.0.0.1', 39268):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39268):Closing socket
+
+GpuID	ActiveJobs (job 14)
+0	1
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39270) ( job 15 )
+DEBUG:server:Started process <Process(Process-17, started)>
+DEBUG:process-('127.0.0.1', 39270):Connected
+DEBUG:process-('127.0.0.1', 39270):Received data 'cudasdk_eigenvalues'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 15)
+DEBUG:server:Got connection : ('127.0.0.1', 39272) ( job 16 )
+DEBUG:server:Started process <Process(Process-18, started)>
+DEBUG:process-('127.0.0.1', 39272):Connected
+DEBUG:process-('127.0.0.1', 39272):Received data 'cudasdk_fastWalshTransform'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 16)
+DEBUG:server:(Job 15) 1523143592.04 to 1523143593.44 = 1.404 seconds
+DEBUG:process-('127.0.0.1', 39270):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39270):Closing socket
+
+GpuID	ActiveJobs (job 15)
+0	1
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39274) ( job 17 )
+DEBUG:server:Started process <Process(Process-19, started)>
+DEBUG:process-('127.0.0.1', 39274):Connected
+DEBUG:process-('127.0.0.1', 39274):Received data 'cudasdk_FDTD3d'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 17)
+DEBUG:server:Got connection : ('127.0.0.1', 39276) ( job 18 )
+DEBUG:server:Started process <Process(Process-20, started)>
+DEBUG:process-('127.0.0.1', 39276):Connected
+DEBUG:process-('127.0.0.1', 39276):Received data 'cudasdk_interval'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 18)
+DEBUG:server:Got connection : ('127.0.0.1', 39278) ( job 19 )
+DEBUG:server:Started process <Process(Process-21, started)>
+DEBUG:process-('127.0.0.1', 39278):Connected
+DEBUG:process-('127.0.0.1', 39278):Received data 'cudasdk_lineOfSight'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 19)
+DEBUG:server:(Job 19) 1523143596.05 to 1523143596.69 = 0.636 seconds
+DEBUG:process-('127.0.0.1', 39278):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39278):Closing socket
+
+GpuID	ActiveJobs (job 19)
+0	3
+1	2
+DEBUG:server:(Job 16) 1523143593.05 to 1523143596.81 = 3.758 seconds
+DEBUG:process-('127.0.0.1', 39272):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39272):Closing socket
+
+GpuID	ActiveJobs (job 16)
+0	2
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39280) ( job 20 )
+DEBUG:server:Started process <Process(Process-22, started)>
+DEBUG:process-('127.0.0.1', 39280):Connected
+DEBUG:process-('127.0.0.1', 39280):Received data 'cudasdk_mergeSort'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 20)
+DEBUG:server:(Job 18) 1523143595.05 to 1523143597.27 = 2.223 seconds
+DEBUG:process-('127.0.0.1', 39276):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39276):Closing socket
+
+GpuID	ActiveJobs (job 18)
+0	2
+1	2
+DEBUG:server:Got connection : ('127.0.0.1', 39282) ( job 21 )
+DEBUG:server:(Job 20) 1523143597.05 to 1523143598.06 = 1.011 seconds
+DEBUG:process-('127.0.0.1', 39280):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39280):Closing socket
+DEBUG:server:Started process <Process(Process-23, started)>
+
+GpuID	ActiveJobs (job 20)
+0	3
+1	1
+DEBUG:process-('127.0.0.1', 39282):Connected
+DEBUG:process-('127.0.0.1', 39282):Received data 'cudasdk_radixSortThrust'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 21)
+DEBUG:server:Got connection : ('127.0.0.1', 39284) ( job 22 )
+DEBUG:server:Started process <Process(Process-24, started)>
+DEBUG:process-('127.0.0.1', 39284):Connected
+DEBUG:process-('127.0.0.1', 39284):Received data 'cudasdk_reduction'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 22)
+DEBUG:server:Got connection : ('127.0.0.1', 39286) ( job 23 )
+DEBUG:server:Started process <Process(Process-25, started)>
+DEBUG:process-('127.0.0.1', 39286):Connected
+DEBUG:process-('127.0.0.1', 39286):Received data 'cudasdk_scalarProd'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 23)
+DEBUG:server:(Job 22) 1523143599.05 to 1523143600.33 = 1.283 seconds
+DEBUG:process-('127.0.0.1', 39284):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39284):Closing socket
+
+GpuID	ActiveJobs (job 22)
+0	2
+1	2
+DEBUG:server:Got connection : ('127.0.0.1', 39290) ( job 24 )
+DEBUG:server:Started process <Process(Process-26, started)>
+DEBUG:process-('127.0.0.1', 39290):Connected
+DEBUG:process-('127.0.0.1', 39290):Received data 'cudasdk_scan'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 24)
+DEBUG:server:(Job 23) 1523143600.05 to 1523143601.13 = 1.075 seconds
+DEBUG:process-('127.0.0.1', 39286):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39286):Closing socket
+
+GpuID	ActiveJobs (job 23)
+0	3
+1	2
+DEBUG:server:(Job 21) 1523143598.06 to 1523143601.69 = 3.630 seconds
+DEBUG:process-('127.0.0.1', 39282):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39282):Closing socket
+
+GpuID	ActiveJobs (job 21)
+0	2
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39292) ( job 25 )
+DEBUG:server:Started process <Process(Process-27, started)>
+DEBUG:process-('127.0.0.1', 39292):Connected
+DEBUG:process-('127.0.0.1', 39292):Received data 'cudasdk_segmentationTreeThrust'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 25)
+DEBUG:server:Got connection : ('127.0.0.1', 39294) ( job 26 )
+DEBUG:server:Started process <Process(Process-28, started)>
+DEBUG:process-('127.0.0.1', 39294):Connected
+DEBUG:process-('127.0.0.1', 39294):Received data 'cudasdk_shflscan'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 26)
+DEBUG:server:(Job 26) 1523143603.06 to 1523143603.78 = 0.721 seconds
+DEBUG:process-('127.0.0.1', 39294):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39294):Closing socket
+
+GpuID	ActiveJobs (job 26)
+0	3
+1	2
+DEBUG:server:(Job 24) 1523143601.06 to 1523143603.87 = 2.815 seconds
+DEBUG:process-('127.0.0.1', 39290):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39290):Closing socket
+
+GpuID	ActiveJobs (job 24)
+0	2
+1	3
+DEBUG:server:Got connection : ('127.0.0.1', 39296) ( job 27 )
+DEBUG:server:Started process <Process(Process-29, started)>
+DEBUG:process-('127.0.0.1', 39296):Connected
+DEBUG:process-('127.0.0.1', 39296):Received data 'cudasdk_sortingNetworks'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 27)
+DEBUG:server:Got connection : ('127.0.0.1', 39298) ( job 28 )
+DEBUG:server:Started process <Process(Process-30, started)>
+DEBUG:process-('127.0.0.1', 39298):Connected
+DEBUG:process-('127.0.0.1', 39298):Received data 'cudasdk_threadFenceReduction'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 28)
+DEBUG:server:(Job 28) 1523143605.06 to 1523143605.62 = 0.564 seconds
+DEBUG:process-('127.0.0.1', 39298):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39298):Closing socket
+
+GpuID	ActiveJobs (job 28)
+0	3
+1	2
+DEBUG:server:(Job 25) 1523143602.06 to 1523143605.99 = 3.935 seconds
+DEBUG:process-('127.0.0.1', 39292):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39292):Closing socket
+
+GpuID	ActiveJobs (job 25)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39300) ( job 29 )
+DEBUG:server:Started process <Process(Process-31, started)>
+DEBUG:process-('127.0.0.1', 39300):Connected
+DEBUG:process-('127.0.0.1', 39300):Received data 'cudasdk_transpose'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 29)
+DEBUG:server:(Job 29) 1523143606.06 to 1523143606.9 = 0.846 seconds
+DEBUG:process-('127.0.0.1', 39300):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39300):Closing socket
+
+GpuID	ActiveJobs (job 29)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39302) ( job 30 )
+DEBUG:server:Started process <Process(Process-32, started)>
+DEBUG:process-('127.0.0.1', 39302):Connected
+DEBUG:process-('127.0.0.1', 39302):Received data 'cudasdk_batchCUBLAS'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 30)
+DEBUG:server:(Job 30) 1523143607.06 to 1523143608.03 = 0.972 seconds
+DEBUG:process-('127.0.0.1', 39302):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39302):Closing socket
+
+GpuID	ActiveJobs (job 30)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39304) ( job 31 )
+DEBUG:server:Started process <Process(Process-33, started)>
+DEBUG:process-('127.0.0.1', 39304):Connected
+DEBUG:process-('127.0.0.1', 39304):Received data 'cudasdk_boxFilterNPP'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 31)
+DEBUG:server:(Job 31) 1523143608.06 to 1523143608.58 = 0.516 seconds
+DEBUG:process-('127.0.0.1', 39304):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39304):Closing socket
+
+GpuID	ActiveJobs (job 31)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39306) ( job 32 )
+DEBUG:server:Started process <Process(Process-34, started)>
+DEBUG:process-('127.0.0.1', 39306):Connected
+DEBUG:process-('127.0.0.1', 39306):Received data 'cudasdk_MCEstimatePiInlineP'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 32)
+DEBUG:server:(Job 32) 1523143609.06 to 1523143609.8 = 0.739 seconds
+DEBUG:process-('127.0.0.1', 39306):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39306):Closing socket
+
+GpuID	ActiveJobs (job 32)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39308) ( job 33 )
+DEBUG:server:Started process <Process(Process-35, started)>
+DEBUG:process-('127.0.0.1', 39308):Connected
+DEBUG:process-('127.0.0.1', 39308):Received data 'cudasdk_MCEstimatePiInlineQ'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 33)
+DEBUG:server:(Job 8) 1523143585.03 to 1523143610.8 = 25.766 seconds
+DEBUG:process-('127.0.0.1', 39254):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39254):Closing socket
+DEBUG:server:(Job 27) 1523143604.06 to 1523143610.8 = 6.742 seconds
+DEBUG:process-('127.0.0.1', 39296):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39296):Closing socket
+
+GpuID	ActiveJobs (job 8)
+0	0
+1	1
+
+GpuID	ActiveJobs (job 27)
+0	2
+1	2
+DEBUG:server:(Job 33) 1523143610.06 to 1523143610.95 = 0.893 seconds
+DEBUG:process-('127.0.0.1', 39308):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39308):Closing socket
+
+GpuID	ActiveJobs (job 33)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39310) ( job 34 )
+DEBUG:server:Started process <Process(Process-36, started)>
+DEBUG:process-('127.0.0.1', 39310):Connected
+DEBUG:process-('127.0.0.1', 39310):Received data 'cudasdk_MCEstimatePiP'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 34)
+DEBUG:server:(Job 17) 1523143594.04 to 1523143611.64 = 17.594 seconds
+DEBUG:process-('127.0.0.1', 39274):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39274):Closing socket
+
+GpuID	ActiveJobs (job 17)
+0	1
+1	2
+DEBUG:server:(Job 34) 1523143611.06 to 1523143611.72 = 0.661 seconds
+DEBUG:process-('127.0.0.1', 39310):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39310):Closing socket
+
+GpuID	ActiveJobs (job 34)
+0	1
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39314) ( job 35 )
+DEBUG:server:Started process <Process(Process-37, started)>
+DEBUG:process-('127.0.0.1', 39314):Connected
+DEBUG:process-('127.0.0.1', 39314):Received data 'cudasdk_MCEstimatePiQ'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 35)
+DEBUG:server:(Job 35) 1523143612.06 to 1523143612.61 = 0.545 seconds
+DEBUG:process-('127.0.0.1', 39314):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39314):Closing socket
+
+GpuID	ActiveJobs (job 35)
+0	0
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39316) ( job 36 )
+DEBUG:server:Started process <Process(Process-38, started)>
+DEBUG:process-('127.0.0.1', 39316):Connected
+DEBUG:process-('127.0.0.1', 39316):Received data 'cudasdk_MCSingleAsianOptionP'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 36)
+DEBUG:server:(Job 9) 1523143586.04 to 1523143613.18 = 27.139 seconds
+DEBUG:process-('127.0.0.1', 39256):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39256):Closing socket
+
+GpuID	ActiveJobs (job 9)
+0	1
+1	0
+DEBUG:server:Got connection : ('127.0.0.1', 39318) ( job 37 )
+DEBUG:server:Started process <Process(Process-39, started)>
+DEBUG:process-('127.0.0.1', 39318):Connected
+DEBUG:process-('127.0.0.1', 39318):Received data 'cudasdk_simpleCUBLAS'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 37)
+DEBUG:server:(Job 36) 1523143613.06 to 1523143614.66 = 1.598 seconds
+DEBUG:process-('127.0.0.1', 39316):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39316):Closing socket
+
+GpuID	ActiveJobs (job 36)
+0	0
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39320) ( job 38 )
+DEBUG:server:Started process <Process(Process-40, started)>
+DEBUG:process-('127.0.0.1', 39320):Connected
+DEBUG:process-('127.0.0.1', 39320):Received data 'cudasdk_simpleCUFFTcallback'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 38)
+DEBUG:server:Got connection : ('127.0.0.1', 39322) ( job 39 )
+DEBUG:server:Started process <Process(Process-41, started)>
+DEBUG:process-('127.0.0.1', 39322):Connected
+DEBUG:process-('127.0.0.1', 39322):Received data 'poly_2dconv'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 39)
+DEBUG:server:(Job 37) 1523143614.07 to 1523143616.15 = 2.084 seconds
+DEBUG:process-('127.0.0.1', 39318):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39318):Closing socket
+
+GpuID	ActiveJobs (job 37)
+0	1
+1	0
+DEBUG:server:(Job 38) 1523143615.07 to 1523143616.85 = 1.776 seconds
+DEBUG:process-('127.0.0.1', 39320):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39320):Closing socket
+
+GpuID	ActiveJobs (job 38)
+0	0
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39324) ( job 40 )
+DEBUG:server:Started process <Process(Process-42, started)>
+DEBUG:process-('127.0.0.1', 39324):Connected
+DEBUG:process-('127.0.0.1', 39324):Received data 'poly_3dconv'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 40)
+DEBUG:server:Got connection : ('127.0.0.1', 39326) ( job 41 )
+DEBUG:server:Started process <Process(Process-43, started)>
+DEBUG:process-('127.0.0.1', 39326):Connected
+DEBUG:process-('127.0.0.1', 39326):Received data 'poly_3mm'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 41)
+DEBUG:server:(Job 39) 1523143616.07 to 1523143618.97 = 2.898 seconds
+DEBUG:process-('127.0.0.1', 39322):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39322):Closing socket
+
+GpuID	ActiveJobs (job 39)
+0	1
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39328) ( job 42 )
+DEBUG:server:Started process <Process(Process-44, started)>
+DEBUG:process-('127.0.0.1', 39328):Connected
+DEBUG:process-('127.0.0.1', 39328):Received data 'poly_atax'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 42)
+DEBUG:server:(Job 40) 1523143617.08 to 1523143619.23 = 2.152 seconds
+DEBUG:process-('127.0.0.1', 39324):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39324):Closing socket
+
+GpuID	ActiveJobs (job 40)
+0	1
+1	0
+DEBUG:server:(Job 42) 1523143619.07 to 1523143619.95 = 0.880 seconds
+DEBUG:process-('127.0.0.1', 39328):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39328):Closing socket
+
+GpuID	ActiveJobs (job 42)
+0	1
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39330) ( job 43 )
+DEBUG:server:Started process <Process(Process-45, started)>
+DEBUG:process-('127.0.0.1', 39330):Connected
+DEBUG:process-('127.0.0.1', 39330):Received data 'poly_bicg'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 43)
+DEBUG:server:(Job 41) 1523143618.07 to 1523143620.64 = 2.576 seconds
+DEBUG:process-('127.0.0.1', 39326):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39326):Closing socket
+
+GpuID	ActiveJobs (job 41)
+0	1
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39334) ( job 44 )
+DEBUG:server:Started process <Process(Process-46, started)>
+DEBUG:process-('127.0.0.1', 39334):Connected
+DEBUG:process-('127.0.0.1', 39334):Received data 'poly_correlation'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 44)
+DEBUG:server:(Job 43) 1523143620.07 to 1523143621.37 = 1.296 seconds
+DEBUG:process-('127.0.0.1', 39330):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39330):Closing socket
+
+GpuID	ActiveJobs (job 43)
+0	1
+1	0
+DEBUG:server:Got connection : ('127.0.0.1', 39336) ( job 45 )
+DEBUG:server:Started process <Process(Process-47, started)>
+DEBUG:process-('127.0.0.1', 39336):Connected
+DEBUG:process-('127.0.0.1', 39336):Received data 'poly_covariance'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 45)
+DEBUG:server:Got connection : ('127.0.0.1', 39338) ( job 46 )
+DEBUG:server:Started process <Process(Process-48, started)>
+DEBUG:process-('127.0.0.1', 39338):Connected
+DEBUG:process-('127.0.0.1', 39338):Received data 'poly_fdtd2d'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 46)
+DEBUG:server:Got connection : ('127.0.0.1', 39340) ( job 47 )
+DEBUG:server:Started process <Process(Process-49, started)>
+DEBUG:process-('127.0.0.1', 39340):Connected
+DEBUG:process-('127.0.0.1', 39340):Received data 'poly_gemm'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 47)
+DEBUG:server:Got connection : ('127.0.0.1', 39342) ( job 48 )
+DEBUG:server:Started process <Process(Process-50, started)>
+DEBUG:process-('127.0.0.1', 39342):Connected
+DEBUG:process-('127.0.0.1', 39342):Received data 'poly_gesummv'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 48)
+DEBUG:server:(Job 47) 1523143624.09 to 1523143625.48 = 1.395 seconds
+DEBUG:process-('127.0.0.1', 39340):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39340):Closing socket
+
+GpuID	ActiveJobs (job 47)
+0	2
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39344) ( job 49 )
+DEBUG:server:Started process <Process(Process-51, started)>
+DEBUG:process-('127.0.0.1', 39344):Connected
+DEBUG:process-('127.0.0.1', 39344):Received data 'poly_mvt'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 49)
+DEBUG:server:(Job 48) 1523143625.08 to 1523143626.32 = 1.237 seconds
+DEBUG:process-('127.0.0.1', 39342):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39342):Closing socket
+
+GpuID	ActiveJobs (job 48)
+0	2
+1	2
+DEBUG:server:Got connection : ('127.0.0.1', 39346) ( job 50 )
+DEBUG:server:Started process <Process(Process-52, started)>
+DEBUG:process-('127.0.0.1', 39346):Connected
+DEBUG:process-('127.0.0.1', 39346):Received data 'poly_syr2k'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 50)
+DEBUG:server:(Job 49) 1523143626.08 to 1523143627.44 = 1.355 seconds
+DEBUG:process-('127.0.0.1', 39344):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39344):Closing socket
+
+GpuID	ActiveJobs (job 49)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39348) ( job 51 )
+DEBUG:server:Started process <Process(Process-53, started)>
+DEBUG:process-('127.0.0.1', 39348):Connected
+DEBUG:process-('127.0.0.1', 39348):Received data 'poly_syrk'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 51)
+DEBUG:server:Got connection : ('127.0.0.1', 39350) ( job 52 )
+DEBUG:server:Started process <Process(Process-54, started)>
+DEBUG:process-('127.0.0.1', 39350):Connected
+DEBUG:process-('127.0.0.1', 39350):Received data 'lonestar_bh'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 52)
+DEBUG:server:Got connection : ('127.0.0.1', 39352) ( job 53 )
+DEBUG:server:Started process <Process(Process-55, started)>
+DEBUG:process-('127.0.0.1', 39352):Connected
+DEBUG:process-('127.0.0.1', 39352):Received data 'lonestar_dmr'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0 (job 53)
+DEBUG:server:(Job 52) 1523143629.09 to 1523143630.81 = 1.718 seconds
+DEBUG:process-('127.0.0.1', 39350):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39350):Closing socket
+
+GpuID	ActiveJobs (job 52)
+0	3
+1	2
+DEBUG:server:Got connection : ('127.0.0.1', 39356) ( job 54 )
+DEBUG:server:Started process <Process(Process-56, started)>
+DEBUG:process-('127.0.0.1', 39356):Connected
+DEBUG:process-('127.0.0.1', 39356):Received data 'lonestar_mst'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 54)
+DEBUG:server:(Job 54) 1523143631.09 to 1523143632.02 = 0.926 seconds
+DEBUG:process-('127.0.0.1', 39356):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39356):Closing socket
+
+GpuID	ActiveJobs (job 54)
+0	4
+1	2
+DEBUG:server:Got connection : ('127.0.0.1', 39358) ( job 55 )
+DEBUG:server:Started process <Process(Process-57, started)>
+DEBUG:process-('127.0.0.1', 39358):Connected
+DEBUG:process-('127.0.0.1', 39358):Received data 'lonestar_sssp'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 55)
+DEBUG:server:Got connection : ('127.0.0.1', 39360) ( job 56 )
+DEBUG:server:Started process <Process(Process-58, started)>
+DEBUG:process-('127.0.0.1', 39360):Connected
+DEBUG:process-('127.0.0.1', 39360):Received data 'parboil_bfs'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 56)
+DEBUG:server:(Job 51) 1523143628.08 to 1523143633.9 = 5.819 seconds
+DEBUG:process-('127.0.0.1', 39348):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39348):Closing socket
+
+GpuID	ActiveJobs (job 51)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39362) ( job 57 )
+DEBUG:server:Started process <Process(Process-59, started)>
+DEBUG:process-('127.0.0.1', 39362):Connected
+DEBUG:process-('127.0.0.1', 39362):Received data 'parboil_cutcp'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 57)
+DEBUG:server:(Job 56) 1523143633.09 to 1523143634.15 = 1.060 seconds
+DEBUG:process-('127.0.0.1', 39360):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39360):Closing socket
+
+GpuID	ActiveJobs (job 56)
+0	4
+1	3
+DEBUG:server:(Job 55) 1523143632.09 to 1523143634.35 = 2.258 seconds
+DEBUG:process-('127.0.0.1', 39358):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39358):Closing socket
+
+GpuID	ActiveJobs (job 55)
+0	4
+1	2
+DEBUG:server:(Job 57) 1523143634.13 to 1523143635.0 = 0.868 seconds
+DEBUG:process-('127.0.0.1', 39362):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39362):Closing socket
+
+GpuID	ActiveJobs (job 57)
+0	4
+1	3
+DEBUG:server:Got connection : ('127.0.0.1', 39364) ( job 58 )
+DEBUG:server:Started process <Process(Process-60, started)>
+DEBUG:process-('127.0.0.1', 39364):Connected
+DEBUG:process-('127.0.0.1', 39364):Received data 'parboil_lbm'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 58)
+DEBUG:server:Got connection : ('127.0.0.1', 39366) ( job 59 )
+DEBUG:server:Started process <Process(Process-61, started)>
+DEBUG:process-('127.0.0.1', 39366):Connected
+DEBUG:process-('127.0.0.1', 39366):Received data 'parboil_mriq'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 59)
+DEBUG:server:(Job 59) 1523143636.12 to 1523143637.04 = 0.920 seconds
+DEBUG:process-('127.0.0.1', 39366):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39366):Closing socket
+
+GpuID	ActiveJobs (job 59)
+0	4
+1	2
+DEBUG:server:Got connection : ('127.0.0.1', 39368) ( job 60 )
+DEBUG:server:Started process <Process(Process-62, started)>
+DEBUG:process-('127.0.0.1', 39368):Connected
+DEBUG:process-('127.0.0.1', 39368):Received data 'parboil_sgemm'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 60)
+DEBUG:server:(Job 60) 1523143637.11 to 1523143637.82 = 0.711 seconds
+DEBUG:process-('127.0.0.1', 39368):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39368):Closing socket
+
+GpuID	ActiveJobs (job 60)
+0	4
+1	2
+DEBUG:server:Got connection : ('127.0.0.1', 39370) ( job 61 )
+DEBUG:server:Started process <Process(Process-63, started)>
+DEBUG:process-('127.0.0.1', 39370):Connected
+DEBUG:process-('127.0.0.1', 39370):Received data 'parboil_stencil'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 61)
+DEBUG:server:(Job 53) 1523143630.09 to 1523143638.18 = 8.087 seconds
+DEBUG:process-('127.0.0.1', 39352):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39352):Closing socket
+
+GpuID	ActiveJobs (job 53)
+0	3
+1	3
+DEBUG:server:(Job 58) 1523143635.09 to 1523143638.77 = 3.676 seconds
+DEBUG:process-('127.0.0.1', 39364):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39364):Closing socket
+
+GpuID	ActiveJobs (job 58)
+0	4
+1	1
+DEBUG:server:(Job 61) 1523143638.1 to 1523143638.89 = 0.789 seconds
+DEBUG:process-('127.0.0.1', 39370):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39370):Closing socket
+
+GpuID	ActiveJobs (job 61)
+0	4
+1	2
+DEBUG:server:Got connection : ('127.0.0.1', 39372) ( job 62 )
+DEBUG:server:Started process <Process(Process-64, started)>
+DEBUG:process-('127.0.0.1', 39372):Connected
+DEBUG:process-('127.0.0.1', 39372):Received data 'rodinia_backprop'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 62)
+DEBUG:server:(Job 62) 1523143639.1 to 1523143639.78 = 0.677 seconds
+DEBUG:process-('127.0.0.1', 39372):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39372):Closing socket
+
+GpuID	ActiveJobs (job 62)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39374) ( job 63 )
+DEBUG:server:Started process <Process(Process-65, started)>
+DEBUG:process-('127.0.0.1', 39374):Connected
+DEBUG:process-('127.0.0.1', 39374):Received data 'rodinia_b+tree'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 63)
+DEBUG:server:Got connection : ('127.0.0.1', 39376) ( job 64 )
+DEBUG:server:Started process <Process(Process-66, started)>
+DEBUG:process-('127.0.0.1', 39376):Connected
+DEBUG:process-('127.0.0.1', 39376):Received data 'rodinia_dwt2d'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 64)
+DEBUG:server:(Job 64) 1523143641.28 to 1523143642.01 = 0.733 seconds
+DEBUG:process-('127.0.0.1', 39376):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39376):Closing socket
+
+GpuID	ActiveJobs (job 64)
+0	3
+1	2
+DEBUG:server:Got connection : ('127.0.0.1', 39380) ( job 65 )
+DEBUG:server:Started process <Process(Process-67, started)>
+DEBUG:process-('127.0.0.1', 39380):Connected
+DEBUG:process-('127.0.0.1', 39380):Received data 'rodinia_gaussian'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 65)
+DEBUG:server:(Job 63) 1523143640.1 to 1523143642.36 = 2.263 seconds
+DEBUG:process-('127.0.0.1', 39374):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39374):Closing socket
+
+GpuID	ActiveJobs (job 63)
+0	3
+1	1
+DEBUG:server:(Job 65) 1523143642.1 to 1523143642.67 = 0.574 seconds
+DEBUG:process-('127.0.0.1', 39380):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39380):Closing socket
+
+GpuID	ActiveJobs (job 65)
+0	3
+1	2
+DEBUG:server:Got connection : ('127.0.0.1', 39382) ( job 66 )
+DEBUG:server:Started process <Process(Process-68, started)>
+DEBUG:process-('127.0.0.1', 39382):Connected
+DEBUG:process-('127.0.0.1', 39382):Received data 'rodinia_heartwall'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 66)
+DEBUG:server:(Job 66) 1523143643.1 to 1523143643.94 = 0.843 seconds
+DEBUG:process-('127.0.0.1', 39382):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39382):Closing socket
+
+GpuID	ActiveJobs (job 66)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39384) ( job 67 )
+DEBUG:server:Started process <Process(Process-69, started)>
+DEBUG:process-('127.0.0.1', 39384):Connected
+DEBUG:process-('127.0.0.1', 39384):Received data 'rodinia_hybridsort'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 67)
+DEBUG:server:Got connection : ('127.0.0.1', 39386) ( job 68 )
+DEBUG:server:Started process <Process(Process-70, started)>
+DEBUG:process-('127.0.0.1', 39386):Connected
+DEBUG:process-('127.0.0.1', 39386):Received data 'rodinia_hotspot'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 68)
+DEBUG:server:(Job 67) 1523143644.11 to 1523143645.17 = 1.061 seconds
+DEBUG:process-('127.0.0.1', 39384):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39384):Closing socket
+
+GpuID	ActiveJobs (job 67)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39388) ( job 69 )
+DEBUG:server:(Job 68) 1523143645.12 to 1523143646.11 = 0.989 seconds
+DEBUG:process-('127.0.0.1', 39386):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39386):Closing socket
+DEBUG:server:Started process <Process(Process-71, started)>
+
+GpuID	ActiveJobs (job 68)
+0	3
+1	2
+DEBUG:process-('127.0.0.1', 39388):Connected
+DEBUG:process-('127.0.0.1', 39388):Received data 'rodinia_lud'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 69)
+DEBUG:server:(Job 69) 1523143646.12 to 1523143646.75 = 0.632 seconds
+DEBUG:process-('127.0.0.1', 39388):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39388):Closing socket
+
+GpuID	ActiveJobs (job 69)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39390) ( job 70 )
+DEBUG:server:Started process <Process(Process-72, started)>
+DEBUG:process-('127.0.0.1', 39390):Connected
+DEBUG:process-('127.0.0.1', 39390):Received data 'rodinia_lavaMD'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 70)
+DEBUG:server:(Job 70) 1523143647.1 to 1523143647.81 = 0.703 seconds
+DEBUG:process-('127.0.0.1', 39390):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39390):Closing socket
+
+GpuID	ActiveJobs (job 70)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39392) ( job 71 )
+DEBUG:server:Started process <Process(Process-73, started)>
+DEBUG:process-('127.0.0.1', 39392):Connected
+DEBUG:process-('127.0.0.1', 39392):Received data 'rodinia_needle'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 71)
+DEBUG:server:(Job 71) 1523143648.11 to 1523143648.78 = 0.667 seconds
+DEBUG:process-('127.0.0.1', 39392):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39392):Closing socket
+
+GpuID	ActiveJobs (job 71)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39394) ( job 72 )
+DEBUG:server:Started process <Process(Process-74, started)>
+DEBUG:process-('127.0.0.1', 39394):Connected
+DEBUG:process-('127.0.0.1', 39394):Received data 'rodinia_pathfinder'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 72)
+DEBUG:server:(Job 72) 1523143649.11 to 1523143649.92 = 0.806 seconds
+DEBUG:process-('127.0.0.1', 39394):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39394):Closing socket
+
+GpuID	ActiveJobs (job 72)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39396) ( job 73 )
+DEBUG:server:Started process <Process(Process-75, started)>
+DEBUG:process-('127.0.0.1', 39396):Connected
+DEBUG:process-('127.0.0.1', 39396):Received data 'shoc_lev1BFS'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 73)
+DEBUG:server:(Job 73) 1523143650.11 to 1523143650.62 = 0.515 seconds
+DEBUG:process-('127.0.0.1', 39396):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39396):Closing socket
+
+GpuID	ActiveJobs (job 73)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39398) ( job 74 )
+DEBUG:server:Started process <Process(Process-76, started)>
+DEBUG:process-('127.0.0.1', 39398):Connected
+DEBUG:process-('127.0.0.1', 39398):Received data 'shoc_lev1sort'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 74)
+DEBUG:server:(Job 74) 1523143651.11 to 1523143651.71 = 0.601 seconds
+DEBUG:process-('127.0.0.1', 39398):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39398):Closing socket
+
+GpuID	ActiveJobs (job 74)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39402) ( job 75 )
+DEBUG:server:Started process <Process(Process-77, started)>
+DEBUG:process-('127.0.0.1', 39402):Connected
+DEBUG:process-('127.0.0.1', 39402):Received data 'shoc_lev1fft'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 75)
+DEBUG:server:(Job 75) 1523143652.11 to 1523143652.62 = 0.506 seconds
+DEBUG:process-('127.0.0.1', 39402):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39402):Closing socket
+
+GpuID	ActiveJobs (job 75)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39404) ( job 76 )
+DEBUG:server:Started process <Process(Process-78, started)>
+DEBUG:process-('127.0.0.1', 39404):Connected
+DEBUG:process-('127.0.0.1', 39404):Received data 'shoc_lev1GEMM'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 76)
+DEBUG:server:(Job 76) 1523143653.13 to 1523143654.02 = 0.887 seconds
+DEBUG:process-('127.0.0.1', 39404):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39404):Closing socket
+
+GpuID	ActiveJobs (job 76)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39406) ( job 77 )
+DEBUG:server:Started process <Process(Process-79, started)>
+DEBUG:process-('127.0.0.1', 39406):Connected
+DEBUG:process-('127.0.0.1', 39406):Received data 'shoc_lev1md5hash'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 77)
+DEBUG:server:(Job 77) 1523143654.12 to 1523143654.74 = 0.627 seconds
+DEBUG:process-('127.0.0.1', 39406):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39406):Closing socket
+
+GpuID	ActiveJobs (job 77)
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 39408) ( job 78 )
+DEBUG:server:Started process <Process(Process-80, started)>
+DEBUG:process-('127.0.0.1', 39408):Connected
+DEBUG:process-('127.0.0.1', 39408):Received data 'shoc_lev1reduction'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1 (job 78)
+DEBUG:server:(Job 78) 1523143655.12 to 1523143655.84 = 0.718 seconds
+DEBUG:process-('127.0.0.1', 39408):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39408):Closing socket
+
+GpuID	ActiveJobs (job 78)
+0	3
+1	1
+DEBUG:server:
+
+Wait 1 seconds before ending.
+
+
+DEBUG:server:
+
+Waiting for jobs to end. Grab a coffee if you like.
+
+
+DEBUG:server:(Job 44) 1523143621.07 to 1523143659.27 = 38.197 seconds
+DEBUG:process-('127.0.0.1', 39334):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39334):Closing socket
+
+GpuID	ActiveJobs (job 44)
+0	0
+1	1
+DEBUG:server:(Job 45) 1523143622.07 to 1523143660.15 = 38.073 seconds
+DEBUG:process-('127.0.0.1', 39336):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39336):Closing socket
+
+GpuID	ActiveJobs (job 45)
+0	1
+1	0
+DEBUG:server:(Job 46) 1523143623.07 to 1523143663.04 = 39.966 seconds
+DEBUG:process-('127.0.0.1', 39338):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39338):Closing socket
+
+GpuID	ActiveJobs (job 46)
+0	1
+1	1
+DEBUG:server:(Job 50) 1523143627.08 to 1523143691.08 = 64.003 seconds
+DEBUG:process-('127.0.0.1', 39346):Socket closed remotely
+DEBUG:process-('127.0.0.1', 39346):Closing socket
+DEBUG:server:
+
+End Simulation
+
+
+
+GpuID	ActiveJobs (job 50)
+0	2
+1	2
+ERROR:root:Unexpected exception
+Traceback (most recent call last):
+  File "./start_server.py", line 1494, in <module>
+    server.start()
+  File "./start_server.py", line 1437, in start
+    conn, address = self.socket.accept()
+  File "/home/users/leiming/anaconda2/envs/tf_lab/lib/python2.7/socket.py", line 206, in accept
+    sock, addr = self._sock.accept()
+KeyboardInterrupt
+INFO:root:Shutting down
+INFO:root:All done
+JobID	GPU	Status	Start			End			Duration
+0.0	0.0	1.0	1523143577.04		1523143578.67		1.62881779671
+1.0	1.0	1.0	1523143578.03		1523143579.86		1.83189702034
+2.0	0.0	1.0	1523143579.03		1523143584.07		5.03869509697
+3.0	1.0	1.0	1523143580.03		1523143582.18		2.15597486496
+4.0	0.0	1.0	1523143581.03		1523143582.36		1.33746886253
+5.0	1.0	1.0	1523143582.03		1523143582.98		0.954545021057
+6.0	1.0	1.0	1523143583.03		1523143583.49		0.461586952209
+7.0	1.0	1.0	1523143584.03		1523143585.57		1.53497505188
+8.0	0.0	1.0	1523143585.03		1523143610.8		25.7661950588
+9.0	1.0	1.0	1523143586.04		1523143613.18		27.1394729614
+10.0	0.0	1.0	1523143587.03		1523143588.63		1.59301304817
+11.0	1.0	1.0	1523143588.03		1523143589.35		1.32249593735
+12.0	0.0	1.0	1523143589.03		1523143589.73		0.692423820496
+13.0	0.0	1.0	1523143590.03		1523143590.76		0.721601009369
+14.0	0.0	1.0	1523143591.04		1523143591.48		0.447933912277
+15.0	0.0	1.0	1523143592.04		1523143593.44		1.40417695045
+16.0	1.0	1.0	1523143593.05		1523143596.81		3.75800800323
+17.0	0.0	1.0	1523143594.04		1523143611.64		17.5939750671
+18.0	0.0	1.0	1523143595.05		1523143597.27		2.2225549221
+19.0	1.0	1.0	1523143596.05		1523143596.69		0.635846853256
+20.0	1.0	1.0	1523143597.05		1523143598.06		1.01055216789
+21.0	1.0	1.0	1523143598.06		1523143601.69		3.63025403023
+22.0	0.0	1.0	1523143599.05		1523143600.33		1.28259992599
+23.0	1.0	1.0	1523143600.05		1523143601.13		1.07455611229
+24.0	0.0	1.0	1523143601.06		1523143603.87		2.81508398056
+25.0	1.0	1.0	1523143602.06		1523143605.99		3.9354839325
+26.0	1.0	1.0	1523143603.06		1523143603.78		0.720598936081
+27.0	0.0	1.0	1523143604.06		1523143610.8		6.74248099327
+28.0	1.0	1.0	1523143605.06		1523143605.62		0.564139127731
+29.0	1.0	1.0	1523143606.06		1523143606.9		0.845594167709
+30.0	1.0	1.0	1523143607.06		1523143608.03		0.972048044205
+31.0	1.0	1.0	1523143608.06		1523143608.58		0.515687942505
+32.0	1.0	1.0	1523143609.06		1523143609.8		0.738682031631
+33.0	1.0	1.0	1523143610.06		1523143610.95		0.893349885941
+34.0	0.0	1.0	1523143611.06		1523143611.72		0.6608710289
+35.0	0.0	1.0	1523143612.06		1523143612.61		0.544947147369
+36.0	0.0	1.0	1523143613.06		1523143614.66		1.59841179848
+37.0	1.0	1.0	1523143614.07		1523143616.15		2.0837161541
+38.0	0.0	1.0	1523143615.07		1523143616.85		1.77625894547
+39.0	0.0	1.0	1523143616.07		1523143618.97		2.89759492874
+40.0	1.0	1.0	1523143617.08		1523143619.23		2.1520409584
+41.0	0.0	1.0	1523143618.07		1523143620.64		2.57633805275
+42.0	0.0	1.0	1523143619.07		1523143619.95		0.88049697876
+43.0	1.0	1.0	1523143620.07		1523143621.37		1.29577302933
+44.0	0.0	1.0	1523143621.07		1523143659.27		38.1969029903
+45.0	1.0	1.0	1523143622.07		1523143660.15		38.0726459026
+46.0	0.0	1.0	1523143623.07		1523143663.04		39.9660208225
+47.0	1.0	1.0	1523143624.09		1523143625.48		1.39484095573
+48.0	0.0	1.0	1523143625.08		1523143626.32		1.23698401451
+49.0	1.0	1.0	1523143626.08		1523143627.44		1.35501289368
+50.0	0.0	1.0	1523143627.08		1523143691.08		64.0031511784
+51.0	1.0	1.0	1523143628.08		1523143633.9		5.81928110123
+52.0	1.0	1.0	1523143629.09		1523143630.81		1.7178030014
+53.0	0.0	1.0	1523143630.09		1523143638.18		8.08688592911
+54.0	1.0	1.0	1523143631.09		1523143632.02		0.926450967789
+55.0	1.0	1.0	1523143632.09		1523143634.35		2.25824093819
+56.0	1.0	1.0	1523143633.09		1523143634.15		1.05951690674
+57.0	1.0	1.0	1523143634.13		1523143635.0		0.867510080338
+58.0	1.0	1.0	1523143635.09		1523143638.77		3.67632889748
+59.0	1.0	1.0	1523143636.12		1523143637.04		0.920316934586
+60.0	1.0	1.0	1523143637.11		1523143637.82		0.711359977722
+61.0	1.0	1.0	1523143638.1		1523143638.89		0.789439916611
+62.0	1.0	1.0	1523143639.1		1523143639.78		0.67676115036
+63.0	1.0	1.0	1523143640.1		1523143642.36		2.26348495483
+64.0	1.0	1.0	1523143641.28		1523143642.01		0.733372211456
+65.0	1.0	1.0	1523143642.1		1523143642.67		0.573529958725
+66.0	1.0	1.0	1523143643.1		1523143643.94		0.842540025711
+67.0	1.0	1.0	1523143644.11		1523143645.17		1.06073188782
+68.0	1.0	1.0	1523143645.12		1523143646.11		0.988931894302
+69.0	1.0	1.0	1523143646.12		1523143646.75		0.63183093071
+70.0	1.0	1.0	1523143647.1		1523143647.81		0.702828884125
+71.0	1.0	1.0	1523143648.11		1523143648.78		0.667135000229
+72.0	1.0	1.0	1523143649.11		1523143649.92		0.806097984314
+73.0	1.0	1.0	1523143650.11		1523143650.62		0.515203952789
+74.0	1.0	1.0	1523143651.11		1523143651.71		0.600695133209
+75.0	1.0	1.0	1523143652.11		1523143652.62		0.506276130676
+76.0	1.0	1.0	1523143653.13		1523143654.02		0.886781930923
+77.0	1.0	1.0	1523143654.12		1523143654.74		0.6272149086
+78.0	1.0	1.0	1523143655.12		1523143655.84		0.718428134918

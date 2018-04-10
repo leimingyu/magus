@@ -1,0 +1,1280 @@
+INFO:root:Listening
+INFO:server:Scheduling using Deep Interference Neural Net Model (DINN) with Performance Model
+INFO:server:Loading dinn model features ...
+INFO:server:Loading performance model features ...
+INFO:server:Total GPU applications = 79
+DEBUG:server:listening
+DEBUG:server:Got connection : ('127.0.0.1', 57104) ( job 0 )
+DEBUG:server:Started process <Process(Process-2, started)>
+DEBUG:process-('127.0.0.1', 57104):Connected
+DEBUG:process-('127.0.0.1', 57104):Received data 'cudasdk_matrixMul'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 0) 1522578363.8 to 1522578364.4 = 0.598 seconds
+DEBUG:process-('127.0.0.1', 57104):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57104):Closing socket
+
+GpuID	ActiveJobs
+0	0
+1	0
+DEBUG:server:Got connection : ('127.0.0.1', 57108) ( job 1 )
+DEBUG:server:Started process <Process(Process-3, started)>
+DEBUG:process-('127.0.0.1', 57108):Connected
+DEBUG:process-('127.0.0.1', 57108):Received data 'cudasdk_vectorAdd'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 1) 1522578364.75 to 1522578365.35 = 0.594 seconds
+DEBUG:process-('127.0.0.1', 57108):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57108):Closing socket
+
+GpuID	ActiveJobs
+0	0
+1	0
+DEBUG:server:Got connection : ('127.0.0.1', 57110) ( job 2 )
+DEBUG:server:Started process <Process(Process-4, started)>
+DEBUG:process-('127.0.0.1', 57110):Connected
+DEBUG:process-('127.0.0.1', 57110):Received data 'cudasdk_convolutionFFT2D'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-0
+DEBUG:server:Got connection : ('127.0.0.1', 57112) ( job 3 )
+DEBUG:server:Started process <Process(Process-5, started)>
+DEBUG:process-('127.0.0.1', 57112):Connected
+DEBUG:process-('127.0.0.1', 57112):Received data 'cudasdk_convolutionSeparable'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1
+DEBUG:server:Got connection : ('127.0.0.1', 57114) ( job 4 )
+DEBUG:server:Started process <Process(Process-6, started)>
+DEBUG:process-('127.0.0.1', 57114):Connected
+DEBUG:process-('127.0.0.1', 57114):Received data 'cudasdk_convolutionTexture'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57116) ( job 5 )
+DEBUG:server:Started process <Process(Process-7, started)>
+DEBUG:process-('127.0.0.1', 57116):Connected
+DEBUG:process-('127.0.0.1', 57116):Received data 'cudasdk_dct8x8'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 3) 1522578366.74 to 1522578368.9 = 2.161 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57118) ( job 6 )
+DEBUG:server:Started process <Process(Process-8, started)>
+DEBUG:process-('127.0.0.1', 57118):Connected
+DEBUG:process-('127.0.0.1', 57118):Received data 'cudasdk_dwtHaar1D'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 2) 1522578365.78 to 1522578369.99 = 4.211 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57120) ( job 7 )
+DEBUG:server:Started process <Process(Process-9, started)>
+DEBUG:process-('127.0.0.1', 57120):Connected
+DEBUG:process-('127.0.0.1', 57120):Received data 'cudasdk_dxtc'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57122) ( job 8 )
+DEBUG:server:Started process <Process(Process-10, started)>
+DEBUG:process-('127.0.0.1', 57122):Connected
+DEBUG:process-('127.0.0.1', 57122):Received data 'cudasdk_stereoDisparity'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57124) ( job 9 )
+DEBUG:server:Started process <Process(Process-11, started)>
+DEBUG:process-('127.0.0.1', 57124):Connected
+DEBUG:process-('127.0.0.1', 57124):Received data 'cudasdk_binomialOptions'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57112):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57112):Closing socket
+DEBUG:process-('127.0.0.1', 57110):Socket closed remotely
+
+GpuID	ActiveJobs
+0	1
+1	0
+DEBUG:process-('127.0.0.1', 57110):Closing socket
+
+GpuID	ActiveJobs
+0	0
+1	0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-1
+DEBUG:server:Got connection : ('127.0.0.1', 57126) ( job 10 )
+DEBUG:server:Started process <Process(Process-12, started)>
+DEBUG:process-('127.0.0.1', 57126):Connected
+DEBUG:process-('127.0.0.1', 57126):Received data 'cudasdk_BlackScholes'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57128) ( job 11 )
+DEBUG:server:Started process <Process(Process-13, started)>
+DEBUG:process-('127.0.0.1', 57128):Connected
+DEBUG:process-('127.0.0.1', 57128):Received data 'cudasdk_quasirandomGenerator'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57132) ( job 12 )
+DEBUG:server:Started process <Process(Process-14, started)>
+DEBUG:process-('127.0.0.1', 57132):Connected
+DEBUG:process-('127.0.0.1', 57132):Received data 'cudasdk_SobolQRNG'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 6) 1522578373.67 to 1522578376.52 = 2.847 seconds
+DEBUG:server:(Job 7) 1522578373.67 to 1522578376.56 = 2.894 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57134) ( job 13 )
+DEBUG:server:Started process <Process(Process-15, started)>
+DEBUG:process-('127.0.0.1', 57134):Connected
+DEBUG:process-('127.0.0.1', 57134):Received data 'cudasdk_c++11Cuda'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 5) 1522578373.67 to 1522578376.93 = 3.259 seconds
+DEBUG:server:(Job 4) 1522578373.72 to 1522578377.33 = 3.610 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57136) ( job 14 )
+DEBUG:server:Started process <Process(Process-16, started)>
+DEBUG:process-('127.0.0.1', 57136):Connected
+DEBUG:process-('127.0.0.1', 57136):Received data 'cudasdk_concurrentKernels'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57118):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57118):Closing socket
+DEBUG:process-('127.0.0.1', 57120):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57120):Closing socket
+
+GpuID	ActiveJobs
+0	1
+1	0
+
+GpuID	ActiveJobs
+0	0
+1	0
+DEBUG:process-('127.0.0.1', 57114):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57114):Closing socket
+DEBUG:process-('127.0.0.1', 57116):Socket closed remotely
+
+GpuID	ActiveJobs
+0	1
+1	1
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:process-('127.0.0.1', 57116):Closing socket
+
+GpuID	ActiveJobs
+0	1
+1	1
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-1
+DEBUG:server:Got connection : ('127.0.0.1', 57138) ( job 15 )
+DEBUG:server:Started process <Process(Process-17, started)>
+DEBUG:process-('127.0.0.1', 57138):Connected
+DEBUG:process-('127.0.0.1', 57138):Received data 'cudasdk_eigenvalues'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 14) 1522578378.5 to 1522578379.51 = 1.005 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57140) ( job 16 )
+DEBUG:server:Started process <Process(Process-18, started)>
+DEBUG:process-('127.0.0.1', 57140):Connected
+DEBUG:process-('127.0.0.1', 57140):Received data 'cudasdk_fastWalshTransform'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 11) 1522578378.5 to 1522578380.23 = 1.733 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57142) ( job 17 )
+DEBUG:server:Started process <Process(Process-19, started)>
+DEBUG:process-('127.0.0.1', 57142):Connected
+DEBUG:process-('127.0.0.1', 57142):Received data 'cudasdk_FDTD3d'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57144) ( job 18 )
+DEBUG:server:Started process <Process(Process-20, started)>
+DEBUG:process-('127.0.0.1', 57144):Connected
+DEBUG:process-('127.0.0.1', 57144):Received data 'cudasdk_interval'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57146) ( job 19 )
+DEBUG:server:Started process <Process(Process-21, started)>
+DEBUG:process-('127.0.0.1', 57146):Connected
+DEBUG:process-('127.0.0.1', 57146):Received data 'cudasdk_lineOfSight'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:TargetGPU-1
+DEBUG:server:Got connection : ('127.0.0.1', 57148) ( job 20 )
+DEBUG:server:Started process <Process(Process-22, started)>
+DEBUG:process-('127.0.0.1', 57148):Connected
+DEBUG:process-('127.0.0.1', 57148):Received data 'cudasdk_mergeSort'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 13) 1522578383.48 to 1522578384.32 = 0.837 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57150) ( job 21 )
+DEBUG:server:Started process <Process(Process-23, started)>
+DEBUG:process-('127.0.0.1', 57150):Connected
+DEBUG:process-('127.0.0.1', 57150):Received data 'cudasdk_radixSortThrust'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57154) ( job 22 )
+DEBUG:server:Started process <Process(Process-24, started)>
+DEBUG:process-('127.0.0.1', 57154):Connected
+DEBUG:process-('127.0.0.1', 57154):Received data 'cudasdk_reduction'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57156) ( job 23 )
+DEBUG:server:Started process <Process(Process-25, started)>
+DEBUG:process-('127.0.0.1', 57156):Connected
+DEBUG:process-('127.0.0.1', 57156):Received data 'cudasdk_scalarProd'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:Got connection : ('127.0.0.1', 57158) ( job 24 )
+DEBUG:server:Started process <Process(Process-26, started)>
+DEBUG:process-('127.0.0.1', 57158):Connected
+DEBUG:process-('127.0.0.1', 57158):Received data 'cudasdk_scan'
+DEBUG:server:(Monitoring)
+DEBUG:process-('127.0.0.1', 57136):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57136):Closing socket
+
+GpuID	ActiveJobs
+0	2
+1	0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-1
+DEBUG:server:Got connection : ('127.0.0.1', 57160) ( job 25 )
+DEBUG:server:Started process <Process(Process-27, started)>
+DEBUG:process-('127.0.0.1', 57160):Connected
+DEBUG:process-('127.0.0.1', 57160):Received data 'cudasdk_segmentationTreeThrust'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57162) ( job 26 )
+DEBUG:server:Started process <Process(Process-28, started)>
+DEBUG:process-('127.0.0.1', 57162):Connected
+DEBUG:process-('127.0.0.1', 57162):Received data 'cudasdk_shflscan'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57164) ( job 27 )
+DEBUG:server:Started process <Process(Process-29, started)>
+DEBUG:process-('127.0.0.1', 57164):Connected
+DEBUG:process-('127.0.0.1', 57164):Received data 'cudasdk_sortingNetworks'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57166) ( job 28 )
+DEBUG:server:Started process <Process(Process-30, started)>
+DEBUG:process-('127.0.0.1', 57166):Connected
+DEBUG:process-('127.0.0.1', 57166):Received data 'cudasdk_threadFenceReduction'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57134):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57134):Closing socket
+
+GpuID	ActiveJobs
+0	3
+1	1
+DEBUG:server:Got connection : ('127.0.0.1', 57168) ( job 29 )
+DEBUG:server:Started process <Process(Process-31, started)>
+DEBUG:process-('127.0.0.1', 57168):Connected
+DEBUG:process-('127.0.0.1', 57168):Received data 'cudasdk_transpose'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57170) ( job 30 )
+DEBUG:server:Started process <Process(Process-32, started)>
+DEBUG:process-('127.0.0.1', 57170):Connected
+DEBUG:process-('127.0.0.1', 57170):Received data 'cudasdk_batchCUBLAS'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57172) ( job 31 )
+DEBUG:server:Started process <Process(Process-33, started)>
+DEBUG:process-('127.0.0.1', 57172):Connected
+DEBUG:process-('127.0.0.1', 57172):Received data 'cudasdk_boxFilterNPP'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57176) ( job 32 )
+DEBUG:server:Started process <Process(Process-34, started)>
+DEBUG:process-('127.0.0.1', 57176):Connected
+DEBUG:process-('127.0.0.1', 57176):Received data 'cudasdk_MCEstimatePiInlineP'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:Got connection : ('127.0.0.1', 57178) ( job 33 )
+DEBUG:server:Started process <Process(Process-35, started)>
+DEBUG:process-('127.0.0.1', 57178):Connected
+DEBUG:process-('127.0.0.1', 57178):Received data 'cudasdk_MCEstimatePiInlineQ'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57180) ( job 34 )
+DEBUG:server:Started process <Process(Process-36, started)>
+DEBUG:process-('127.0.0.1', 57180):Connected
+DEBUG:process-('127.0.0.1', 57180):Received data 'cudasdk_MCEstimatePiP'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 12) 1522578396.96 to 1522578398.18 = 1.222 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57182) ( job 35 )
+DEBUG:server:Started process <Process(Process-37, started)>
+DEBUG:process-('127.0.0.1', 57182):Connected
+DEBUG:process-('127.0.0.1', 57182):Received data 'cudasdk_MCEstimatePiQ'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 15) 1522578396.96 to 1522578399.04 = 2.088 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57184) ( job 36 )
+DEBUG:server:Started process <Process(Process-38, started)>
+DEBUG:process-('127.0.0.1', 57184):Connected
+DEBUG:process-('127.0.0.1', 57184):Received data 'cudasdk_MCSingleAsianOptionP'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 8) 1522578373.67 to 1522578400.25 = 26.578 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57186) ( job 37 )
+DEBUG:server:Started process <Process(Process-39, started)>
+DEBUG:process-('127.0.0.1', 57186):Connected
+DEBUG:process-('127.0.0.1', 57186):Received data 'cudasdk_simpleCUBLAS'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:Got connection : ('127.0.0.1', 57188) ( job 38 )
+DEBUG:server:Started process <Process(Process-40, started)>
+DEBUG:process-('127.0.0.1', 57188):Connected
+DEBUG:process-('127.0.0.1', 57188):Received data 'cudasdk_simpleCUFFTcallback'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 9) 1522578373.67 to 1522578402.06 = 28.386 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57190) ( job 39 )
+DEBUG:server:Started process <Process(Process-41, started)>
+DEBUG:process-('127.0.0.1', 57190):Connected
+DEBUG:process-('127.0.0.1', 57190):Received data 'poly_2dconv'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57192) ( job 40 )
+DEBUG:server:Started process <Process(Process-42, started)>
+DEBUG:process-('127.0.0.1', 57192):Connected
+DEBUG:process-('127.0.0.1', 57192):Received data 'poly_3dconv'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57194) ( job 41 )
+DEBUG:server:Started process <Process(Process-43, started)>
+DEBUG:process-('127.0.0.1', 57194):Connected
+DEBUG:process-('127.0.0.1', 57194):Received data 'poly_3mm'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57196) ( job 42 )
+DEBUG:server:Started process <Process(Process-44, started)>
+DEBUG:process-('127.0.0.1', 57196):Connected
+DEBUG:process-('127.0.0.1', 57196):Received data 'poly_atax'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:TargetGPU-0
+DEBUG:server:Got connection : ('127.0.0.1', 57200) ( job 43 )
+DEBUG:server:Started process <Process(Process-45, started)>
+DEBUG:process-('127.0.0.1', 57200):Connected
+DEBUG:process-('127.0.0.1', 57200):Received data 'poly_bicg'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57202) ( job 44 )
+DEBUG:server:Started process <Process(Process-46, started)>
+DEBUG:process-('127.0.0.1', 57202):Connected
+DEBUG:process-('127.0.0.1', 57202):Received data 'poly_correlation'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 10) 1522578406.36 to 1522578408.04 = 1.675 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57204) ( job 45 )
+DEBUG:server:Started process <Process(Process-47, started)>
+DEBUG:process-('127.0.0.1', 57204):Connected
+DEBUG:process-('127.0.0.1', 57204):Received data 'poly_covariance'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57206) ( job 46 )
+DEBUG:server:Started process <Process(Process-48, started)>
+DEBUG:process-('127.0.0.1', 57206):Connected
+DEBUG:process-('127.0.0.1', 57206):Received data 'poly_fdtd2d'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57208) ( job 47 )
+DEBUG:server:Started process <Process(Process-49, started)>
+DEBUG:process-('127.0.0.1', 57208):Connected
+DEBUG:process-('127.0.0.1', 57208):Received data 'poly_gemm'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57138):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57138):Closing socket
+DEBUG:process-('127.0.0.1', 57122):Socket closed remotely
+
+GpuID	ActiveJobs
+0	2
+1	3
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:process-('127.0.0.1', 57122):Closing socket
+
+GpuID	ActiveJobs
+0	0
+1	0
+DEBUG:server:Got connection : ('127.0.0.1', 57210) ( job 48 )
+DEBUG:server:Started process <Process(Process-50, started)>
+DEBUG:process-('127.0.0.1', 57210):Connected
+DEBUG:process-('127.0.0.1', 57210):Received data 'poly_gesummv'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57212) ( job 49 )
+DEBUG:server:Started process <Process(Process-51, started)>
+DEBUG:process-('127.0.0.1', 57212):Connected
+DEBUG:process-('127.0.0.1', 57212):Received data 'poly_mvt'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57214) ( job 50 )
+DEBUG:server:Started process <Process(Process-52, started)>
+DEBUG:process-('127.0.0.1', 57214):Connected
+DEBUG:process-('127.0.0.1', 57214):Received data 'poly_syr2k'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57216) ( job 51 )
+DEBUG:server:Started process <Process(Process-53, started)>
+DEBUG:process-('127.0.0.1', 57216):Connected
+DEBUG:process-('127.0.0.1', 57216):Received data 'poly_syrk'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57128):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57128):Closing socket
+
+GpuID	ActiveJobs
+0	4
+1	2
+DEBUG:process-('127.0.0.1', 57124):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57124):Closing socket
+
+GpuID	ActiveJobs
+0	0
+1	0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:process-('127.0.0.1', 57132):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57132):Closing socket
+DEBUG:server:TargetGPU-1
+
+GpuID	ActiveJobs
+0	4
+1	2
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:process-('127.0.0.1', 57126):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57126):Closing socket
+
+GpuID	ActiveJobs
+0	4
+1	2
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-0
+DEBUG:server:Got connection : ('127.0.0.1', 57218) ( job 52 )
+DEBUG:server:Started process <Process(Process-54, started)>
+DEBUG:process-('127.0.0.1', 57218):Connected
+DEBUG:process-('127.0.0.1', 57218):Received data 'lonestar_bh'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 35) 1522578415.55 to 1522578416.7 = 1.147 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57222) ( job 53 )
+DEBUG:server:Started process <Process(Process-55, started)>
+DEBUG:process-('127.0.0.1', 57222):Connected
+DEBUG:process-('127.0.0.1', 57222):Received data 'lonestar_dmr'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57224) ( job 54 )
+DEBUG:server:Started process <Process(Process-56, started)>
+DEBUG:process-('127.0.0.1', 57224):Connected
+DEBUG:process-('127.0.0.1', 57224):Received data 'lonestar_mst'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57226) ( job 55 )
+DEBUG:server:Started process <Process(Process-57, started)>
+DEBUG:process-('127.0.0.1', 57226):Connected
+DEBUG:process-('127.0.0.1', 57226):Received data 'lonestar_sssp'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 16) 1522578415.52 to 1522578419.64 = 4.125 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57228) ( job 56 )
+DEBUG:server:Started process <Process(Process-58, started)>
+DEBUG:process-('127.0.0.1', 57228):Connected
+DEBUG:process-('127.0.0.1', 57228):Received data 'parboil_bfs'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:Got connection : ('127.0.0.1', 57230) ( job 57 )
+DEBUG:server:Started process <Process(Process-59, started)>
+DEBUG:process-('127.0.0.1', 57230):Connected
+DEBUG:process-('127.0.0.1', 57230):Received data 'parboil_cutcp'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57232) ( job 58 )
+DEBUG:server:Started process <Process(Process-60, started)>
+DEBUG:process-('127.0.0.1', 57232):Connected
+DEBUG:process-('127.0.0.1', 57232):Received data 'parboil_lbm'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57234) ( job 59 )
+DEBUG:server:Started process <Process(Process-61, started)>
+DEBUG:process-('127.0.0.1', 57234):Connected
+DEBUG:process-('127.0.0.1', 57234):Received data 'parboil_mriq'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57236) ( job 60 )
+DEBUG:server:Started process <Process(Process-62, started)>
+DEBUG:process-('127.0.0.1', 57236):Connected
+DEBUG:process-('127.0.0.1', 57236):Received data 'parboil_sgemm'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:Got connection : ('127.0.0.1', 57238) ( job 61 )
+DEBUG:server:Started process <Process(Process-63, started)>
+DEBUG:process-('127.0.0.1', 57238):Connected
+DEBUG:process-('127.0.0.1', 57238):Received data 'parboil_stencil'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57240) ( job 62 )
+DEBUG:server:Started process <Process(Process-64, started)>
+DEBUG:process-('127.0.0.1', 57240):Connected
+DEBUG:process-('127.0.0.1', 57240):Received data 'rodinia_backprop'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57244) ( job 63 )
+DEBUG:server:Started process <Process(Process-65, started)>
+DEBUG:process-('127.0.0.1', 57244):Connected
+DEBUG:process-('127.0.0.1', 57244):Received data 'rodinia_b+tree'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57246) ( job 64 )
+DEBUG:server:Started process <Process(Process-66, started)>
+DEBUG:process-('127.0.0.1', 57246):Connected
+DEBUG:process-('127.0.0.1', 57246):Received data 'rodinia_dwt2d'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57248) ( job 65 )
+DEBUG:server:Started process <Process(Process-67, started)>
+DEBUG:process-('127.0.0.1', 57248):Connected
+DEBUG:process-('127.0.0.1', 57248):Received data 'rodinia_gaussian'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:TargetGPU-0
+DEBUG:server:Got connection : ('127.0.0.1', 57250) ( job 66 )
+DEBUG:server:Started process <Process(Process-68, started)>
+DEBUG:process-('127.0.0.1', 57250):Connected
+DEBUG:process-('127.0.0.1', 57250):Received data 'rodinia_heartwall'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1
+DEBUG:server:Got connection : ('127.0.0.1', 57252) ( job 67 )
+DEBUG:server:Started process <Process(Process-69, started)>
+DEBUG:process-('127.0.0.1', 57252):Connected
+DEBUG:process-('127.0.0.1', 57252):Received data 'rodinia_hybridsort'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 28) 1522578429.74 to 1522578431.16 = 1.419 seconds
+DEBUG:server:(Job 20) 1522578429.74 to 1522578431.59 = 1.846 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57254) ( job 68 )
+DEBUG:server:Started process <Process(Process-70, started)>
+DEBUG:process-('127.0.0.1', 57254):Connected
+DEBUG:process-('127.0.0.1', 57254):Received data 'rodinia_hotspot'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57256) ( job 69 )
+DEBUG:server:Started process <Process(Process-71, started)>
+DEBUG:process-('127.0.0.1', 57256):Connected
+DEBUG:process-('127.0.0.1', 57256):Received data 'rodinia_lud'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57258) ( job 70 )
+DEBUG:server:Started process <Process(Process-72, started)>
+DEBUG:process-('127.0.0.1', 57258):Connected
+DEBUG:process-('127.0.0.1', 57258):Received data 'rodinia_lavaMD'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:TargetGPU-1
+DEBUG:server:Got connection : ('127.0.0.1', 57260) ( job 71 )
+DEBUG:server:Started process <Process(Process-73, started)>
+DEBUG:process-('127.0.0.1', 57260):Connected
+DEBUG:process-('127.0.0.1', 57260):Received data 'rodinia_needle'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57262) ( job 72 )
+DEBUG:server:Started process <Process(Process-74, started)>
+DEBUG:process-('127.0.0.1', 57262):Connected
+DEBUG:process-('127.0.0.1', 57262):Received data 'rodinia_pathfinder'
+DEBUG:server:(Monitoring)
+DEBUG:server:Got connection : ('127.0.0.1', 57264) ( job 73 )
+DEBUG:server:Started process <Process(Process-75, started)>
+DEBUG:process-('127.0.0.1', 57264):Connected
+DEBUG:process-('127.0.0.1', 57264):Received data 'shoc_lev1BFS'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 23) 1522578434.59 to 1522578437.08 = 2.494 seconds
+DEBUG:server:(Job 26) 1522578434.58 to 1522578437.26 = 2.677 seconds
+DEBUG:server:(Job 19) 1522578434.59 to 1522578437.26 = 2.679 seconds
+DEBUG:server:(Job 29) 1522578434.66 to 1522578437.34 = 2.678 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57268) ( job 74 )
+DEBUG:server:Started process <Process(Process-76, started)>
+DEBUG:process-('127.0.0.1', 57268):Connected
+DEBUG:process-('127.0.0.1', 57268):Received data 'shoc_lev1sort'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 22) 1522578434.58 to 1522578437.88 = 3.299 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57270) ( job 75 )
+DEBUG:server:Started process <Process(Process-77, started)>
+DEBUG:process-('127.0.0.1', 57270):Connected
+DEBUG:process-('127.0.0.1', 57270):Received data 'shoc_lev1fft'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:Got connection : ('127.0.0.1', 57272) ( job 76 )
+DEBUG:server:Started process <Process(Process-78, started)>
+DEBUG:process-('127.0.0.1', 57272):Connected
+DEBUG:process-('127.0.0.1', 57272):Received data 'shoc_lev1GEMM'
+DEBUG:server:(Monitoring)
+DEBUG:server:TargetGPU-1
+DEBUG:process-('127.0.0.1', 57140):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57140):Closing socket
+DEBUG:server:TargetGPU-0
+
+GpuID	ActiveJobs
+0	2
+1	2
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:TargetGPU-1
+DEBUG:server:Got connection : ('127.0.0.1', 57274) ( job 77 )
+DEBUG:server:Started process <Process(Process-79, started)>
+DEBUG:process-('127.0.0.1', 57274):Connected
+DEBUG:process-('127.0.0.1', 57274):Received data 'shoc_lev1md5hash'
+DEBUG:server:(Monitoring)
+DEBUG:server:(Job 33) 1522578439.86 to 1522578441.0 = 1.132 seconds
+DEBUG:server:Got connection : ('127.0.0.1', 57276) ( job 78 )
+DEBUG:server:Started process <Process(Process-80, started)>
+DEBUG:process-('127.0.0.1', 57276):Connected
+DEBUG:process-('127.0.0.1', 57276):Received data 'shoc_lev1reduction'
+DEBUG:server:(Monitoring)
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 27) 1522578439.86 to 1522578446.47 = 6.605 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:(Job 31) 1522578449.33 to 1522578450.13 = 0.805 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:process-('127.0.0.1', 57156):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57156):Closing socket
+DEBUG:process-('127.0.0.1', 57162):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57162):Closing socket
+DEBUG:process-('127.0.0.1', 57146):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57146):Closing socket
+DEBUG:process-('127.0.0.1', 57168):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57168):Closing socket
+DEBUG:process-('127.0.0.1', 57154):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57154):Closing socket
+
+GpuID	ActiveJobs
+0	2
+1	1
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	2
+1	3
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	3
+1	2
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	3
+1	3
+
+GpuID	ActiveJobs
+0	2
+1	1
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:(Job 51) 1522578453.88 to 1522578458.48 = 4.605 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 48) 1522578459.1 to 1522578460.99 = 1.891 seconds
+DEBUG:server:(Job 21) 1522578459.1 to 1522578463.37 = 4.267 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:(Job 46) 1522578429.78 to 1522578464.98 = 35.205 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:TargetGPU-0
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:(Job 38) 1522578473.85 to 1522578475.59 = 1.740 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57172):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57172):Closing socket
+
+GpuID	ActiveJobs
+0	3
+1	3
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-1
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:(Job 40) 1522578488.46 to 1522578491.24 = 2.777 seconds
+DEBUG:server:(Job 52) 1522578488.46 to 1522578491.28 = 2.823 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:process-('127.0.0.1', 57166):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57166):Closing socket
+
+GpuID	ActiveJobs
+0	3
+1	3
+DEBUG:process-('127.0.0.1', 57210):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57210):Closing socket
+DEBUG:process-('127.0.0.1', 57150):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57150):Closing socket
+
+GpuID	ActiveJobs
+0	7
+1	5
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	2
+1	1
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-1
+DEBUG:server:(Job 44) 1522578459.1 to 1522578501.26 = 42.155 seconds
+DEBUG:server:(Job 36) 1522578499.17 to 1522578501.82 = 2.652 seconds
+DEBUG:server:(Job 62) 1522578499.17 to 1522578501.91 = 2.740 seconds
+DEBUG:server:(Job 43) 1522578499.17 to 1522578502.23 = 3.056 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-0
+DEBUG:process-('127.0.0.1', 57178):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57178):Closing socket
+
+GpuID	ActiveJobs
+0	3
+1	3
+DEBUG:process-('127.0.0.1', 57188):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57188):Closing socket
+
+GpuID	ActiveJobs
+0	1
+1	3
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-1
+DEBUG:server:(Job 25) 1522578499.17 to 1522578505.14 = 5.971 seconds
+DEBUG:server:(Job 17) 1522578488.46 to 1522578505.24 = 16.777 seconds
+DEBUG:server:(Job 67) 1522578504.74 to 1522578506.17 = 1.431 seconds
+DEBUG:server:(Job 50) 1522578444.43 to 1522578506.73 = 62.301 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 42) 1522578509.91 to 1522578512.28 = 2.369 seconds
+DEBUG:server:(Job 30) 1522578509.91 to 1522578512.68 = 2.778 seconds
+DEBUG:server:(Job 55) 1522578509.91 to 1522578513.24 = 3.336 seconds
+DEBUG:server:(Job 41) 1522578509.91 to 1522578514.15 = 4.244 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57216):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57216):Closing socket
+
+GpuID	ActiveJobs
+0	1
+1	1
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:process-('127.0.0.1', 57148):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57148):Closing socket
+
+GpuID	ActiveJobs
+0	2
+1	1
+>>> fall back to perf model
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 49) 1522578519.99 to 1522578521.22 = 1.236 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57182):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57182):Closing socket
+
+GpuID	ActiveJobs
+0	3
+1	3
+DEBUG:server:TargetGPU-0
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57202):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57202):Closing socket
+DEBUG:process-('127.0.0.1', 57184):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57184):Closing socket
+DEBUG:process-('127.0.0.1', 57240):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57240):Closing socket
+DEBUG:process-('127.0.0.1', 57200):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57200):Closing socket
+
+GpuID	ActiveJobs
+0	1
+1	1
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	2
+1	3
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	5
+1	5
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	1
+1	1
+>>> fall back to perf model
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 54) 1522578529.59 to 1522578532.27 = 2.678 seconds
+DEBUG:server:(Job 75) 1522578529.59 to 1522578532.31 = 2.722 seconds
+DEBUG:server:(Job 68) 1522578529.59 to 1522578532.46 = 2.872 seconds
+DEBUG:server:(Job 37) 1522578529.59 to 1522578532.69 = 3.103 seconds
+DEBUG:server:(Job 66) 1522578529.59 to 1522578533.06 = 3.475 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57160):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57160):Closing socket
+DEBUG:process-('127.0.0.1', 57142):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57142):Closing socket
+DEBUG:process-('127.0.0.1', 57252):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57252):Closing socket
+DEBUG:process-('127.0.0.1', 57214):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57214):Closing socket
+
+GpuID	ActiveJobs
+0	7
+1	5
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	1
+1	2
+>>> fall back to perf model
+DEBUG:process-('127.0.0.1', 57196):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57196):Closing socket
+DEBUG:process-('127.0.0.1', 57170):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57170):Closing socket
+DEBUG:process-('127.0.0.1', 57226):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57226):Closing socket
+DEBUG:process-('127.0.0.1', 57194):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57194):Closing socket
+DEBUG:process-('127.0.0.1', 57192):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57192):Closing socket
+
+GpuID	ActiveJobs
+0	3
+1	2
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	0
+1	2
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	1
+1	1
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	0
+1	2
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	3
+1	3
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	0
+1	2
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	4
+1	5
+>>> fall back to perf model
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 77) 1522578534.61 to 1522578536.92 = 2.316 seconds
+DEBUG:server:(Job 59) 1522578534.61 to 1522578536.95 = 2.344 seconds
+DEBUG:server:(Job 64) 1522578534.62 to 1522578537.05 = 2.431 seconds
+DEBUG:server:(Job 63) 1522578534.61 to 1522578537.76 = 3.150 seconds
+DEBUG:server:(Job 58) 1522578534.61 to 1522578539.73 = 5.124 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57212):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57212):Closing socket
+DEBUG:process-('127.0.0.1', 57206):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57206):Closing socket
+
+GpuID	ActiveJobs
+0	7
+1	5
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	1
+1	0
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 72) 1522578540.15 to 1522578541.66 = 1.505 seconds
+DEBUG:server:(Job 45) 1522578499.17 to 1522578541.84 = 42.664 seconds
+DEBUG:server:(Job 24) 1522578540.15 to 1522578543.44 = 3.287 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57164):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57164):Closing socket
+DEBUG:server:TargetGPU-0
+DEBUG:process-('127.0.0.1', 57224):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57224):Closing socket
+
+GpuID	ActiveJobs
+0	3
+1	3
+DEBUG:process-('127.0.0.1', 57254):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57186):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57186):Closing socket
+DEBUG:process-('127.0.0.1', 57250):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57250):Closing socket
+DEBUG:process-('127.0.0.1', 57254):Closing socket
+DEBUG:process-('127.0.0.1', 57270):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57270):Closing socket
+DEBUG:server:TargetGPU-1
+
+GpuID	ActiveJobs
+0	7
+1	5
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	5
+1	4
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	1
+1	3
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	4
+1	5
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	7
+1	5
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 65) 1522578544.84 to 1522578546.9 = 2.061 seconds
+DEBUG:server:(Job 32) 1522578544.83 to 1522578546.9 = 2.070 seconds
+DEBUG:server:(Job 56) 1522578544.83 to 1522578547.04 = 2.215 seconds
+DEBUG:server:(Job 39) 1522578544.83 to 1522578548.09 = 3.252 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57274):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57274):Closing socket
+DEBUG:process-('127.0.0.1', 57234):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57234):Closing socket
+DEBUG:process-('127.0.0.1', 57246):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57246):Closing socket
+DEBUG:process-('127.0.0.1', 57244):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57244):Closing socket
+DEBUG:process-('127.0.0.1', 57232):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57232):Closing socket
+DEBUG:server:TargetGPU-1
+DEBUG:process-('127.0.0.1', 57262):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57262):Closing socket
+DEBUG:process-('127.0.0.1', 57204):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57204):Closing socket
+DEBUG:process-('127.0.0.1', 57158):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57158):Closing socket
+
+GpuID	ActiveJobs
+0	4
+1	5
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	4
+1	5
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	1
+1	0
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	2
+1	1
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	8
+1	6
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	7
+1	6
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	8
+1	5
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	10
+1	6
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 69) 1522578550.03 to 1522578551.99 = 1.959 seconds
+DEBUG:server:(Job 70) 1522578550.03 to 1522578552.08 = 2.053 seconds
+DEBUG:server:(Job 18) 1522578550.04 to 1522578553.72 = 3.680 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57248):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57248):Closing socket
+DEBUG:process-('127.0.0.1', 57176):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57176):Closing socket
+DEBUG:process-('127.0.0.1', 57228):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57228):Closing socket
+DEBUG:process-('127.0.0.1', 57190):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57190):Closing socket
+
+GpuID	ActiveJobs
+0	8
+1	5
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	3
+1	3
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	7
+1	5
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	0
+1	2
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:(Job 61) 1522578554.77 to 1522578555.72 = 0.946 seconds
+DEBUG:server:(Job 71) 1522578554.77 to 1522578555.89 = 1.123 seconds
+DEBUG:server:(Job 53) 1522578550.03 to 1522578557.91 = 7.882 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57218):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57218):Closing socket
+DEBUG:process-('127.0.0.1', 57256):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57256):Closing socket
+DEBUG:process-('127.0.0.1', 57258):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57258):Closing socket
+DEBUG:process-('127.0.0.1', 57144):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57144):Closing socket
+
+GpuID	ActiveJobs
+0	4
+1	5
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	7
+1	5
+>>> fall back to perf model
+
+GpuID	ActiveJobs
+0	2
+1	1
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	7
+1	5
+>>> fall back to perf model
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-1
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 34) 1522578559.9 to 1522578560.67 = 0.770 seconds
+INFO:tensorflow:Restoring parameters from ./dinn/models/dinn_final.ckpt
+DEBUG:process-('127.0.0.1', 57238):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57238):Closing socket
+DEBUG:process-('127.0.0.1', 57260):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57260):Closing socket
+DEBUG:process-('127.0.0.1', 57222):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57222):Closing socket
+
+GpuID	ActiveJobs
+0	5
+1	5
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	10
+1	7
+>>> running DINN
+[*] Initialize model successfully...
+
+GpuID	ActiveJobs
+0	8
+1	6
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:process-('127.0.0.1', 57180):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57180):Closing socket
+
+GpuID	ActiveJobs
+0	1
+1	1
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:TargetGPU-0
+DEBUG:server:TargetGPU-0
+DEBUG:server:(Job 60) 1522578564.39 to 1522578568.77 = 4.382 seconds
+DEBUG:process-('127.0.0.1', 57236):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57236):Closing socket
+
+GpuID	ActiveJobs
+0	10
+1	7
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:(Job 73) 1522578564.39 to 1522578568.91 = 4.523 seconds
+DEBUG:process-('127.0.0.1', 57264):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57264):Closing socket
+
+GpuID	ActiveJobs
+0	8
+1	6
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:(Job 57) 1522578564.39 to 1522578569.1 = 4.711 seconds
+DEBUG:process-('127.0.0.1', 57230):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57230):Closing socket
+
+GpuID	ActiveJobs
+0	7
+1	5
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:(Job 74) 1522578564.39 to 1522578569.15 = 4.762 seconds
+DEBUG:process-('127.0.0.1', 57268):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57268):Closing socket
+
+GpuID	ActiveJobs
+0	5
+1	5
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:(Job 78) 1522578564.48 to 1522578569.21 = 4.732 seconds
+DEBUG:process-('127.0.0.1', 57276):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57276):Closing socket
+
+GpuID	ActiveJobs
+0	10
+1	7
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:
+
+Wait 1 seconds before ending.
+
+
+DEBUG:server:(Job 76) 1522578564.39 to 1522578569.48 = 5.088 seconds
+DEBUG:process-('127.0.0.1', 57272):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57272):Closing socket
+
+GpuID	ActiveJobs
+0	11
+1	5
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:(Job 47) 1522578564.48 to 1522578569.73 = 5.252 seconds
+DEBUG:process-('127.0.0.1', 57208):Socket closed remotely
+DEBUG:process-('127.0.0.1', 57208):Closing socket
+
+GpuID	ActiveJobs
+0	13
+1	7
+>>> running DINN
+[*] Initialize model successfully...
+DEBUG:server:
+
+Waiting for jobs to end. Grab a coffee if you like.
+
+
+DEBUG:server:
+
+End Simulation
+
+
+ERROR:root:Unexpected exception
+Traceback (most recent call last):
+  File "./start_server.py", line 1256, in <module>
+    server.start()
+  File "./start_server.py", line 1199, in start
+    conn, address = self.socket.accept()
+  File "/home/users/leiming/anaconda2/envs/tf_lab/lib/python2.7/socket.py", line 206, in accept
+    sock, addr = self._sock.accept()
+KeyboardInterrupt
+INFO:root:Shutting down
+INFO:root:Shutting down process <Process(SyncManager-1, started)>
+INFO:root:All done
+JobID	GPU	Status	Start			End			Duration
+0.0	0.0	1.0	1522578363.8		1522578364.4		0.598239898682
+1.0	0.0	1.0	1522578364.75		1522578365.35		0.594357967377
+2.0	0.0	1.0	1522578365.78		1522578369.99		4.21136212349
+3.0	1.0	1.0	1522578366.74		1522578368.9		2.16052389145
+4.0	1.0	1.0	1522578373.72		1522578377.33		3.61047291756
+5.0	0.0	1.0	1522578373.67		1522578376.93		3.25875711441
+6.0	1.0	1.0	1522578373.67		1522578376.52		2.84675192833
+7.0	0.0	1.0	1522578373.67		1522578376.56		2.89364790916
+8.0	0.0	1.0	1522578373.67		1522578400.25		26.5778958797
+9.0	0.0	1.0	1522578373.67		1522578402.06		28.3855941296
+10.0	1.0	1.0	1522578406.36		1522578408.04		1.67519688606
+11.0	1.0	1.0	1522578378.5		1522578380.23		1.73267388344
+12.0	1.0	1.0	1522578396.96		1522578398.18		1.22188901901
+13.0	1.0	1.0	1522578383.48		1522578384.32		0.837145805359
+14.0	1.0	1.0	1522578378.5		1522578379.51		1.00496101379
+15.0	0.0	1.0	1522578396.96		1522578399.04		2.08830189705
+16.0	0.0	1.0	1522578415.52		1522578419.64		4.12462210655
+17.0	0.0	1.0	1522578488.46		1522578505.24		16.7769219875
+18.0	0.0	1.0	1522578550.04		1522578553.72		3.68001890182
+19.0	1.0	1.0	1522578434.59		1522578437.26		2.67944192886
+20.0	1.0	1.0	1522578429.74		1522578431.59		1.84559011459
+21.0	1.0	1.0	1522578459.1		1522578463.37		4.26692700386
+22.0	1.0	1.0	1522578434.58		1522578437.88		3.29873108864
+23.0	0.0	1.0	1522578434.59		1522578437.08		2.49436712265
+24.0	0.0	1.0	1522578540.15		1522578543.44		3.2868411541
+25.0	1.0	1.0	1522578499.17		1522578505.14		5.97141909599
+26.0	0.0	1.0	1522578434.58		1522578437.26		2.67719888687
+27.0	0.0	1.0	1522578439.86		1522578446.47		6.60452318192
+28.0	0.0	1.0	1522578429.74		1522578431.16		1.41884899139
+29.0	0.0	1.0	1522578434.66		1522578437.34		2.67809104919
+30.0	0.0	1.0	1522578509.91		1522578512.68		2.77778291702
+31.0	0.0	1.0	1522578449.33		1522578450.13		0.805464982986
+32.0	0.0	1.0	1522578544.83		1522578546.9		2.07039499283
+33.0	0.0	1.0	1522578439.86		1522578441.0		1.13243198395
+34.0	0.0	1.0	1522578559.9		1522578560.67		0.770431995392
+35.0	1.0	1.0	1522578415.55		1522578416.7		1.14658784866
+36.0	0.0	1.0	1522578499.17		1522578501.82		2.65166091919
+37.0	0.0	1.0	1522578529.59		1522578532.69		3.1027340889
+38.0	1.0	1.0	1522578473.85		1522578475.59		1.73975992203
+39.0	0.0	1.0	1522578544.83		1522578548.09		3.25170493126
+40.0	0.0	1.0	1522578488.46		1522578491.24		2.77728891373
+41.0	1.0	1.0	1522578509.91		1522578514.15		4.24413299561
+42.0	0.0	1.0	1522578509.91		1522578512.28		2.36910510063
+43.0	1.0	1.0	1522578499.17		1522578502.23		3.05624294281
+44.0	0.0	1.0	1522578459.1		1522578501.26		42.1550650597
+45.0	0.0	1.0	1522578499.17		1522578541.84		42.6635499001
+46.0	1.0	1.0	1522578429.78		1522578464.98		35.2053689957
+47.0	0.0	1.0	1522578564.48		1522578569.73		5.25210213661
+48.0	0.0	1.0	1522578459.1		1522578460.99		1.89091897011
+49.0	0.0	1.0	1522578519.99		1522578521.22		1.23596906662
+50.0	0.0	1.0	1522578444.43		1522578506.73		62.3008210659
+51.0	1.0	1.0	1522578453.88		1522578458.48		4.60524010658
+52.0	0.0	1.0	1522578488.46		1522578491.28		2.82338690758
+53.0	0.0	1.0	1522578550.03		1522578557.91		7.88213396072
+54.0	1.0	1.0	1522578529.59		1522578532.27		2.67783498764
+55.0	0.0	1.0	1522578509.91		1522578513.24		3.33597898483
+56.0	0.0	1.0	1522578544.83		1522578547.04		2.21511483192
+57.0	0.0	1.0	1522578564.39		1522578569.1		4.71126317978
+58.0	1.0	1.0	1522578534.61		1522578539.73		5.12372899055
+59.0	0.0	1.0	1522578534.61		1522578536.95		2.34369087219
+60.0	0.0	1.0	1522578564.39		1522578568.77		4.38163995743
+61.0	1.0	1.0	1522578554.77		1522578555.72		0.946490049362
+62.0	0.0	1.0	1522578499.17		1522578501.91		2.7401099205
+63.0	0.0	1.0	1522578534.61		1522578537.76		3.14989113808
+64.0	0.0	1.0	1522578534.62		1522578537.05		2.43099308014
+65.0	1.0	1.0	1522578544.84		1522578546.9		2.06090402603
+66.0	1.0	1.0	1522578529.59		1522578533.06		3.47547698021
+67.0	0.0	1.0	1522578504.74		1522578506.17		1.4310669899
+68.0	0.0	1.0	1522578529.59		1522578532.46		2.87196588516
+69.0	1.0	1.0	1522578550.03		1522578551.99		1.95856118202
+70.0	0.0	1.0	1522578550.03		1522578552.08		2.05297899246
+71.0	0.0	1.0	1522578554.77		1522578555.89		1.12314081192
+72.0	0.0	1.0	1522578540.15		1522578541.66		1.50519895554
+73.0	1.0	1.0	1522578564.39		1522578568.91		4.52342700958
+74.0	0.0	1.0	1522578564.39		1522578569.15		4.76220989227
+75.0	0.0	1.0	1522578529.59		1522578532.31		2.72228598595
+76.0	0.0	1.0	1522578564.39		1522578569.48		5.08837103844
+77.0	1.0	1.0	1522578534.61		1522578536.92		2.31640696526
+78.0	0.0	1.0	1522578564.48		1522578569.21		4.73161911964

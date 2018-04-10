@@ -1,0 +1,10 @@
+==15197== NVPROF is profiling process 15197, command: ./syr2k.exe 0
+==15197== Profiling application: ./syr2k.exe 0
+==15197== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+s,s,,,,,,,,B,B,MB,MB/s,,,,
+0.684875,0.043017,,,,,,,,,,16.000000,371.945551,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+0.727983,0.043045,,,,,,,,,,16.000000,371.700274,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+0.771119,0.043052,,,,,,,,,,16.000000,371.643912,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+0.814175,2.084784,64,256,1,32,8,1,19,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","syr2k_kernel(float*, float*, float*) [1168]"
+2.899005,0.040105,,,,,,,,,,16.000000,398.957514,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

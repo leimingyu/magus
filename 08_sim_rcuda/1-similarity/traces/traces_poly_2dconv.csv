@@ -1,0 +1,8 @@
+==26047== NVPROF is profiling process 26047, command: ./2DConvolution.exe 0
+==26047== Profiling application: ./2DConvolution.exe 0
+==26047== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+s,ms,,,,,,,,B,B,MB,MB/s,,,,
+0.909607,172.271216,,,,,,,,,,64.000000,371.507216,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+1.081882,0.614942,128,512,1,32,8,1,16,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","Convolution2D_kernel(float*, float*) [1164]"
+1.082520,158.575454,,,,,,,,,,64.000000,403.593358,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

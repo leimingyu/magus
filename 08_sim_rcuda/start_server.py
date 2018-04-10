@@ -1599,7 +1599,7 @@ class Server(object):
 
         if args.scheme in ["sim", "rrSim", "llSim", "llSim1"]:
             self.logger.info("Scheduling based on Similarity")
-            app2metric = np.load('./similarity/app2metric_dd.npy').item()
+            app2metric = np.load('./1-similarity/app2metric_dd.npy').item()
             if check_key(app2dir, app2cmd, app2metric):
                 self.logger.info("Looks good!")
 
@@ -1611,7 +1611,7 @@ class Server(object):
 
         if args.scheme == "simp":
             self.logger.info("Scheduling based on SIMP (Similarity +  Performance Model)")
-            app2metric = np.load('./similarity/app2metric_dd.npy').item()
+            app2metric = np.load('./1-similarity/app2metric_dd.npy').item()
             app2trace = np.load('./perfmodel/app2trace_dd.npy').item()
 
 
