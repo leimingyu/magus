@@ -29,7 +29,7 @@ touch /tmp/magic_time_log
 #================#
 # benchmark the perf 
 #================#
-ITER=2
+ITER=10
 
 app1_keyword="convolutionSeparable"
 app1=$app1_keyword
@@ -43,7 +43,7 @@ app3=$app3_keyword
 for (( i=1; i<=$ITER; i++ ))
 do
   # gpu 0
-  cd ../apps/devid_cudasdk80/3_Imaging/convolutionSeparable/
+  cd ../../apps/devid_cudasdk80/3_Imaging/convolutionSeparable/
   timeApp $app1_keyword ./run.sh 0 &
 
   # gpu 1
@@ -57,7 +57,7 @@ do
   wait
 
   # back to current folder
-  cd ../../../../09_case_study 
+  cd ../../../../../09_case_study 
 done
 
 currentFile=`basename "$0"`
