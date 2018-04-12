@@ -50,6 +50,7 @@ def gen_sim2(current_dir, app1, app1_dir, app2, app2_dir, scriptDir='sim2_tests'
     "  cd " + app1_dir + "\n" + \
     "  timeApp $app1_keyword ./run.sh 0 &"  + "\n" + \
     " " + "\n" + \
+    "  cd " + current_dir + "/" + scriptDir + "\n" + \
     "  cd " + app2_dir + "\n" + \
     "  timeApp $app2_keyword ./run.sh 0 &"  + "\n" + \
     " " + "\n" + \
@@ -123,7 +124,7 @@ for app, top3_list in top3_leastsim_dd.iteritems():
 
     #app2 = app2.replace("_", "-")
     app2 = app2.replace("+", "")
-    print app1, app2
+    #print app1, app2
     gen_sim2(current_dir, app1, app1_dir, app2, app2_dir)
 
     #break
