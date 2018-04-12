@@ -126,24 +126,4 @@ for app, top3_list in top3_leastsim_dd.iteritems():
     print app1, app2
     gen_sim2(current_dir, app1, app1_dir, app2, app2_dir)
 
-    break
-
-
-#N = len(appsInfo)
-#count = 0
-#for i in xrange(N):
-#    #print appsInfo[i]
-#    [app1, app1_keyword, app1_cmd] = appsInfo[i]
-#    #print app1
-#    for j in xrange(N):
-#        if i <> j:
-#            [app2, app2_keyword, app2_cmd] = appsInfo[j]
-#            print("\nScript ({}) : {} + {} ...".format(count, app1, app2))
-#            # add python function to generate script
-#            genScriptRun2(app1, app1_keyword, app1_cmd,\
-#                    app2, app2_keyword, app2_cmd,\
-#                    scriptDir)
-#            print("Done!\n")
-#            count = count + 1
-#
-#print("\nTotal generated scripts = {} at {}".format(count, scriptDir))
+    #break
