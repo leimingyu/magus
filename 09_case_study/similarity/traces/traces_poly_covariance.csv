@@ -1,0 +1,12 @@
+==3696== NVPROF is profiling process 3696, command: ./covariance.exe 0
+==3696== Profiling application: ./covariance.exe 0
+==3696== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+s,s,,,,,,,,B,B,MB,GB/s,,,,
+0.656297,0.043023,,,,,,,,,,16.015629,0.363535,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+0.699432,0.043022,,,,,,,,,,16.015629,0.363537,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+0.742489,0.000002,,,,,,,,,,0.007816,4.770700,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+0.742505,0.000568,8,1,1,256,1,1,16,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","mean_kernel(float*, float*) [1167]"
+0.743090,0.000024,64,64,1,32,8,1,8,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","reduce_kernel(float*, float*) [1172]"
+0.743127,1.307819,8,1,1,256,1,1,22,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","covar_kernel(float*, float*) [1177]"
+2.050989,0.040147,,,,,,,,,,16.015629,0.389577,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

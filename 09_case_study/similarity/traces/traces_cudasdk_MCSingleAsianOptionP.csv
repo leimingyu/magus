@@ -1,0 +1,10 @@
+==12872== NVPROF is profiling process 12872, command: ./MC_SingleAsianOptionP 0
+==12872== Profiling application: ./MC_SingleAsianOptionP 0
+==12872== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,KB,GB/s,,,,
+570.626242,0.000960,,,,,,,,,,0.035156,0.034925,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+573.405014,2.856503,391,1,1,128,1,1,32,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","initRNG(curandStateXORWOW*, unsigned int) [1172]"
+576.263150,0.117606,391,1,1,128,1,1,24,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","void generatePaths<float>(float*, curandStateXORWOW*, AsianOption<float> const *, unsigned int, unsigned int) [1179]"
+576.382228,0.105446,391,1,1,128,1,1,27,0,512,,,"GeForce GTX 1080 Ti (0)","1","7","void computeValue<float>(float*, float const *, AsianOption<float> const *, unsigned int, unsigned int) [1186]"
+576.489722,0.000896,,,,,,,,,,1.527344,1.625657,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

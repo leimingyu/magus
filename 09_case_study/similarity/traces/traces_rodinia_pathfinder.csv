@@ -1,0 +1,18 @@
+==851== NVPROF is profiling process 851, command: ./pathfinder 100000 100 20 0
+==851== Profiling application: ./pathfinder 100000 100 20 0
+==851== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,KB,B,MB,MB/s,,,,
+794.266620,1.031317,,,,,,,,,,0.381470,369.886006,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+795.408214,101.726460,,,,,,,,,,37.765503,371.245622,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+897.152819,0.042946,463,1,1,256,1,1,13,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","13","dynproc_kernel(int, int*, int*, int*, int, int, int, int) [1176]"
+897.180532,0.045827,463,1,1,256,1,1,13,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","14","dynproc_kernel(int, int*, int*, int*, int, int, int, int) [1186]"
+897.210614,0.045314,463,1,1,256,1,1,13,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","13","dynproc_kernel(int, int*, int*, int*, int, int, int, int) [1196]"
+897.240695,0.045795,463,1,1,256,1,1,13,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","14","dynproc_kernel(int, int*, int*, int*, int, int, int, int) [1206]"
+897.271065,0.046306,463,1,1,256,1,1,13,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","13","dynproc_kernel(int, int*, int*, int*, int, int, int, int) [1216]"
+897.301627,0.047234,463,1,1,256,1,1,13,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","14","dynproc_kernel(int, int*, int*, int*, int, int, int, int) [1226]"
+897.333308,0.047075,463,1,1,256,1,1,13,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","13","dynproc_kernel(int, int*, int*, int*, int, int, int, int) [1236]"
+897.365054,0.047362,463,1,1,256,1,1,13,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","14","dynproc_kernel(int, int*, int*, int*, int, int, int, int) [1246]"
+897.396640,0.046402,463,1,1,256,1,1,13,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","13","dynproc_kernel(int, int*, int*, int*, int, int, int, int) [1256]"
+897.427073,0.041794,463,1,1,256,1,1,13,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","14","dynproc_kernel(int, int*, int*, int*, int, int, int, int) [1266]"
+897.470435,0.946833,,,,,,,,,,0.381470,402.890189,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

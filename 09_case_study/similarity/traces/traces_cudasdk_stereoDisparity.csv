@@ -1,0 +1,11 @@
+==7693== NVPROF is profiling process 7693, command: ./stereoDisparity 0
+==7693== Profiling application: ./stereoDisparity 0
+==7693== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,KB,B,MB,MB/s,,,,
+727.317159,3.497360,,,,,,,,,,1.301270,372.071942,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+730.905211,3.503568,,,,,,,,,,1.301270,371.412665,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+734.498927,3.506256,,,,,,,,,,1.301270,371.127930,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+738.010559,0.372371,20,67,1,32,8,1,29,4.500000,0,,,"GeForce GTX 1080 Ti (0)","1","7","stereoDisparityKernel(unsigned int*, unsigned int*, unsigned int*, int, int, int, int) [1176]"
+738.420211,0.371251,20,67,1,32,8,1,29,4.500000,0,,,"GeForce GTX 1080 Ti (0)","1","7","stereoDisparityKernel(unsigned int*, unsigned int*, unsigned int*, int, int, int, int) [1189]"
+738.806631,3.236962,,,,,,,,,,1.301270,402.003338,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

@@ -1,0 +1,14 @@
+==624== NVPROF is profiling process 624, command: ./bicg.exe 0
+==624== Profiling application: ./bicg.exe 0
+==624== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,MB,GB/s,,,,
+796.637727,172.141662,,,,,,,,,,64.000000,0.363073,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+968.828991,0.002017,,,,,,,,,,0.015625,7.565091,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+968.879842,0.002016,,,,,,,,,,0.015625,7.568844,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+968.930053,0.001952,,,,,,,,,,0.015625,7.817003,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+968.979943,0.003104,,,,,,,,,,0.015625,4.915847,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+968.985415,0.997268,16,1,1,256,1,1,18,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","bicg_kernel1(float*, float*, float*) [1172]"
+969.995643,0.843212,16,1,1,256,1,1,22,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","bicg_kernel2(float*, float*, float*) [1178]"
+970.859496,0.028545,,,,,,,,,,0.015625,0.534552,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
+970.914154,0.029058,,,,,,,,,,0.015625,0.525115,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
