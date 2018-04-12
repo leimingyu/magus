@@ -118,8 +118,11 @@ for app, top3_list in top3_leastsim_dd.iteritems():
     # generate test script
     #
 
-    app1 = app1.replace("_", "-")
-    app2 = app2.replace("_", "-")
+    #app1 = app1.replace("_", "-")
+    app1 = app1.replace("+", "")
+
+    #app2 = app2.replace("_", "-")
+    app2 = app2.replace("+", "")
     print app1, app2
     gen_sim2(current_dir, app1, app1_dir, app2, app2_dir)
 
