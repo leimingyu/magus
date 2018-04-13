@@ -1,0 +1,15 @@
+==20718== NVPROF is profiling process 20718, command: ./backprop 65536 0
+==20718== Profiling application: ./backprop 65536 0
+==20718== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,KB,B,MB,MB/s,,,,
+602.605858,0.671425,,,,,,,,,,0.250004,372.348087,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+603.400938,11.440028,,,,,,,,,,4.250065,371.508255,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+614.845415,0.072547,1,4096,1,16,16,1,18,1.062500,0,,,"GeForce GTX 1080 Ti (0)","1","7","bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int) [1171]"
+614.949260,0.615839,,,,,,,,,,0.250000,405.950256,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
+616.422774,0.000928,,,,,,,,,,0.000065,69.881308,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+616.535131,11.434141,,,,,,,,,,4.250065,371.699531,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+628.084157,11.440477,,,,,,,,,,4.250065,371.493675,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+639.528058,0.152808,1,4096,1,16,16,1,20,0.000000,0,,,"GeForce GTX 1080 Ti (0)","1","7","bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*) [1187]"
+639.682978,0.616511,,,,,,,,,,0.250004,405.513956,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"
+640.348068,10.645717,,,,,,,,,,4.250065,399.227674,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

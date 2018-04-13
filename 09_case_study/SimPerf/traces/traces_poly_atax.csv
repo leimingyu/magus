@@ -1,0 +1,12 @@
+==425== NVPROF is profiling process 425, command: ./atax.exe 0
+==425== Profiling application: ./atax.exe 0
+==425== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,MB,GB/s,,,,
+699.420227,172.130527,,,,,,,,,,64.000000,0.363097,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+871.600549,0.002016,,,,,,,,,,0.015625,7.568844,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+871.651688,0.002016,,,,,,,,,,0.015625,7.568844,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+871.701802,0.003072,,,,,,,,,,0.015625,4.967054,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+871.707146,0.840332,16,1,1,256,1,1,22,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","atax_kernel1(float*, float*, float*) [1170]"
+872.560982,0.999284,16,1,1,256,1,1,18,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","atax_kernel2(float*, float*, float*) [1176]"
+873.579947,0.028417,,,,,,,,,,0.015625,0.536960,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

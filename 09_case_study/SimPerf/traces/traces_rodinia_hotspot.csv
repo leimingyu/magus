@@ -1,0 +1,9 @@
+==12398== NVPROF is profiling process 12398, command: ./hotspot 512 2 2 ../data/hotspot/temp_512 ../data/hotspot/power_512 output.out 0
+==12398== Profiling application: ./hotspot 512 2 2 ../data/hotspot/temp_512 ../data/hotspot/power_512 output.out 0
+==12398== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,KB,B,MB,MB/s,,,,
+704.269012,2.693833,,,,,,,,,,1.000000,371.218260,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+707.056033,2.691785,,,,,,,,,,1.000000,371.500695,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+709.752106,0.086277,43,43,1,16,16,1,37,3.000000,0,,,"GeForce GTX 1080 Ti (0)","1","7","calculate_temp(int, float*, float*, float*, int, int, int, int, float, float, float, float, float, float) [1178]"
+709.840559,2.495166,,,,,,,,,,1.000000,400.774938,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

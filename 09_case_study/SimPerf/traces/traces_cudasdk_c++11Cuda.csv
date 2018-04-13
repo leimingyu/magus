@@ -1,0 +1,10 @@
+==10083== NVPROF is profiling process 10083, command: ./c++11_cuda 0
+==10083== Profiling application: ./c++11_cuda 0
+==10083== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,MB,MB/s,,,,
+628.579591,8.285840,,,,,,,,,,3.074172,371.015131,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+636.003820,0.000658,,,,,,,,,,0.000004,5.797412,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memset]"
+636.888632,0.501434,8,1,1,256,1,1,8,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","xyzw_frequency(int*, char*, int) [1166]"
+637.391507,145.826066,1,1,1,1,1,1,12,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","xyzw_frequency_thrust_device(int*, char*, int) [1171]"
+783.219557,0.000576,,,,,,,,,,0.000004,6.622738,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

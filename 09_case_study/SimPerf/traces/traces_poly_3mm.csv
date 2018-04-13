@@ -1,0 +1,16 @@
+==32729== NVPROF is profiling process 32729, command: ./3mm.exe 0
+==32729== Profiling application: ./3mm.exe 0
+==32729== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,MB,MB/s,,,,
+613.669821,2.687783,,,,,,,,,,1.000000,372.053844,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+616.445384,2.688488,,,,,,,,,,1.000000,371.956282,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+619.223284,2.687751,,,,,,,,,,1.000000,372.058274,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+622.003200,2.688615,,,,,,,,,,1.000000,371.938711,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+624.813741,2.688487,,,,,,,,,,1.000000,371.956420,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+627.624539,2.687815,,,,,,,,,,1.000000,372.049416,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+630.433384,2.692391,,,,,,,,,,1.000000,371.417078,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+633.129839,0.729893,16,64,1,32,8,1,19,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","mm3_kernel1(float*, float*, float*) [1176]"
+633.874869,0.727876,16,64,1,32,8,1,19,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","mm3_kernel2(float*, float*, float*) [1182]"
+634.614714,0.720868,16,64,1,32,8,1,19,0,0,,,"GeForce GTX 1080 Ti (0)","1","7","mm3_kernel3(float*, float*, float*) [1188]"
+635.345663,2.494813,,,,,,,,,,1.000000,400.831645,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

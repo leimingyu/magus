@@ -1,0 +1,10 @@
+==7377== NVPROF is profiling process 7377, command: ./dxtc 0
+==7377== Profiling application: ./dxtc 0
+==7377== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,KB,B,MB,GB/s,,,,
+564.494686,0.001152,,,,,,,,,,0.003906,3.311369,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+564.608964,2.693551,,,,,,,,,,1.000000,0.362556,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+567.306611,1.030582,16384,1,1,64,1,1,90,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","7","compress(unsigned int const *, unsigned int const *, uint2*, int) [1168]"
+568.355882,1.029591,16384,1,1,64,1,1,90,2.000000,0,,,"GeForce GTX 1080 Ti (0)","1","7","compress(unsigned int const *, unsigned int const *, uint2*, int) [1175]"
+569.404738,0.302384,,,,,,,,,,0.125000,0.403693,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy DtoH]"

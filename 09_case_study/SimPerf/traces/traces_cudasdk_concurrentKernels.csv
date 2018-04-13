@@ -1,0 +1,15 @@
+==10404== NVPROF is profiling process 10404, command: ./concurrentKernels 0
+==10404== Profiling application: ./concurrentKernels 0
+==10404== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,ms,,,,,,,,B,B,B,MB/s,,,,
+598.807267,10.733177,1,1,1,1,1,1,8,0,0,,,"GeForce GTX 1080 Ti (0)","1","13","clock_block(long*, long) [1183]"
+598.820068,10.732953,1,1,1,1,1,1,8,0,0,,,"GeForce GTX 1080 Ti (0)","1","14","clock_block(long*, long) [1189]"
+598.826788,10.732953,1,1,1,1,1,1,8,0,0,,,"GeForce GTX 1080 Ti (0)","1","15","clock_block(long*, long) [1195]"
+598.834437,10.732953,1,1,1,1,1,1,8,0,0,,,"GeForce GTX 1080 Ti (0)","1","16","clock_block(long*, long) [1201]"
+598.841541,10.732921,1,1,1,1,1,1,8,0,0,,,"GeForce GTX 1080 Ti (0)","1","17","clock_block(long*, long) [1207]"
+598.847525,10.732922,1,1,1,1,1,1,8,0,0,,,"GeForce GTX 1080 Ti (0)","1","18","clock_block(long*, long) [1213]"
+598.853926,10.732889,1,1,1,1,1,1,8,0,0,,,"GeForce GTX 1080 Ti (0)","1","19","clock_block(long*, long) [1219]"
+598.859366,10.732889,1,1,1,1,1,1,8,0,0,,,"GeForce GTX 1080 Ti (0)","1","20","clock_block(long*, long) [1225]"
+609.594047,0.002304,1,1,1,32,1,1,8,256,0,,,"GeForce GTX 1080 Ti (0)","1","21","sum(long*, int) [1231]"
+609.598720,0.001120,,,,,,,,,,8,6.811959,"GeForce GTX 1080 Ti (0)","1","21","[CUDA memcpy DtoH]"

@@ -1,0 +1,8 @@
+==15505== NVPROF is profiling process 15505, command: ./sgemm -i ../../datasets/sgemm/small/input/matrix1.txt,../../datasets/sgemm/small/input/matrix2.txt,../../datasets/sgemm/small/input/matrix2t.txt -d 0
+==15505== Profiling application: ./sgemm -i ../../datasets/sgemm/small/input/matrix1.txt,../../datasets/sgemm/small/input/matrix2.txt,../../datasets/sgemm/small/input/matrix2t.txt -d 0
+==15505== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","Device","Context","Stream","Name"
+ms,us,,,,,,,,B,B,KB,MB/s,,,,
+579.959810,77.892000,,,,,,,,,,48.000000,601.794792,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+580.098793,109.798000,,,,,,,,,,60.000000,533.650431,"GeForce GTX 1080 Ti (0)","1","7","[CUDA memcpy HtoD]"
+580.210799,13.473000,1,10,1,16,8,1,46,512,0,,,"GeForce GTX 1080 Ti (0)","1","7","mysgemmNT(float const *, int, float const *, int, float*, int, int, float, float) [1173]"
