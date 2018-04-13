@@ -97,10 +97,11 @@ def gen_sim2(current_dir, app1, app1_dir, app2, app2_dir, scriptDir='sim2_tests'
 current_dir = os.getcwd()
 print "current dir : %s" % current_dir
 
-top3_leastsim_dd = np.load('top3_leastsim.npy').item()
+bestone_simperf_dd = np.load('bestone_simperf_dd.npy').item()
+
 app2dir_dd = np.load('../app2dir_dd.npy').item()
 
-for app, top3_list in top3_leastsim_dd.iteritems():
+for app, bestone in bestone_simperf_dd.iteritems():
     #print app, top3_list
     print "\nGenerating script for %s\n" % app
     #print("least similar : {}".format(app,top3_list[0][0]))
@@ -110,17 +111,17 @@ for app, top3_list in top3_leastsim_dd.iteritems():
     app1_dir = "../../" + app1_dir
     print app1_dir
 
-    #print top3_list
+    #print bestone 
 
-    app2 = top3_list[0][0]
-    print app2
+    app2 = bestone 
+    #print app2
     app2_dir = app2dir_dd[app2]
     app2_dir = "../../" + app2_dir
     print app2_dir
 
-    #
-    # generate test script
-    #
+    ##
+    ## generate test script
+    ##
 
     #app1 = app1.replace("_", "-")
     app1 = app1.replace("+", "")
@@ -128,8 +129,7 @@ for app, top3_list in top3_leastsim_dd.iteritems():
     #app2 = app2.replace("_", "-")
     app2 = app2.replace("+", "")
 
-
-    print app1, app2
+    #print app1, app2
 
 
     gen_sim2(current_dir, app1, app1_dir, app2, app2_dir)
