@@ -794,11 +794,7 @@ int main(int argc, char *argv[])
   }
 
 	//----------------------------------------------------
-  const int dev = atoi(argv[3]);
-  if ((dev < 0) || (deviceCount <= dev)) {
-    fprintf(stderr, "There is no device %d\n", dev);
-    exit(-1);
-  }
+  int dev = atoi(argv[3]);
   cudaSetDevice(dev);
 	
 
