@@ -174,27 +174,27 @@ appList.append(GPUApp_pb2.GPUApp(
     cmd='./run.sh'))
 
 appList.append(GPUApp_pb2.GPUApp(
-    name='cudasdk_MC_EstimatePiInlineP',
+    name='cudasdk_MCEstimatePiInlineP',
     dir='../apps/devid_cudasdk80/7_CUDALibraries/MC_EstimatePiInlineP',
     cmd='./run.sh'))
 
 appList.append(GPUApp_pb2.GPUApp(
-    name='cudasdk_MC_EstimatePiInlineQ',
+    name='cudasdk_MCEstimatePiInlineQ',
     dir='../apps/devid_cudasdk80/7_CUDALibraries/MC_EstimatePiInlineQ',
     cmd='./run.sh'))
 
 appList.append(GPUApp_pb2.GPUApp(
-    name='cudasdk_MC_EstimatePiP',
+    name='cudasdk_MCEstimatePiP',
     dir='../apps/devid_cudasdk80/7_CUDALibraries/MC_EstimatePiP',
     cmd='./run.sh'))
 
 appList.append(GPUApp_pb2.GPUApp(
-    name='cudasdk_MC_EstimatePiQ',
+    name='cudasdk_MCEstimatePiQ',
     dir='../apps/devid_cudasdk80/7_CUDALibraries/MC_EstimatePiQ',
     cmd='./run.sh'))
 
 appList.append(GPUApp_pb2.GPUApp(
-    name='cudasdk_MC_SingleAsianOptionP',
+    name='cudasdk_MCSingleAsianOptionP',
     dir='../apps/devid_cudasdk80/7_CUDALibraries/MC_SingleAsianOptionP',
     cmd='./run.sh'))
 
