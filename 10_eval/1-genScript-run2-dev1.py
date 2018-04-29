@@ -154,9 +154,16 @@ def main():
     ##    print "\n[DEBUG] Check 5 app info : "
     ##    dump_applist(apps_list[:5]) # print the 1st 5 appinfo
 
+    ##apps_num = len(apps_list)
+    ##print("\n[LOG] Total GPU Applications : {}.".format(apps_num))
+
+    #
+    # use 78 instead of 79
+    #
+    print("del the last app {}".format(apps_list[-1]))
+    del apps_list[-1]
     apps_num = len(apps_list)
     print("\n[LOG] Total GPU Applications : {}.".format(apps_num))
-
 
     #----------
     #  3 different app launch sequences
