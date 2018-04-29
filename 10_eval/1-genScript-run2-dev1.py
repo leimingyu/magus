@@ -22,6 +22,9 @@ def gen_app_seq(current_dir, apps_list, apps_dir, outFile="xxx.sh", test_num = 0
     
     count_jobs = 0
     for i, app in enumerate(apps_list):
+        if i == 0: # add start timer
+            file_content += "ts=$(date +%s%N)\n"
+
         #app_cmd = str(app[1]) + ";" + str(app[2]) 
         #app_cmd = str(app[0]) # send the appName
         app_cmd = str(app) # send the appName
@@ -44,6 +47,14 @@ def gen_app_seq(current_dir, apps_list, apps_dir, outFile="xxx.sh", test_num = 0
 
 
     #print("\n[LOG] Generate total jobs = {}.".format(count_jobs + 1))
+
+    #
+    # wait and update the end timer
+    #
+    file_content += "wait\n\n"
+    file_content += "runtime_ms=$((($(date +%s%N) - $ts)/1000000))\n"
+    file_content += "echo -e \"\\n=> Total Runtime (ms):$runtime_ms\""
+    
 
     with open(outFile, "w+") as myfile:                                         
         myfile.write(file_content)

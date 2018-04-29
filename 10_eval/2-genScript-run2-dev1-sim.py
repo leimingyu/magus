@@ -73,6 +73,10 @@ def gen_app_seq_sim(current_dir, apps_list, apps_dir_dd, app2app_dist, outFile="
     
     count_jobs = 0
     for i, app in enumerate(apps_list):
+
+        if i == 0: # add start timer
+            file_content += "ts=$(date +%s%N)\n"
+
         app_name = str(app) # send the appName
         app_dir  = apps_dir_dd[app_name]
         #print app_name, app_dir
@@ -134,7 +138,13 @@ def gen_app_seq_sim(current_dir, apps_list, apps_dir_dd, app2app_dist, outFile="
                 else:
                     del appList_update[app_idx]
 
-
+    #
+    # wait and update the end timer
+    #
+    file_content += "wait\n\n"
+    file_content += "runtime_ms=$((($(date +%s%N) - $ts)/1000000))\n"
+    file_content += "echo -e \"\\n=> Total Runtime (ms):$runtime_ms\""
+    
 
     with open(outFile, "w+") as myfile:                                         
         myfile.write(file_content)
