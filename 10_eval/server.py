@@ -116,7 +116,7 @@ def handleWorkload(lock, corun, jobID, appName, app2dir_dd):
         # 
         #=========================#
         [startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_dev)
-        logger.debug("Done.")
+        logger.debug("start: {}\t end: {}\t duration: {}".format(startT, endT, endT - startT))
 
 
     except BaseException:
