@@ -49,6 +49,23 @@ def get_appinfo(app_info_file):
             read_app_list.append([curApp.name, curApp.dir, curApp.cmd])
     return read_app_list
 
+#-----------------------------------------------------------------------------#
+# go to dir 
+#-----------------------------------------------------------------------------#
+class cd:
+    """
+    Context manager for changing the current working directory
+    """
+
+    def __init__(self, newPath):
+        self.newPath = os.path.expanduser(newPath)
+
+    def __enter__(self):
+        self.savedPath = os.getcwd()
+        os.chdir(self.newPath)
+
+    def __exit__(self, etype, value, traceback):
+        os.chdir(self.savedPath)
 
 
 #-----------------------------------------------------------------------------#
@@ -99,6 +116,7 @@ def handleWorkload(lock, corun, jobID, appName, app2dir_dd):
         # 
         #=========================#
         [startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_dev)
+        logger.debug("Done.")
 
 
     except BaseException:
