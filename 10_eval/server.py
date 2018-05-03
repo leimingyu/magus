@@ -7,6 +7,7 @@ import random
 import time
 import numpy as np
 
+import multiprocessing as mp
 from multiprocessing import Process, Lock, Manager, Value
 
 import logging
@@ -94,7 +95,7 @@ def run_remote(app_dir, app_cmd, devid=0):
 #-----------------------------------------------------------------------------#
 # Run incoming workload
 #-----------------------------------------------------------------------------#
-def handleWorkload(lock, corun, jobID, appName, app2dir_dd):
+def handleWorkload(lock, corun, jobID, appName, app2dir_dd, GpuJobTable):
     '''
     schedule workloads on the gpu
     '''
@@ -113,10 +114,24 @@ def handleWorkload(lock, corun, jobID, appName, app2dir_dd):
         target_dev = 0
 
         #=========================#
-        # 
+        # run the application 
         #=========================#
         [startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_dev)
         logger.debug("start: {}\t end: {}\t duration: {}".format(startT, endT, endT - startT))
+
+        with lock:
+            corun.value = corun.value - 1
+
+        #=========================#
+        # update gpu job table
+        #
+        # 5 columns:
+        #    jobid      gpu     starT       endT
+        #=========================#
+        # mark the job is done, and update the timing info
+        GpuJobTable[jobID, 0] = jobID 
+        GpuJobTable[jobID, 1] = startT 
+        GpuJobTable[jobID, 2] = endT 
 
 
     except BaseException:
@@ -125,11 +140,41 @@ def handleWorkload(lock, corun, jobID, appName, app2dir_dd):
         logger.debug("Done.")
 
 
+#-----------------------------------------------------------------------------#
+# GPU Job Table 
+#-----------------------------------------------------------------------------#
+def PrintGpuJobTable(self, GpuJobTable, total_jobs):
+    print("JobID\tStart\tEnd\tDuration")
+    for row in xrange(total_jobs):
+        print("{}\t{}\t{}\t{}".format(GpuJobTable[row, 0],
+            GpuJobTable[row, 1],
+            GpuJobTable[row, 2],
+            GpuJobTable[row, 2] - GpuJobTable[row, 1]))
+
+#=============================================================================#
+# main program
+#=============================================================================#
 def main():
     #global app2dir
     #global app2cmd
     global app2metric
     global app2trace
+
+
+    #-------------------------------------------------------------------------#
+    # GPU Job Table 
+    #-------------------------------------------------------------------------#
+    #    jobid           starT       endT
+    #       0             1           2
+    #       1             1.3         2.4
+    #       2             -           -
+    #       ...
+    #----------------------------------------------------------------------
+    maxJobs = 10000
+    rows, cols = maxJobs, 3  # note: init with a large prefixed table
+    d_arr = mp.Array(ctypes.c_double, rows * cols)
+    arr = np.frombuffer(d_arr.get_obj())
+    GpuJobTable = arr.reshape((rows, cols))
 
 
     #===================#
@@ -219,7 +264,8 @@ def main():
             logger.debug("Run {}".format(cur_app))
 
             process = Process(target=handleWorkload,
-                                 args=(lock, corun, jobID, cur_app, app2dir_dd))
+                                 args=(lock, corun, jobID, cur_app, app2dir_dd,
+                                     GpuJobTable))
 
             process.daemon = False
             logger.debug("Start %r", process)
@@ -229,6 +275,9 @@ def main():
             #logger.debug("corun = %r", corun.value)
 
         break
+
+
+    PrintGpuJobTable(GpuJobTable, apps_num)
 
 
 
