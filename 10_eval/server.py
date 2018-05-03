@@ -140,7 +140,7 @@ def handleWorkload(lock, corun, jobID, appName, app2dir_dd, GpuJobTable):
 #-----------------------------------------------------------------------------#
 # GPU Job Table 
 #-----------------------------------------------------------------------------#
-def PrintGpuJobTable(self, GpuJobTable, total_jobs):
+def PrintGpuJobTable(GpuJobTable, total_jobs):
     print("JobID\tStart\tEnd\tDuration")
     for row in xrange(total_jobs):
         print("{}\t{}\t{}\t{}".format(GpuJobTable[row, 0],
