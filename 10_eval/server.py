@@ -103,9 +103,9 @@ def handleWorkload(lock, corun, jobID, appName, app2dir_dd, GpuJobTable):
         with lock:
             corun.value = corun.value + 1
 
-        print appName
         app_dir = app2dir_dd[appName]
-        print app_dir 
+        #print appName
+        #print app_dir 
 
         app_cmd = "./run.sh"
         target_dev = 0
@@ -271,10 +271,16 @@ def main():
 
             #logger.debug("corun = %r", corun.value)
 
-        break
+        #break
+        if jobID == 8: break
 
+    total_jobs = jobID + 1
 
-    PrintGpuJobTable(GpuJobTable, apps_num)
+    PrintGpuJobTable(GpuJobTable, total_jobs)
+
+    if total_jobs <> apps_num:
+        logger.debug("[Warning] job number doesn't match.")
+
 
 
 
