@@ -289,6 +289,9 @@ def main():
         #break
         if jobID == 8: break
 
+    for p in worker_pool:
+        p.join()
+
     #worker_pool.close()
     #worker_pool.join()
 
