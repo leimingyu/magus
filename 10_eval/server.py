@@ -289,8 +289,8 @@ def main():
         #break
         if jobID == 8: break
 
-    worker_pool.close()
-    worker_pool.join()
+    #worker_pool.close()
+    #worker_pool.join()
 
     total_jobs = jobID + 1
 
