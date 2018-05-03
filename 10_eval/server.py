@@ -239,7 +239,8 @@ def main():
     #==================================#
     # 4) create independent processes 
     #==================================#
-    worker_pool = Pool(apps_num)
+    #worker_pool = Pool(apps_num)
+    worker_pool = []
 
 
     #==================================#
@@ -266,21 +267,23 @@ def main():
 
             logger.debug("Run {}".format(cur_app))
 
-            ##process = Process(target=handleWorkload,
-            ##                     args=(lock, corun, jobID, cur_app, app2dir_dd,
-            ##                         GpuJobTable))
-            ##process.daemon = False
-            ##logger.debug("Start %r", process)
-            ##process.start()
-            ##process.join()
+            process = Process(target=handleWorkload,
+                                 args=(lock, corun, jobID, cur_app, app2dir_dd,
+                                     GpuJobTable))
+            process.daemon = False
+            logger.debug("Start %r", process)
+            worker_pool.append(process)  # 
+            process.start()
+            #process.join()
 
             #logger.debug("corun = %r", corun.value)
 
             #=========#
             # using pool
             #=========#
-            worker_pool.apply_async(handleWorkload, args=(lock, corun, jobID, 
-                cur_app, app2dir_dd, GpuJobTable))
+
+            #worker_pool.apply_async(handleWorkload, args=(lock, corun, jobID, 
+            #    cur_app, app2dir_dd, GpuJobTable))
 
 
         #break
