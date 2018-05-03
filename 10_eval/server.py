@@ -5,7 +5,7 @@ import operator, copy, random, time, ctypes
 import numpy as np
 
 import multiprocessing as mp
-from multiprocessing import Process, Lock, Manager, Value
+from multiprocessing import Process, Lock, Manager, Value, Pool
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -237,7 +237,13 @@ def main():
     #print appQueList[:3]
 
     #==================================#
-    # 4) run the apps in the queue 
+    # 4) create independent processes 
+    #==================================#
+    worker_pool = Pool(apps_num)
+
+
+    #==================================#
+    # 5) run the apps in the queue 
     #==================================#
     MAXCORUN = 2
     #corun = 0
@@ -260,19 +266,28 @@ def main():
 
             logger.debug("Run {}".format(cur_app))
 
-            process = Process(target=handleWorkload,
-                                 args=(lock, corun, jobID, cur_app, app2dir_dd,
-                                     GpuJobTable))
-
-            process.daemon = False
-            logger.debug("Start %r", process)
-            process.start()
-            process.join()
+            ##process = Process(target=handleWorkload,
+            ##                     args=(lock, corun, jobID, cur_app, app2dir_dd,
+            ##                         GpuJobTable))
+            ##process.daemon = False
+            ##logger.debug("Start %r", process)
+            ##process.start()
+            ##process.join()
 
             #logger.debug("corun = %r", corun.value)
 
+            #=========#
+            # using pool
+            #=========#
+            worker_pool.apply_async(handleWorkload, args=(lock, corun, jobID, 
+                cur_app, app2dir_dd, GpuJobTable))
+
+
         #break
         if jobID == 8: break
+
+    worker_pool.close()
+    worker_pool.join()
 
     total_jobs = jobID + 1
 
