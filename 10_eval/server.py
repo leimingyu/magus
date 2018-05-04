@@ -157,6 +157,7 @@ def handleWorkload(lock, activeJobs, jobID, appName, app2dir_dd, GpuJobTable):
     try:
         with lock:
             activeJobs.value += 1
+            print jobID, activeJobs.value 
 
         app_dir = app2dir_dd[appName]
         #print appName
@@ -313,9 +314,10 @@ def main():
     while appQueList:
         Dispatch = False 
 
-        with lock:
-            if activeJobs.value <= MAXCORUN:
-                Dispatch = True
+        lock.acquire()
+        if activeJobs.value <= MAXCORUN:
+            Dispatch = True
+        lock.release()
 
         if Dispatch:
             jobID = jobID + 1
@@ -326,33 +328,48 @@ def main():
             logger.debug("Run {}".format(cur_app))
 
             process = Process(target=handleWorkload,
-                                 args=(lock, activJobs, jobID, cur_app, app2dir_dd, GpuJobTable))
+                                 args=(lock, activeJobs, jobID, cur_app, app2dir_dd, GpuJobTable))
 
             process.daemon = False
             logger.debug("Start %r", process)
+            workers.append(process)
             process.start()
 
+        reachMax = False
+        lock.acquire()
+        if activeJobs.value >= MAXCORUN:
+            reachMax = True
+            print "=>reach max!"
+        lock.release()
 
-        while activeJobs.value >=1:
-            lock.acquire()
-            print activeJobs.value
-            sys.stdout.flush()
-            lock.release()
-            
-            
+        if reachMax: # waiting
+            while True:
+                break_loop = False
+                lock.acquire()
+                if activeJobs.value < MAXCORUN:
+                    break_loop = True
+                lock.release()
+                if break_loop:
+                    break
+                else:
+                    time.sleep(0.001)
 
 
+        ##while activeJobs.value >=1:
+        ##    lock.acquire()
+        ##    print activeJobs.value
+        ##    sys.stdout.flush()
+        ##    lock.release()
 
-    #    #break
-    #    if jobID == 8: break
+        if jobID == 8: break
 
-    #for p in worker_pool:
-    #    p.join()
+    for p in workers:
+        p.join()
 
 
-    ##total_jobs = jobID + 1
+    total_jobs = jobID + 1
 
-    ##PrintGpuJobTable(GpuJobTable, total_jobs)
+    PrintGpuJobTable(GpuJobTable, total_jobs)
 
     ##if total_jobs <> apps_num:
     ##    logger.debug("[Warning] job number doesn't match.")
