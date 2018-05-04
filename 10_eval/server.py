@@ -152,32 +152,28 @@ def run_mp(lock, appQueList, total_jobs, jobID, app2dir_dd, GpuJobTable, pid):
     print pid, startT, endT, endT - startT
 
 
-#=========
-#=========
-def run_work(lock, full_shared, current_jobs, activeJobs, MAXCORUN, jobID, GpuJobTable):
-    logger.debug("jobid {}\t activejobs = {}".format(jobID, activeJobs))
-
-    lock.acquire()
-    current_jobs.value += 1
-    lock.release()
-
-    ##if activeJobs >= MAXCORUN:
-    ##    lock.acquire()
-    ##    full_shared.value = 1
-    ##    lock.release()
-    ##else:
-    ##    lock.acquire()
-    ##    current_jobs.value += 1
-    ##    lock.release()
-
-    #--------
-    # do some work
-    #--------
+#-----------------------------------------------------------------------------#
+# Run incoming workload
+#-----------------------------------------------------------------------------#
+def run_work(jobID, GpuJobTable, appName, app2dir_dd):
     GpuJobTable[jobID, 0] = jobID 
     GpuJobTable[jobID, 3] = 0 
 
-    [startT, endT] = run_test(jobID)
-    logger.debug("start: {}\t end: {}\t duration: {}".format(startT, endT, endT - startT))
+    #=========================#
+    # run the application 
+    #=========================#
+
+    ## [startT, endT] = run_test(jobID)
+
+    app_dir = app2dir_dd[appName]
+    app_cmd = "./run.sh"
+    target_dev = 0
+
+    [startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_dev)
+
+    logger.debug("jodID:{} \t start: {}\t end: {}\t duration: {}".format(jobID, 
+        startT, endT, endT - startT))
+
 
     #=========================#
     # update gpu job table
@@ -190,10 +186,7 @@ def run_work(lock, full_shared, current_jobs, activeJobs, MAXCORUN, jobID, GpuJo
     GpuJobTable[jobID, 2] = endT 
     GpuJobTable[jobID, 3] = 1   # done
 
-    lock.acquire()
-    current_jobs.value -= 1
-    #full_shared.value = 0
-    lock.release()
+
 
 #-----------------------------------------------------------------------------#
 # Run incoming workload
@@ -355,13 +348,8 @@ def main():
     # 5) run the apps in the queue 
     #==================================#
     MAXCORUN = 2
-    #corun = 0
-    #total_jobs = Value('i', apps_num) 
-
-    #activeJobs = Value('i',0)
     activeJobs = 0
     full_shared = Value('i',0)
-    current_jobs = Value('i',0)
     current_jobid_list = []
 
 
@@ -375,16 +363,15 @@ def main():
         if activeJobs < MAXCORUN:
             Dispatch = True
 
-        print("iter {} dispatch={}".format(i, Dispatch))
+        #print("iter {} dispatch={}".format(i, Dispatch))
 
         if Dispatch:
             activeJobs += 1
             jobID += 1
             current_jobid_list.append(jobID)
 
-            process = Process(target=run_work,
-                             args=(lock, full_shared, current_jobs, 
-                                 activeJobs, MAXCORUN, jobID, GpuJobTable))
+            appName = appQueList[i] 
+            process = Process(target=run_work, args=(jobID, GpuJobTable, appName, app2dir_dd))
 
             process.daemon = False
             #logger.debug("Start %r", process)
@@ -414,12 +401,6 @@ def main():
                             del current_jobid_list[del_idx]
                     break
 
-                #print("spinning: iter {}".format(i))
-
-            #print time.time()
-
-            #print current_jobid_list
-
             #------------------------------------
             # after spinning, schedule the work
             #------------------------------------
@@ -430,9 +411,8 @@ def main():
             current_jobid_list.append(jobID)
             #print("iter {}: activeJobs = {}".format(i, activeJobs))
 
-            process = Process(target=run_work,
-                             args=(lock, full_shared, current_jobs,
-                                 activeJobs, MAXCORUN, jobID, GpuJobTable))
+            appName = appQueList[i] 
+            process = Process(target=run_work, args=(jobID, GpuJobTable, appName, app2dir_dd))
 
             process.daemon = False
             #logger.debug("Start %r", process)
@@ -440,7 +420,7 @@ def main():
             process.start()
 
 
-        #if i == 10: break
+        #if i == 5: break
 
     #=========================================================================#
     # end of running all the jobs
@@ -454,79 +434,8 @@ def main():
     total_jobs = jobID + 1
     PrintGpuJobTable(GpuJobTable, total_jobs)
 
-    ##while appQueList:
-    ##    Dispatch = False 
-
-    ##    if activeJobs <= MAXCORUN:
-    ##        Dispatch = True
-
-    ##    if Dispatch:
-    ##        activeJobs += 1
-        
-
-
-
-    ##while appQueList:
-    ##    Dispatch = False 
-
-    ##    lock.acquire()
-    ##    if activeJobs.value <= MAXCORUN:
-    ##        Dispatch = True
-    ##    lock.release()
-
-    ##    if Dispatch:
-    ##        jobID = jobID + 1
-
-    ##        cur_app = appQueList[0]
-    ##        del appQueList[0]
-
-    ##        logger.debug("Run {}".format(cur_app))
-
-    ##        process = Process(target=handleWorkload,
-    ##                             args=(lock, activeJobs, jobID, cur_app, app2dir_dd, GpuJobTable))
-
-    ##        process.daemon = False
-    ##        logger.debug("Start %r", process)
-    ##        workers.append(process)
-    ##        process.start()
-
-    ##    reachMax = False
-    ##    lock.acquire()
-    ##    if activeJobs.value >= MAXCORUN:
-    ##        reachMax = True
-    ##        print "=>reach max!"
-    ##    lock.release()
-
-    ##    if reachMax: # waiting
-    ##        while True:
-    ##            break_loop = False
-    ##            lock.acquire()
-    ##            if activeJobs.value < MAXCORUN:
-    ##                break_loop = True
-    ##            lock.release()
-    ##            if break_loop:
-    ##                break
-    ##            else:
-    ##                time.sleep(0.001)
-
-
-    ##    ##while activeJobs.value >=1:
-    ##    ##    lock.acquire()
-    ##    ##    print activeJobs.value
-    ##    ##    sys.stdout.flush()
-    ##    ##    lock.release()
-
-    ##    if jobID == 8: break
-
-    ##for p in workers:
-    ##    p.join()
-
-
-    ##total_jobs = jobID + 1
-    ##PrintGpuJobTable(GpuJobTable, total_jobs)
-
-    ##if total_jobs <> apps_num:
-    ##    logger.debug("[Warning] job number doesn't match.")
+    if total_jobs <> apps_num:
+        logger.debug("[Warning] job number doesn't match.")
 
 
 
