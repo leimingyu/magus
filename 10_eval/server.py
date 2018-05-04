@@ -100,8 +100,8 @@ def handleWorkload(lock, corun, jobID, appName, app2dir_dd, GpuJobTable):
     logger = logging.getLogger("(Job-%r)" % (jobID))
 
     try:
-        with lock:
-            corun.value = corun.value + 1
+        #with lock:
+        #    corun.value = corun.value + 1
 
         app_dir = app2dir_dd[appName]
         #print appName
@@ -116,8 +116,8 @@ def handleWorkload(lock, corun, jobID, appName, app2dir_dd, GpuJobTable):
         [startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_dev)
         logger.debug("start: {}\t end: {}\t duration: {}".format(startT, endT, endT - startT))
 
-        with lock:
-            corun.value = corun.value - 1
+        #with lock:
+        #    corun.value = corun.value - 1
 
         #=========================#
         # update gpu job table
@@ -267,14 +267,24 @@ def main():
 
             logger.debug("Run {}".format(cur_app))
 
+            with lock:
+                corun.value = corun.value + 1
+
             process = Process(target=handleWorkload,
                                  args=(lock, corun, jobID, cur_app, app2dir_dd,
                                      GpuJobTable))
             process.daemon = False
+            #process.daemon = True 
             logger.debug("Start %r", process)
             worker_pool.append(process)  # 
             process.start()
-            #process.join()
+
+            while True:
+                if GpuJobTable[jobID, 3]
+            process.join()
+
+            with lock:
+                corun.value = corun.value - 1
 
             #logger.debug("corun = %r", corun.value)
 
