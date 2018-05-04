@@ -88,11 +88,66 @@ def run_remote(app_dir, app_cmd, devid=0):
 
     return [startT, endT]
 
+#-----------------------------------------------------------------------------#
+# 
+#-----------------------------------------------------------------------------#
+def run_mp(lock, appQueList, total_jobs, jobID, app2dir_dd, GpuJobTable, pid):
+
+    startT = time.time()
+
+    ##for i in xrange(10):
+    ##    lock.acquire() 
+    ##    corun.value -= 1
+    ##    print corun.value
+
+    ##    #if corun.value <= 1:
+    ##    #    break_loop = True
+    ##    lock.release() 
+
+    ##    if corun.value <= 1:
+    ##        print corun.value
+    ##        break
+
+
+        
+
+    while True:
+        lock.acquire() 
+        #corun.value -= 1
+        #print corun.value
+        cur_app = appQueList[0]
+        del appQueList[0]
+        total_jobs.value -= 1
+        print pid, cur_app
+        lock.release() 
+
+
+        if total_jobs.value <=1:
+            break
+
+
+    ##STOP = False
+
+    ##while True:
+    ##    lock.acquire() 
+    ##    corun.value -= 1
+    ##    if corun.value == 0:
+    ##        STOP = True
+    ##    lock.release() 
+
+    ##    if STOP:
+    ##        break
+
+    endT = time.time()
+
+    print pid, startT, endT, endT - startT
+
+
 
 #-----------------------------------------------------------------------------#
 # Run incoming workload
 #-----------------------------------------------------------------------------#
-def handleWorkload(lock, corun, jobID, appName, app2dir_dd, GpuJobTable):
+def handleWorkload(lock, activeJobs, jobID, appName, app2dir_dd, GpuJobTable):
     '''
     schedule workloads on the gpu
     '''
@@ -100,8 +155,8 @@ def handleWorkload(lock, corun, jobID, appName, app2dir_dd, GpuJobTable):
     logger = logging.getLogger("(Job-%r)" % (jobID))
 
     try:
-        #with lock:
-        #    corun.value = corun.value + 1
+        with lock:
+            activeJobs.value += 1
 
         app_dir = app2dir_dd[appName]
         #print appName
@@ -116,9 +171,6 @@ def handleWorkload(lock, corun, jobID, appName, app2dir_dd, GpuJobTable):
         [startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_dev)
         logger.debug("start: {}\t end: {}\t duration: {}".format(startT, endT, endT - startT))
 
-        #with lock:
-        #    corun.value = corun.value - 1
-
         #=========================#
         # update gpu job table
         #
@@ -129,6 +181,9 @@ def handleWorkload(lock, corun, jobID, appName, app2dir_dd, GpuJobTable):
         GpuJobTable[jobID, 0] = jobID 
         GpuJobTable[jobID, 1] = startT 
         GpuJobTable[jobID, 2] = endT 
+
+        with lock:
+            activeJobs.value -= 1
 
 
     except BaseException:
@@ -239,8 +294,8 @@ def main():
     #==================================#
     # 4) create independent processes 
     #==================================#
-    #worker_pool = Pool(apps_num)
-    worker_pool = []
+    #workers = Pool(processes=2)
+    workers = []
 
 
     #==================================#
@@ -248,15 +303,18 @@ def main():
     #==================================#
     MAXCORUN = 2
     #corun = 0
-    corun = Value('i',0) 
+    #total_jobs = Value('i', apps_num) 
+
+    activeJobs = Value('i',0)
 
     jobID = -1
+
 
     while appQueList:
         Dispatch = False 
 
         with lock:
-            if corun.value <= MAXCORUN:
+            if activeJobs.value <= MAXCORUN:
                 Dispatch = True
 
         if Dispatch:
@@ -267,50 +325,37 @@ def main():
 
             logger.debug("Run {}".format(cur_app))
 
-            with lock:
-                corun.value = corun.value + 1
-
             process = Process(target=handleWorkload,
-                                 args=(lock, corun, jobID, cur_app, app2dir_dd,
-                                     GpuJobTable))
+                                 args=(lock, activJobs, jobID, cur_app, app2dir_dd, GpuJobTable))
+
             process.daemon = False
-            #process.daemon = True 
             logger.debug("Start %r", process)
-            worker_pool.append(process)  # 
             process.start()
 
-            while True:
-                if GpuJobTable[jobID, 3]
-            process.join()
 
-            with lock:
-                corun.value = corun.value - 1
-
-            #logger.debug("corun = %r", corun.value)
-
-            #=========#
-            # using pool
-            #=========#
-
-            #worker_pool.apply_async(handleWorkload, args=(lock, corun, jobID, 
-            #    cur_app, app2dir_dd, GpuJobTable))
+        while activeJobs.value >=1:
+            lock.acquire()
+            print activeJobs.value
+            sys.stdout.flush()
+            lock.release()
+            
+            
 
 
-        #break
-        if jobID == 8: break
 
-    for p in worker_pool:
-        p.join()
+    #    #break
+    #    if jobID == 8: break
 
-    #worker_pool.close()
-    #worker_pool.join()
+    #for p in worker_pool:
+    #    p.join()
 
-    total_jobs = jobID + 1
 
-    PrintGpuJobTable(GpuJobTable, total_jobs)
+    ##total_jobs = jobID + 1
 
-    if total_jobs <> apps_num:
-        logger.debug("[Warning] job number doesn't match.")
+    ##PrintGpuJobTable(GpuJobTable, total_jobs)
+
+    ##if total_jobs <> apps_num:
+    ##    logger.debug("[Warning] job number doesn't match.")
 
 
 
