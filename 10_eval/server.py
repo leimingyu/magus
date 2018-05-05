@@ -163,13 +163,13 @@ def run_work(jobID, GpuJobTable, appName, app2dir_dd):
     # run the application 
     #=========================#
 
-    ## [startT, endT] = run_test(jobID)
 
     app_dir = app2dir_dd[appName]
     app_cmd = "./run.sh"
     target_dev = 0
 
-    [startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_dev)
+    [startT, endT] = run_test(jobID)
+    #[startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_dev)
 
     logger.debug("jodID:{} \t start: {}\t end: {}\t duration: {}".format(jobID, 
         startT, endT, endT - startT))
@@ -188,54 +188,6 @@ def run_work(jobID, GpuJobTable, appName, app2dir_dd):
 
 
 
-#-----------------------------------------------------------------------------#
-# Run incoming workload
-#-----------------------------------------------------------------------------#
-def handleWorkload(lock, activeJobs, jobID, appName, app2dir_dd, GpuJobTable):
-    '''
-    schedule workloads on the gpu
-    '''
-    logging.basicConfig(level=logging.DEBUG)
-    logger = logging.getLogger("(Job-%r)" % (jobID))
-
-    try:
-        with lock:
-            activeJobs.value += 1
-            print jobID, activeJobs.value 
-
-        app_dir = app2dir_dd[appName]
-        #print appName
-        #print app_dir 
-
-        app_cmd = "./run.sh"
-        target_dev = 0
-
-        #=========================#
-        # run the application 
-        #=========================#
-        [startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_dev)
-        logger.debug("start: {}\t end: {}\t duration: {}".format(startT, endT, endT - startT))
-
-        #=========================#
-        # update gpu job table
-        #
-        # 5 columns:
-        #    jobid      gpu     starT       endT
-        #=========================#
-        # mark the job is done, and update the timing info
-        GpuJobTable[jobID, 0] = jobID 
-        GpuJobTable[jobID, 1] = startT 
-        GpuJobTable[jobID, 2] = endT 
-
-        with lock:
-            activeJobs.value -= 1
-
-
-    except BaseException:
-        logger.exception("Problem handling request")
-    finally:
-        logger.debug("Done.")
-
 
 #-----------------------------------------------------------------------------#
 # GPU Job Table 
@@ -247,6 +199,31 @@ def PrintGpuJobTable(GpuJobTable, total_jobs):
             GpuJobTable[row, 1],
             GpuJobTable[row, 2],
             GpuJobTable[row, 2] - GpuJobTable[row, 1]))
+
+
+#-----------------------------------------------------------------------------#
+# GPU Job Table 
+#-----------------------------------------------------------------------------#
+def find_least_sim(active_job_list, app2app_dist, waiting_list):
+    job_name = active_job_list[0]
+    print job_name, "\n"
+
+    #--------------------------# 
+    # run similarity analysis
+    #--------------------------# 
+    dist_dd = app2app_dist[job_name] # get the distance dict
+    dist_sorted = sorted(dist_dd.items(), key=operator.itemgetter(1))
+
+    leastsim_app = None
+    # the sorted in non-decreasing order, use reversed()
+    for appname_and_dist in reversed(dist_sorted):
+        sel_appname = appname_and_dist
+        if sel_appname in waiting_list: # find 1st app in the list, and exit
+            leastsim_app = sel_appname
+            break
+
+    return leastsim_app
+
 
 #=============================================================================#
 # main program
@@ -290,6 +267,25 @@ def main():
 
     #print appNameList
 
+    #=====================================#
+    # compute the euclidean distance between app metrics
+    #=====================================#
+    logger.debug("Compute euclidean dist between apps.")
+
+    app2app_dist = {}
+    for app1, metric1 in app2metric.iteritems():
+        curApp_dist = {}
+        m1 = metric1.as_matrix()
+        for app2, metric2 in app2metric.iteritems():
+            if app1 <> app2:
+                m2 = metric2.as_matrix()
+                curApp_dist[app2] = np.linalg.norm(m1 - m2) 
+
+        app2app_dist[app1] = curApp_dist
+
+    logger.debug("Finish computing distance.")
+
+
     #============================#
     # 2) randomize the app order 
     #============================#
@@ -322,25 +318,24 @@ def main():
     #==================================#
     # 3) shared variable for workqueue 
     #==================================#
-    appQueList = manager.list()
-    #appQueList = list(appQueList)
-
-    #print type(appQueList)
-    #print len(appQueList)
-
+    appQueList = [] 
     for app in app_seq:
         appQueList.append(app)
 
-    #print len(appQueList)
-    #print app_seq[:3]
-    #print appQueList[:3]
-    #del appQueList[1]
-    #print appQueList[:3]
+    name2indx_dd = {}
+    indx2name_dd = {}
+    for i in xrange(apps_num):
+        name2indx_dd[appQueList[i]] = i   # find the original index using the app name
+        indx2name_dd[i] = appQueList[i]   # find the original index using the app name
+
+
+    print appQueList[:3], "\n"
+
+    waiting_list = copy.deepcopy(appQueList)
 
     #==================================#
     # 4) create independent processes 
     #==================================#
-    #workers = Pool(processes=2)
     workers = []
 
 
@@ -350,45 +345,83 @@ def main():
     MAXCORUN = 2
     activeJobs = 0
     full_shared = Value('i',0)
-    current_jobid_list = []
+    active_job_list = []
+    name2jobid = {}   # use the application to find the jobID
+    jobid2name = {}
 
+    #========================#
+    # start with the 1st job
+    #========================#
+    jobID = 0 
+    activeJobs += 1
+    appName = waiting_list[0]
+    active_job_list.append(appName) # add app to the active job list 
+    app_idx = waiting_list.index(appName) # remove the app from the waiting list
+    del waiting_list[app_idx]
+    #print waiting_list[:5]
+    name2jobid[appName] = jobID
+    jobid2name[jobID] = appName 
 
+    process = Process(target=run_work, args=(jobID, GpuJobTable, appName, app2dir_dd))
+    process.daemon = False
+    #logger.debug("Start %r", process)
+    workers.append(process)
+    process.start()
 
-
-    jobID = -1
-
-    for i in xrange(apps_num):
-        Dispatch = False 
-
+    apps_num_minus_one = apps_num - 1
+    for i in xrange(1, apps_num_minus_one):
+        Dispatch = False
+        
         if activeJobs < MAXCORUN:
             Dispatch = True
 
-        #print("iter {} dispatch={}".format(i, Dispatch))
-
         if Dispatch:
-            activeJobs += 1
-            jobID += 1
-            current_jobid_list.append(jobID)
+            # there are two cases:
+            # 1) there is no active job running, directly schedule the job
+            # 2) there is 1 active job (max 2), use similarity 
+            if len(active_job_list) == 1:
+                #pos = active_job_list[0]
+                #job_name = indx2name_dd[pos] 
 
-            appName = appQueList[i] 
-            process = Process(target=run_work, args=(jobID, GpuJobTable, appName, app2dir_dd))
+                leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
 
-            process.daemon = False
-            #logger.debug("Start %r", process)
-            workers.append(process)
-            process.start()
+                if leastsim_app is None:
+                    logger.debug("[Warning] leastsim for  {} is None!", job_name)
+                else:
+                    #
+                    # run the selected app
+                    #
+                    activeJobs += 1
+                    jobID += 1
+                    active_job_list.append(leastsim_app) # add app to the active job list
+                    leastsim_idx = waiting_list.index(leastsim_app) # del app from list
+                    del waiting_list[leastsim_idx]
+                    name2jobid[leastsim_app] = jobID # update name to jobID
+                    jobid2name[jobID] =leastsim_app 
 
+                    process = Process(target=run_work, args=(jobID, GpuJobTable,
+                        leastsim_app, app2dir_dd))
+                    process.daemon = False
+                    workers.append(process)
+                    process.start()
+            
         else:
-            # spin
+            #=================================#
+            # the active jobs reach limit, wait
+            #=================================#
             while True:
+                #
+                # spin
+                #
                 break_loop = False
 
                 current_running_jobs = 0
                 jobs2del = []
 
-                for jid in current_jobid_list:
+                for jobname in active_job_list:
+                    jid = name2jobid[jobname]
                     if GpuJobTable[jid, 3] == 1: # check the status, if one is done
-                        jobs2del.append(jid)
+                        jobs2del.append(jid)  # add the jobID
                         break_loop = True
 
                 if break_loop:
@@ -396,39 +429,45 @@ def main():
 
                     # update
                     if jobs2del:
-                        for id2del in jobs2del:
-                            del_idx = current_jobid_list.index(id2del)
-                            del current_jobid_list[del_idx]
-                    break
+                        for job_id in jobs2del:
+                            appname = jobid2name[job_id]
+                            del_idx = active_job_list.index(appname)
+                            del active_job_list[del_idx]
 
+                    break # stop spinning, exit while loop
+                
             #------------------------------------
             # after spinning, schedule the work
             #------------------------------------
+            leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
 
-            #print("iter {}: activeJobs = {}".format(i, activeJobs))
             activeJobs += 1
             jobID += 1
-            current_jobid_list.append(jobID)
-            #print("iter {}: activeJobs = {}".format(i, activeJobs))
+            active_job_list.append(leastsim_app) # add app to the active job list
+            leastsim_idx = waiting_list.index(leastsim_app) # del app from list
+            del waiting_list[leastsim_idx]
+            name2jobid[leastsim_app] = jobID # update name to jobID
+            jobid2name[jobID] =leastsim_app 
 
-            appName = appQueList[i] 
-            process = Process(target=run_work, args=(jobID, GpuJobTable, appName, app2dir_dd))
-
+            process = Process(target=run_work, args=(jobID, GpuJobTable,
+                leastsim_app, app2dir_dd))
             process.daemon = False
-            #logger.debug("Start %r", process)
             workers.append(process)
             process.start()
 
 
-        #if i == 5: break
+        #if i == 0: break
 
     #=========================================================================#
     # end of running all the jobs
     #=========================================================================#
 
-
     for p in workers:
         p.join()
+
+
+    if not waiting_list:
+        logger.debug("[Warning] waiting_list should be empty at last.")
 
 
     total_jobs = jobID + 1
