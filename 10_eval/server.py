@@ -206,7 +206,7 @@ def PrintGpuJobTable(GpuJobTable, total_jobs):
 #-----------------------------------------------------------------------------#
 def find_least_sim(active_job_list, app2app_dist, waiting_list):
     job_name = active_job_list[0]
-    print job_name, "\n"
+    #print job_name, "\n"
 
     #--------------------------# 
     # run similarity analysis
@@ -214,13 +214,18 @@ def find_least_sim(active_job_list, app2app_dist, waiting_list):
     dist_dd = app2app_dist[job_name] # get the distance dict
     dist_sorted = sorted(dist_dd.items(), key=operator.itemgetter(1))
 
+    #print dist_sorted, "\n"
+    #print waiting_list
+
     leastsim_app = None
     # the sorted in non-decreasing order, use reversed()
     for appname_and_dist in reversed(dist_sorted):
-        sel_appname = appname_and_dist
+        sel_appname = appname_and_dist[0]
         if sel_appname in waiting_list: # find 1st app in the list, and exit
             leastsim_app = sel_appname
             break
+
+    print("\n{} <<select>> {}\n".format(job_name, leastsim_app))
 
     return leastsim_app
 
@@ -329,7 +334,8 @@ def main():
         indx2name_dd[i] = appQueList[i]   # find the original index using the app name
 
 
-    print appQueList[:3], "\n"
+    ##print appQueList[:3], "\n"
+
 
     waiting_list = copy.deepcopy(appQueList)
 
@@ -456,7 +462,7 @@ def main():
             process.start()
 
 
-        #if i == 0: break
+        if i == 1: break
 
     #=========================================================================#
     # end of running all the jobs
