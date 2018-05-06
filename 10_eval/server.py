@@ -168,8 +168,8 @@ def run_work(jobID, GpuJobTable, appName, app2dir_dd):
     app_cmd = "./run.sh"
     target_dev = 0
 
-    [startT, endT] = run_test(jobID)
-    #[startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_dev)
+    #[startT, endT] = run_test(jobID)
+    [startT, endT] = run_remote(app_dir=app_dir, app_cmd=app_cmd, devid=target_dev)
 
     logger.debug("jodID:{} \t start: {}\t end: {}\t duration: {}".format(jobID, 
         startT, endT, endT - startT))
@@ -225,7 +225,7 @@ def find_least_sim(active_job_list, app2app_dist, waiting_list):
             leastsim_app = sel_appname
             break
 
-    print("\n{} <<select>> {}\n".format(job_name, leastsim_app))
+    ##print("\n{} <<select>> {}\n".format(job_name, leastsim_app))
 
     return leastsim_app
 
@@ -375,7 +375,7 @@ def main():
     process.start()
 
     apps_num_minus_one = apps_num - 1
-    for i in xrange(1, apps_num_minus_one):
+    for i in xrange(1, apps_num):
         Dispatch = False
         
         if activeJobs < MAXCORUN:
@@ -445,7 +445,12 @@ def main():
             #------------------------------------
             # after spinning, schedule the work
             #------------------------------------
-            leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
+
+            # for the last application, go directly schedule it
+            if i == apps_num_minus_one:
+                leastsim_app = waiting_list[0]
+            else:
+                leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
 
             activeJobs += 1
             jobID += 1
@@ -462,7 +467,8 @@ def main():
             process.start()
 
 
-        if i == 1: break
+        #if i == 1: break
+
 
     #=========================================================================#
     # end of running all the jobs
@@ -472,8 +478,8 @@ def main():
         p.join()
 
 
-    if not waiting_list:
-        logger.debug("[Warning] waiting_list should be empty at last.")
+    #if not waiting_list:
+    #    logger.debug("[Warning] waiting_list should be empty at last.")
 
 
     total_jobs = jobID + 1
