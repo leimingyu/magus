@@ -386,7 +386,7 @@ def main():
                 leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
 
                 if leastsim_app is None:
-                    logger.debug("[Warning] leastsim for  {} is None!", job_name)
+                    logger.debug("[Warning] leastsim_app is None!")
                 else:
                     #
                     # run the selected app
