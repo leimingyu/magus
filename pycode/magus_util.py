@@ -46,7 +46,7 @@ def read_nvprof_trace(traceFile):
     return df_trace
 
 
-def parse_nvprof_trace(df_trace):
+def parse_nvprof_trace(df_trace, rowinfoVer=0):
     """
     Read dataframe of the nvprof trace
     Return a list of trace
@@ -68,9 +68,18 @@ def parse_nvprof_trace(df_trace):
     #-----
     appTrace = []
     for rowID in xrange(1, df_trace.shape[0]):
-        # apiType, starT, endT, Grid, Block, Reg, SharedMem
-        CurrentApi = getRowInfo(
-            df_trace.iloc[[rowID]], start_coef, duration_coef, trans_coef, ssm_coef, dsm_coef)
+
+        if rowinfoVer == 0:
+            # apiType, starT, endT, Grid, Block, Reg, SharedMem
+            CurrentApi = getRowInfo(
+                df_trace.iloc[[rowID]], start_coef, duration_coef, trans_coef, ssm_coef, dsm_coef)
+        elif rowinfoVer == 1:
+            CurrentApi = getRowInfo_v1(
+                df_trace.iloc[[rowID]], start_coef, duration_coef, trans_coef, ssm_coef, dsm_coef)
+        else:
+            print "something is wrong."
+            sys.exit(1)
+
         # print CurrentApi
         appTrace.append(CurrentApi)
 
@@ -193,7 +202,7 @@ def getRowInfo(df_row, start_coef_ms, duration_coef_ms,
     tranSize = 0.0
     Grid, Block, Reg, SharedMem = 0., 0., 0., 0.
 
-    if "DtoH" in api_name:
+    if "DtoH" in api_name or "DtoA" in api_name:
         apiType = 'd2h'
         tranSize = float(df_row.Size) * trans_coef  # d2h size in KB
     elif "HtoD" in api_name or "HtoA" in api_name:   
@@ -220,6 +229,53 @@ def getRowInfo(df_row, start_coef_ms, duration_coef_ms,
     CurrentApi = [apiType, startT, endT, Grid, Block, Reg, SharedMem]
     return CurrentApi
 
+def getRowInfo_v1(df_row, start_coef_ms, duration_coef_ms,
+               trans_coef, ssm_coef, dsm_coef):
+    """
+    Read the current row for the dataframe, extracting timing only.
+
+    :param df_row:              row of dataframe
+    :param start_coef_ms        start time coef in ms
+    :param duration_coef_m      duration time coef in ms
+
+    :return api_type:           api type : h2d, d2h, memset, kern
+    :return start_time_ms:      the starting time for current api
+    :return end_time_ms:        the ending time for current api
+    :return trans_kb:           the transfer size in KB
+    """
+    # parameters
+    api_name = df_row['Name'].to_string()
+    startT = float(df_row['Start']) * start_coef_ms
+    endT = startT + float(df_row['Duration']) * duration_coef_ms
+    tranSize = 0.0  # transfer siez in unit of KB
+    Grid, Block, Reg, SharedMem = 0., 0., 0., 0.
+
+    if "DtoH" in api_name or "DtoA" in api_name:
+        apiType = 'd2h'
+        tranSize = float(df_row.Size) * trans_coef  # d2h size in KB
+    elif "HtoD" in api_name or "HtoA" in api_name:   
+        # NOTE: cudaMemcpyToArray = HtoA
+        apiType = 'h2d'
+        tranSize = float(df_row.Size) * trans_coef  # h2d size in KB
+    elif "DtoD" in api_name:
+        apiType = 'd2d'
+        tranSize = float(df_row.Size) * trans_coef  # d2d size in KB
+    elif "memset" in api_name:
+        apiType = 'memset'
+        tranSize = 0.      # no transfer over pcie
+    else:
+        apiType = 'kern'
+        Grid = float(df_row['Grid X']) * \
+            float(df_row['Grid Y']) * float(df_row['Grid Z'])
+        Block = float(df_row['Block X']) * \
+            float(df_row['Block Y']) * float(df_row['Block Z'])
+        Reg = float(df_row['Registers Per Thread'])
+        SharedMem = float(df_row['Static SMem']) * ssm_coef + \
+            float(df_row['Dynamic SMem']) * dsm_coef
+        # print Grid, Block, Reg, SharedMem
+
+    CurrentApi = [apiType, startT, endT, Grid, Block, Reg, SharedMem, tranSize]
+    return CurrentApi
 
 #------------------------------------------------------------------------------
 # Generate Features for NN 
@@ -349,3 +405,180 @@ def genNNFeat(app_trace, ApiNum = 5):
     #print feat_array
 
     return feat_array
+
+
+def testFeat(app_trace):
+    # pre-allocate array
+    # 
+    startT, endT = app_trace[0][1], app_trace[-1][2]
+    appDur = endT # ret 1
+    gpuDur = endT - startT # ret2
+
+
+
+    gapSum = 0.
+    
+    transT = 0.
+    transCalls = 0.
+
+    kernsT = 0.
+    kernelCalls = 0.
+    KernelTime_list = [] # to compute min/max/mean/std
+
+    for i, app in enumerate(app_trace):
+        if app[0] in ['h2d', 'd2h', 'd2d', 'memset']:
+            transT = transT + (app[2] - app[1])
+            transCalls = transCalls + 1.
+
+        if app[0] == "kern":
+            myKernT = app[2] - app[1] 
+            kernsT = kernsT + myKernT 
+            kernelCalls = kernelCalls + 1.
+            KernelTime_list.append(myKernT)
+                
+        if i>0:
+            gapSum = gapSum + (app_trace[i][1] - app_trace[i-1][2])
+    
+    kerns_time_ratio = kernsT / gpuDur   # sum(kernels_runtime) / app_runtime
+    trans_time_ratio = transT / gpuDur   # sum(transfer_runtime) / app_runtime
+    
+    avgKernsTime = kernsT / kernelCalls
+    avgTransTime = transT / transCalls
+    
+    # avg interval between two consecutive apis
+    avgApiGap = gapSum / float(len(app_trace) - 1)
+    
+    ## add the rest
+    #feat_array[startpos]     = startT
+    #feat_array[startpos + 1] = endT
+    #feat_array[startpos + 2] = appDur
+    #feat_array[startpos + 3] = kernelCalls
+    #feat_array[startpos + 4] = transCalls
+    #feat_array[startpos + 5] = kerns_time_ratio
+    #feat_array[startpos + 6] = trans_time_ratio
+    #feat_array[startpos + 7] = avgKernsTime
+    #feat_array[startpos + 8] = avgTransTime
+    #feat_array[startpos + 9] = avgApiGap
+
+    apiNum = len(app_trace)
+
+    KernelTime_array = np.array(KernelTime_list)
+
+    MinKernT = np.amin(KernelTime_array)
+    MaxKernT = np.amax(KernelTime_array)
+    StdKernT = np.std(KernelTime_array)
+    MeanKernT = np.mean(KernelTime_array)
+    MedianKernT = np.median(KernelTime_array)
+
+
+
+    return appDur, gpuDur, apiNum,transCalls, kernelCalls, kerns_time_ratio, trans_time_ratio, avgKernsTime, avgTransTime, avgApiGap, MinKernT, MaxKernT, MeanKernT, StdKernT, MedianKernT 
+
+
+def testFeat_v1(app_trace):
+    # pre-allocate array
+    # 
+    startT, endT = app_trace[0][1], app_trace[-1][2]
+
+    appDur = endT
+    cpuTime = startT
+    gpuTime = endT - startT 
+
+    # [apiType, startT, endT, Grid, Block, Reg, SharedMem, tranSize]
+    kern_threads_list = []
+    kern_reg_list = []
+    kern_sm_list = []
+    trans_list = []
+    for traceinfo in app_trace:
+        [apiType, _, _, Grid, Block, Reg, SharedMem, tranSize] = traceinfo
+
+        if apiType == 'kern':
+            kern_threads_list.append(Grid * Block)
+            kern_reg_list.append(Reg)
+            kern_sm_list.append(SharedMem)
+        else:
+            trans_list.append(tranSize)
+
+    kern_threads_mat = np.matrix(kern_threads_list)
+    kern_reg_mat     = np.matrix(kern_reg_list)
+    kern_sm_mat      = np.matrix(kern_sm_list)
+    trans_mat        = np.matrix(trans_list)
+
+    threads_max = np.amax(kern_threads_mat)
+    threads_avg = np.mean(kern_threads_mat)
+
+    reg_max = np.amax(kern_reg_mat)
+    reg_avg = np.mean(kern_reg_mat)
+
+    sm_max = np.amax(kern_sm_mat)
+    sm_avg = np.mean(kern_sm_mat)
+
+    trans_max = np.amax(trans_mat)
+    trans_avg = np.mean(trans_mat)
+
+    #
+    # return feature metrics
+    #
+    feature_list = [appDur, cpuTime, gpuTime, 
+            threads_max, threads_avg, 
+            reg_max, reg_avg, 
+            sm_max, sm_avg,
+            trans_max, trans_avg]
+
+    ##gapSum = 0.
+    ##
+    ##transT = 0.
+    ##transCalls = 0.
+
+    ##kernsT = 0.
+    ##kernelCalls = 0.
+    ##KernelTime_list = [] # to compute min/max/mean/std
+
+    ##for i, app in enumerate(app_trace):
+    ##    if app[0] in ['h2d', 'd2h', 'd2d', 'memset']:
+    ##        transT = transT + (app[2] - app[1])
+    ##        transCalls = transCalls + 1.
+
+    ##    if app[0] == "kern":
+    ##        myKernT = app[2] - app[1] 
+    ##        kernsT = kernsT + myKernT 
+    ##        kernelCalls = kernelCalls + 1.
+    ##        KernelTime_list.append(myKernT)
+    ##            
+    ##    if i>0:
+    ##        gapSum = gapSum + (app_trace[i][1] - app_trace[i-1][2])
+    ##
+    ##kerns_time_ratio = kernsT / gpuDur   # sum(kernels_runtime) / app_runtime
+    ##trans_time_ratio = transT / gpuDur   # sum(transfer_runtime) / app_runtime
+    ##
+    ##avgKernsTime = kernsT / kernelCalls
+    ##avgTransTime = transT / transCalls
+    ##
+    ### avg interval between two consecutive apis
+    ##avgApiGap = gapSum / float(len(app_trace) - 1)
+    ##
+    #### add the rest
+    ###feat_array[startpos]     = startT
+    ###feat_array[startpos + 1] = endT
+    ###feat_array[startpos + 2] = appDur
+    ###feat_array[startpos + 3] = kernelCalls
+    ###feat_array[startpos + 4] = transCalls
+    ###feat_array[startpos + 5] = kerns_time_ratio
+    ###feat_array[startpos + 6] = trans_time_ratio
+    ###feat_array[startpos + 7] = avgKernsTime
+    ###feat_array[startpos + 8] = avgTransTime
+    ###feat_array[startpos + 9] = avgApiGap
+
+    ##apiNum = len(app_trace)
+
+    ##KernelTime_array = np.array(KernelTime_list)
+
+    ##MinKernT = np.amin(KernelTime_array)
+    ##MaxKernT = np.amax(KernelTime_array)
+    ##StdKernT = np.std(KernelTime_array)
+    ##MeanKernT = np.mean(KernelTime_array)
+    ##MedianKernT = np.median(KernelTime_array)
+
+
+
+    return feature_list 
