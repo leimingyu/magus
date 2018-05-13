@@ -261,14 +261,13 @@ def main():
     #-------------------------------------------------------------------------#
     # GPU Job Table 
     #-------------------------------------------------------------------------#
-    #    jobid           starT       endT
+    #    jobid           starT       endT   status
     #       0             1           2
     #       1             1.3         2.4
     #       2             -           -
     #       ...
     #----------------------------------------------------------------------
     maxJobs = 10000
-    #rows, cols = maxJobs, 3  # note: init with a large prefixed table
     rows, cols = maxJobs, 4  # note: init with a large prefixed table
     d_arr = mp.Array(ctypes.c_double, rows * cols)
     arr = np.frombuffer(d_arr.get_obj())
@@ -280,82 +279,52 @@ def main():
     #===================#
     #app2dir    = np.load('../07_sim_devid/similarity/app2dir_dd.npy').item()
     #app2cmd    = np.load('../07_sim_devid/similarity/app2cmd_dd.npy').item()
-    app2metric = np.load('../07_sim_devid/similarity/app2metric_dd.npy').item()
-    app2trace  = np.load('../07_sim_devid/perfmodel/app2trace_dd.npy').item()
+
+    #app2metric = np.load('../07_sim_devid/similarity/app2metric_dd.npy').item()
+    #app2trace  = np.load('../07_sim_devid/perfmodel/app2trace_dd.npy').item()
 
     #print len(app2dir), len(app2cmd), len(app2metric), len(app2trace)
 
+
+    #=========================================================================#
+    # set up the launch order list
+    #=========================================================================#
     appsList = get_appinfo('./prepare/app_info_79.bin')
-    print appsList[0]
+    #print appsList
 
-    #print appNameList
-
-    #============================#
-    # 2) randomize the app order 
-    #============================#
-    app_name = [v[0] for v in appsList]
-    app_dir  = [v[1] for v in appsList]
-    #print app_name
-    #print app_dir 
-
-    apps_num = len(appsList)
-    logger.debug("Total GPU Applications = {}.".format(apps_num))
-    
-
-    random.seed(a=1010)
-    idx = [i for i in xrange(0, apps_num)]
-    #print idx
-    random.shuffle(idx)
-    #print idx
-    app_seq        = [app_name[i] for i in idx]
-    app_seq_dir    = [app_dir[i] for i in idx]
     app2dir_dd = {}
-    for i in idx:
-        appName = app_seq[i]
-        appDir  = app_seq_dir[i]
-        app2dir_dd[appName] = appDir
+    for v in appsList:
+        app2dir_dd[v[0]] = v[1] 
+
+    #print app2dir_dd
+    
+    launch_list = ['cudasdk_concurrentKernels', 'poly_correlation']
+
+    #for x in launch_list:
+    #    print x, app2dir_dd[x]
 
 
-    #print app_seq[:2]
-    #print app_seq_dir[:2]
 
-    #==================================#
-    # 3) shared variable for workqueue 
-    #==================================#
-    appQueList = manager.list()
-    #appQueList = list(appQueList)
 
-    #print type(appQueList)
-    #print len(appQueList)
 
-    for app in app_seq:
-        appQueList.append(app)
 
-    #print len(appQueList)
-    #print app_seq[:3]
-    #print appQueList[:3]
-    #del appQueList[1]
-    #print appQueList[:3]
+    apps_num = len(launch_list)
+    logger.debug("Total GPU Applications = {}.".format(apps_num))
 
-    #==================================#
-    # 4) create independent processes 
-    #==================================#
-    #workers = Pool(processes=2)
-    workers = []
+
+    appQueList = copy.deepcopy(launch_list)  # application running queue
+
+    workers = [] # for mp processes
 
 
     #==================================#
-    # 5) run the apps in the queue 
+    # run the apps in the queue 
     #==================================#
     MAXCORUN = 2
     activeJobs = 0
-    full_shared = Value('i',0)
-    current_jobid_list = []
-
-
-
-
     jobID = -1
+
+    current_jobid_list = []
 
     for i in xrange(apps_num):
         Dispatch = False 
@@ -420,8 +389,6 @@ def main():
             process.start()
 
 
-        #if i == 5: break
-
     #=========================================================================#
     # end of running all the jobs
     #=========================================================================#
@@ -436,8 +403,6 @@ def main():
 
     if total_jobs <> apps_num:
         logger.debug("[Warning] job number doesn't match.")
-
-
 
 
 if __name__ == "__main__":
