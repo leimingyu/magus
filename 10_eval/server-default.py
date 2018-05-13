@@ -248,6 +248,9 @@ def PrintGpuJobTable(GpuJobTable, total_jobs):
             GpuJobTable[row, 2],
             GpuJobTable[row, 2] - GpuJobTable[row, 1]))
 
+    total_runtime =  GpuJobTable[total_jobs - 1, 2] - GpuJobTable[0,1]
+    print("total runtime = {} (s)".format(total_runtime))
+
 #=============================================================================#
 # main program
 #=============================================================================#
