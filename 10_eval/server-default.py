@@ -288,6 +288,7 @@ def main():
 
     #print len(app2dir), len(app2cmd), len(app2metric), len(app2trace)
 
+    #app_iobound_dd = np.load('./case_studies/app_iobound_dd.npy').item()
 
     #=========================================================================#
     # set up the launch order list
@@ -301,10 +302,43 @@ def main():
 
     #print app2dir_dd
     
-    launch_list = ['cudasdk_concurrentKernels', 'poly_correlation']
+    #launch_list = ['cudasdk_concurrentKernels', 'poly_correlation']
+
+    #==========#
+    # test 1
+    #==========#
+
+    #launch_list = ['cudasdk_concurrentKernels', 'poly_3mm', 'poly_gemm', 'cudasdk_segmentationTreeThrust'] # sim
+    #launch_list = ['cudasdk_concurrentKernels', 'cudasdk_segmentationTreeThrust', 'poly_3mm', 'poly_gemm'] # job size  
+
+
+    #launch_list = ['cudasdk_concurrentKernels', 'poly_3mm', 'cudasdk_segmentationTreeThrust', 'cudasdk_MCSingleAsianOptionP'] # sim
+    #launch_list = ['cudasdk_concurrentKernels', 'cudasdk_segmentationTreeThrust', 'poly_3mm', 'cudasdk_MCSingleAsianOptionP'] # job size 
+    #launch_list = ['cudasdk_concurrentKernels', 'cudasdk_segmentationTreeThrust', 'cudasdk_MCSingleAsianOptionP', 'poly_3mm'] # job size  + iobound
+
+
+
+    #launch_list = ['cudasdk_concurrentKernels', 'poly_3mm', 'cudasdk_segmentationTreeThrust'] # sim
+    #launch_list = ['cudasdk_concurrentKernels', 'cudasdk_segmentationTreeThrust', 'poly_3mm'] # job size 
+
 
     #for x in launch_list:
     #    print x, app2dir_dd[x]
+
+    #==========#
+    # test 2
+    #==========#
+
+    #launch_list = ['shoc_lev1reduction', 'poly_3mm', 'poly_gemm', 'cudasdk_segmentationTreeThrust'] # sim
+    #launch_list = ['shoc_lev1reduction', 'cudasdk_segmentationTreeThrust', 'poly_3mm', 'poly_gemm'] # jobsize + sim
+
+    #==========#
+    # test 3
+    #==========#
+    #launch_list = ['cudasdk_scan', 'cudasdk_interval', 'cudasdk_MCEstimatePiQ', 'cudasdk_concurrentKernels'] # sim
+    #launch_list = ['cudasdk_scan', 'cudasdk_concurrentKernels', 'cudasdk_MCEstimatePiQ','cudasdk_interval'] # threads + sim
+    #launch_list = ['cudasdk_scan', 'cudasdk_concurrentKernels', 'cudasdk_interval', 'cudasdk_MCEstimatePiQ'] # threads + sim
+
 
 
 
