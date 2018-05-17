@@ -454,19 +454,20 @@ def main():
                 #job_name = indx2name_dd[pos] 
 
                 #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
-                anotherApp = FindNextJob(waiting_list, appDur_sorted_dd)
+                anotherApp = FindNextJob(waiting_list, appDur_sorted)
 
                 if anotherApp is None:
-                    logger.debug("[Warning] leastsim_app is None!")
+                    logger.debug("[Warning] anotherApp is None!")
                 else:
                     #
                     # run the selected app
                     #
                     activeJobs += 1
                     jobID += 1
-                    active_job_list.append(leastsim_app) # add app to the active job list
-                    leastsim_idx = waiting_list.index(leastsim_app) # del app from list
+                    active_job_list.append(anotherApp) # add app to the active job list
+                    leastsim_idx = waiting_list.index(anotherApp) # del app from list
                     del waiting_list[leastsim_idx]
+
                     name2jobid[leastsim_app] = jobID # update name to jobID
                     jobid2name[jobID] =leastsim_app 
 
@@ -516,7 +517,7 @@ def main():
                 leastsim_app = waiting_list[0]
             else:
                 #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
-                anotherApp = FindNextJob(waiting_list, appDur_sorted_dd)
+                anotherApp = FindNextJob(waiting_list, appDur_sorted)
 
             activeJobs += 1
             jobID += 1
