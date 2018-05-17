@@ -202,13 +202,12 @@ def PrintGpuJobTable(GpuJobTable, total_jobs):
 
     total_runtime =  GpuJobTable[total_jobs - 1, 2] - GpuJobTable[0,1]
     print("total runtime = {} (s)".format(total_runtime))
-    
 
 
 #-----------------------------------------------------------------------------#
 # GPU Job Table 
 #-----------------------------------------------------------------------------#
-def find_least_sim(active_job_list, app2app_dist, waiting_list):
+def FindNextJob(active_job_list, app2app_dist, waiting_list, app2newfeat_dd):
     job_name = active_job_list[0]
     #print job_name, "\n"
 
@@ -233,6 +232,41 @@ def find_least_sim(active_job_list, app2app_dist, waiting_list):
 
     return leastsim_app
 
+
+def InitTwoJobs(waiting_list, appDur_sorted_dd, cpuTime_sorted_dd):
+    # sorted in increasing order
+    app1_name = None
+
+    # find the largest cpuTime 
+    large_cpuTime_app = [None, None]
+    for app in reversed(cpuTime_sorted_dd):
+        (appName, appCpuTime) = app
+        if appName in waiting_list:
+            large_cpuTime_app[0] = appName 
+            large_cpuTime_app[1] = appCpuTime 
+            break
+
+    app1_name = large_cpuTime_app[0]
+
+    # check whether appDur is smaller than the cpuTime 
+    HAS_SMALL = False
+    for app in appDur_sorted_dd:
+        (appName, appDur) = app
+        if appName in waiting_list:
+            if appDur < large_cpuTime_app[1]:
+                app2_name = appName
+                HAS_SMALL = True
+                break
+
+    if HAS_SMALL:
+        return [app1_name, app2_name]
+
+
+    # if there is no smaller choice, select the shorted appDur to corun
+    app2_name = appDur_sorted_dd[0][0]
+
+    return [app1_name, app2_name]
+        
 
 #=============================================================================#
 # main program
@@ -267,21 +301,18 @@ def main():
     #app2dir    = np.load('../07_sim_devid/similarity/app2dir_dd.npy').item()
     #app2cmd    = np.load('../07_sim_devid/similarity/app2cmd_dd.npy').item()
     app2metric = np.load('../07_sim_devid/similarity/app2metric_dd.npy').item()
-    app2trace  = np.load('../07_sim_devid/perfmodel/app2trace_dd.npy').item()
+    #app2trace  = np.load('../07_sim_devid/perfmodel/app2trace_dd.npy').item()
+
+    # [appDur, cpuTime, gpuTime, threads_max, threads_avg, reg_max, reg_avg, sm_max, sm_avg, trans_max, trans_avg]
+    app2newfeat_dd = np.load('./case_studies/app2newfeat_dd.npy').item()
 
     #print len(app2dir), len(app2cmd), len(app2metric), len(app2trace)
 
     appsList = get_appinfo('./prepare/app_info_79.bin')
     #print appsList[0]
-
     app2dir_dd = {}
-    app_seq_list = []
     for v in appsList:
         app2dir_dd[v[0]] = v[1] 
-        app_seq_list.append(v[0])
-
-    #print app_seq_list
-
 
 
 
@@ -304,30 +335,51 @@ def main():
     logger.debug("Finish computing distance.")
 
 
-    #============================#
-    # 2) randomize the app order 
-    #============================#
+    #=========================================================================#
+    # 
+    #=========================================================================#
     
-    #launch_list = ['shoc_lev1reduction', 
-    #        'poly_correlation', 
-    #        'cudasdk_interval', 
-    #        'cudasdk_MCEstimatePiInlineQ', 
-    #        'cudasdk_convolutionTexture', 
-    #        'poly_2dconv',
-    #        'cudasdk_MCSingleAsianOptionP',
-    #        'poly_syrk',
-    #        'cudasdk_segmentationTreeThrust',
-    #        'poly_gemm',
-    #        'poly_3mm'] 
+    ##launch_list = ['shoc_lev1reduction', 
+    ##        'poly_correlation', 
+    ##        'cudasdk_interval', 
+    ##        'cudasdk_MCEstimatePiInlineQ', 
+    ##        'cudasdk_convolutionTexture', 
+    ##        'poly_2dconv',
+    ##        'cudasdk_MCSingleAsianOptionP',
+    ##        'poly_syrk',
+    ##        'cudasdk_segmentationTreeThrust',
+    ##        'poly_gemm',
+    ##        'poly_3mm'] 
 
+    launch_list = ['shoc_lev1reduction', 
+            'poly_correlation', 
+            'cudasdk_interval', 
+            'cudasdk_MCEstimatePiInlineQ' 
+            ] 
 
-    launch_list = copy.deepcopy(app_seq_list)
 
     apps_num = len(launch_list)
     logger.debug("Total GPU Applications = {}.".format(apps_num))
+
+    #====================#
+    # sort
+    #====================#
     
+    # [appDur, cpuTime, gpuTime, threads_max, threads_avg, reg_max, reg_avg, sm_max, sm_avg, trans_max, trans_avg]
+    appDur_dd = {}
+    cpuTime_dd = {}
+    for i in launch_list:
+        appDur, cpuTime = app2newfeat_dd[i][:2]
+        appDur_dd[i] = appDur
+        cpuTime_dd[i] = cpuTime 
 
+    appDur_sorted = sorted(appDur_dd.items(), key=operator.itemgetter(1))
+    cpuTime_sorted = sorted(cpuTime_dd.items(), key=operator.itemgetter(1))
 
+    #print "appDur:\n", appDur_sorted
+    #print "cpuTime:\n", cpuTime_sorted
+
+    
 
     #==================================#
     # 
@@ -345,7 +397,6 @@ def main():
     ##print appQueList[:3], "\n"
 
 
-    #time.sleep(100)
 
     #==================================#
     # 4) create independent processes 
@@ -358,6 +409,8 @@ def main():
     #==================================#
     MAXCORUN = 2
     activeJobs = 0
+    jobID = -1
+
     active_job_list = [] # keep track of job name
     name2jobid = {}   # use the application to find the jobID
     jobid2name = {}
@@ -365,23 +418,35 @@ def main():
     #========================#
     # start with the 1st job
     #========================#
-    jobID = 0 
-    activeJobs += 1
-    appName = waiting_list[0]
-    active_job_list.append(appName) # add app to the active job list 
-    app_idx = waiting_list.index(appName) # remove the app from the waiting list
-    del waiting_list[app_idx]
-    #print waiting_list[:5]
-    name2jobid[appName] = jobID
-    jobid2name[jobID] = appName 
+    firsttwojobs = InitTwoJobs(waiting_list, appDur_sorted, cpuTime_sorted)
+    #print firsttwojobs 
+    #appName = waiting_list[0]
 
-    process = Process(target=run_work, args=(jobID, GpuJobTable, appName, app2dir_dd))
-    process.daemon = False
-    workers.append(process)
-    process.start()
+    #
+    # app1 + app2
+    #
+    for i, appName in enumerate(firsttwojobs):
+        jobID += 1 
+        activeJobs += 1
+
+        active_job_list.append(appName) # add app to the active job list 
+        app_idx = waiting_list.index(appName) # remove the app from the waiting list
+        del waiting_list[app_idx]
+
+        name2jobid[appName] = jobID
+        jobid2name[jobID] = appName 
+
+        process = Process(target=run_work, args=(jobID, GpuJobTable, appName, app2dir_dd))
+        process.daemon = False
+        workers.append(process)
+        process.start()
+
+
+    #time.sleep(100)
+
 
     apps_num_minus_one = apps_num - 1
-    for i in xrange(1, apps_num):
+    for i in xrange(2, apps_num):
         Dispatch = False
         
         if activeJobs < MAXCORUN:
@@ -456,7 +521,8 @@ def main():
             if i == apps_num_minus_one:
                 leastsim_app = waiting_list[0]
             else:
-                leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
+                #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
+                anotherApp = FindNextJob(active_job_list, app2app_dist, waiting_list, app2newfeat_dd)
 
             activeJobs += 1
             jobID += 1
