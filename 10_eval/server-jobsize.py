@@ -468,11 +468,11 @@ def main():
                     leastsim_idx = waiting_list.index(anotherApp) # del app from list
                     del waiting_list[leastsim_idx]
 
-                    name2jobid[leastsim_app] = jobID # update name to jobID
-                    jobid2name[jobID] =leastsim_app 
+                    name2jobid[anotherApp] = jobID # update name to jobID
+                    jobid2name[jobID] = anotherApp 
 
                     process = Process(target=run_work, args=(jobID, GpuJobTable,
-                        leastsim_app, app2dir_dd))
+                        anotherApp, app2dir_dd))
                     process.daemon = False
                     workers.append(process)
                     process.start()
@@ -514,7 +514,7 @@ def main():
 
             # for the last application, go directly schedule it
             if i == apps_num_minus_one:
-                leastsim_app = waiting_list[0]
+                anotherApp = waiting_list[0]
             else:
                 #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
                 anotherApp = FindNextJob(waiting_list, appDur_sorted)
@@ -524,11 +524,12 @@ def main():
             active_job_list.append(anotherApp) # add app to the active job list
             leastsim_idx = waiting_list.index(anotherApp) # del app from list
             del waiting_list[leastsim_idx]
-            name2jobid[leastsim_app] = jobID # update name to jobID
-            jobid2name[jobID] =leastsim_app 
+
+            name2jobid[anotherApp] = jobID # update name to jobID
+            jobid2name[jobID] = anotherApp
 
             process = Process(target=run_work, args=(jobID, GpuJobTable,
-                leastsim_app, app2dir_dd))
+                anotherApp, app2dir_dd))
             process.daemon = False
             workers.append(process)
             process.start()
