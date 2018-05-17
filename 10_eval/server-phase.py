@@ -194,43 +194,38 @@ def run_work(jobID, GpuJobTable, appName, app2dir_dd):
 #-----------------------------------------------------------------------------#
 def PrintGpuJobTable(GpuJobTable, total_jobs):
     print("JobID\tStart\tEnd\tDuration")
+    start_list = []
+    end_list = []
     for row in xrange(total_jobs):
         print("{}\t{}\t{}\t{}".format(GpuJobTable[row, 0],
             GpuJobTable[row, 1],
             GpuJobTable[row, 2],
             GpuJobTable[row, 2] - GpuJobTable[row, 1]))
 
-    total_runtime =  GpuJobTable[total_jobs - 1, 2] - GpuJobTable[0,1]
+        start_list.append(GpuJobTable[row, 1])
+        end_list.append(GpuJobTable[row, 2])
+
+
+    total_runtime = max(end_list) - min(start_list) 
     print("total runtime = {} (s)".format(total_runtime))
 
 
 #-----------------------------------------------------------------------------#
 # GPU Job Table 
 #-----------------------------------------------------------------------------#
-def FindNextJob(active_job_list, app2app_dist, waiting_list, app2newfeat_dd):
-    job_name = active_job_list[0]
-    #print job_name, "\n"
+def FindNextJob(waiting_list, appDur_sorted_dd):
+    #
+    # continue to select app that appDur is the smallest
+    #
+    app2_name= None
 
-    #--------------------------# 
-    # run similarity analysis
-    #--------------------------# 
-    dist_dd = app2app_dist[job_name] # get the distance dict
-    dist_sorted = sorted(dist_dd.items(), key=operator.itemgetter(1))
-
-    #print dist_sorted, "\n"
-    #print waiting_list
-
-    leastsim_app = None
-    # the sorted in non-decreasing order, use reversed()
-    for appname_and_dist in reversed(dist_sorted):
-        sel_appname = appname_and_dist[0]
-        if sel_appname in waiting_list: # find 1st app in the list, and exit
-            leastsim_app = sel_appname
+    for app in appDur_sorted_dd:
+        appName = app[0]
+        if appName in waiting_list:
+            app2_name = appName 
             break
 
-    ##print("\n{} <<select>> {}\n".format(job_name, leastsim_app))
-
-    return leastsim_app
+    return app2_name 
 
 
 def InitTwoJobs(waiting_list, appDur_sorted_dd, cpuTime_sorted_dd):
@@ -310,10 +305,13 @@ def main():
 
     appsList = get_appinfo('./prepare/app_info_79.bin')
     #print appsList[0]
+
+
     app2dir_dd = {}
+    app_seq_list = []
     for v in appsList:
         app2dir_dd[v[0]] = v[1] 
-
+        app_seq_list.append(v[0])
 
 
     #=====================================#
@@ -351,12 +349,13 @@ def main():
     ##        'poly_gemm',
     ##        'poly_3mm'] 
 
-    launch_list = ['shoc_lev1reduction', 
-            'poly_correlation', 
-            'cudasdk_interval', 
-            'cudasdk_MCEstimatePiInlineQ' 
-            ] 
+    ##launch_list = ['shoc_lev1reduction', 
+    ##        'poly_correlation', 
+    ##        'cudasdk_interval', 
+    ##        'cudasdk_MCEstimatePiInlineQ' 
+    ##        ] 
 
+    launch_list = copy.deepcopy(app_seq_list)
 
     apps_num = len(launch_list)
     logger.debug("Total GPU Applications = {}.".format(apps_num))
@@ -460,24 +459,26 @@ def main():
                 #pos = active_job_list[0]
                 #job_name = indx2name_dd[pos] 
 
-                leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
+                #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
+                anotherApp = FindNextJob(waiting_list, appDur_sorted)
 
-                if leastsim_app is None:
-                    logger.debug("[Warning] leastsim_app is None!")
+                if anotherApp is None:
+                    logger.debug("[Warning] anotherApp is None!")
                 else:
                     #
                     # run the selected app
                     #
                     activeJobs += 1
                     jobID += 1
-                    active_job_list.append(leastsim_app) # add app to the active job list
-                    leastsim_idx = waiting_list.index(leastsim_app) # del app from list
+                    active_job_list.append(anotherApp) # add app to the active job list
+                    leastsim_idx = waiting_list.index(anotherApp) # del app from list
                     del waiting_list[leastsim_idx]
-                    name2jobid[leastsim_app] = jobID # update name to jobID
-                    jobid2name[jobID] =leastsim_app 
+
+                    name2jobid[anotherApp] = jobID # update name to jobID
+                    jobid2name[jobID] = anotherApp 
 
                     process = Process(target=run_work, args=(jobID, GpuJobTable,
-                        leastsim_app, app2dir_dd))
+                        anotherApp, app2dir_dd))
                     process.daemon = False
                     workers.append(process)
                     process.start()
@@ -519,21 +520,22 @@ def main():
 
             # for the last application, go directly schedule it
             if i == apps_num_minus_one:
-                leastsim_app = waiting_list[0]
+                anotherApp = waiting_list[0]
             else:
                 #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
-                anotherApp = FindNextJob(active_job_list, app2app_dist, waiting_list, app2newfeat_dd)
+                anotherApp = FindNextJob(waiting_list, appDur_sorted)
 
             activeJobs += 1
             jobID += 1
-            active_job_list.append(leastsim_app) # add app to the active job list
-            leastsim_idx = waiting_list.index(leastsim_app) # del app from list
+            active_job_list.append(anotherApp) # add app to the active job list
+            leastsim_idx = waiting_list.index(anotherApp) # del app from list
             del waiting_list[leastsim_idx]
-            name2jobid[leastsim_app] = jobID # update name to jobID
-            jobid2name[jobID] =leastsim_app 
+
+            name2jobid[anotherApp] = jobID # update name to jobID
+            jobid2name[jobID] = anotherApp
 
             process = Process(target=run_work, args=(jobID, GpuJobTable,
-                leastsim_app, app2dir_dd))
+                anotherApp, app2dir_dd))
             process.daemon = False
             workers.append(process)
             process.start()

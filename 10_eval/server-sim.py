@@ -194,15 +194,20 @@ def run_work(jobID, GpuJobTable, appName, app2dir_dd):
 #-----------------------------------------------------------------------------#
 def PrintGpuJobTable(GpuJobTable, total_jobs):
     print("JobID\tStart\tEnd\tDuration")
+    start_list = []
+    end_list = []
     for row in xrange(total_jobs):
         print("{}\t{}\t{}\t{}".format(GpuJobTable[row, 0],
             GpuJobTable[row, 1],
             GpuJobTable[row, 2],
             GpuJobTable[row, 2] - GpuJobTable[row, 1]))
 
-    total_runtime =  GpuJobTable[total_jobs - 1, 2] - GpuJobTable[0,1]
+        start_list.append(GpuJobTable[row, 1])
+        end_list.append(GpuJobTable[row, 2])
+
+
+    total_runtime = max(end_list) - min(start_list) 
     print("total runtime = {} (s)".format(total_runtime))
-    
 
 
 #-----------------------------------------------------------------------------#
