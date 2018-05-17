@@ -271,8 +271,13 @@ def main():
     #print appsList[0]
 
     app2dir_dd = {}
+    app_seq_list = []
     for v in appsList:
         app2dir_dd[v[0]] = v[1] 
+        app_seq_list.append(v[0])
+
+    #print app_seq_list
+
 
 
 
@@ -299,29 +304,26 @@ def main():
     # 2) randomize the app order 
     #============================#
     
-    launch_list = ['shoc_lev1reduction', 
-            'poly_correlation', 
-            'cudasdk_interval', 
-            'cudasdk_MCEstimatePiInlineQ', 
-            'cudasdk_convolutionTexture', 
-            'poly_2dconv',
-            'cudasdk_MCSingleAsianOptionP',
-            'poly_syrk',
-            'cudasdk_segmentationTreeThrust',
-            'poly_gemm',
-            'poly_3mm'] 
+    #launch_list = ['shoc_lev1reduction', 
+    #        'poly_correlation', 
+    #        'cudasdk_interval', 
+    #        'cudasdk_MCEstimatePiInlineQ', 
+    #        'cudasdk_convolutionTexture', 
+    #        'poly_2dconv',
+    #        'cudasdk_MCSingleAsianOptionP',
+    #        'poly_syrk',
+    #        'cudasdk_segmentationTreeThrust',
+    #        'poly_gemm',
+    #        'poly_3mm'] 
 
+
+    launch_list = copy.deepcopy(app_seq_list)
 
     apps_num = len(launch_list)
     logger.debug("Total GPU Applications = {}.".format(apps_num))
     
 
-    #idx = [i for i in xrange(0, apps_num)]
-    #app_seq        = [app_name[i] for i in idx]
 
-
-    #print app_seq[:2]
-    #print app_seq_dir[:2]
 
     #==================================#
     # 
@@ -339,6 +341,7 @@ def main():
     ##print appQueList[:3], "\n"
 
 
+    #time.sleep(100)
 
     #==================================#
     # 4) create independent processes 
