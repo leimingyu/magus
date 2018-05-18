@@ -212,14 +212,35 @@ def PrintGpuJobTable(GpuJobTable, total_jobs):
 #-----------------------------------------------------------------------------#
 # GPU Job Table 
 #-----------------------------------------------------------------------------#
-def FindNextJob(waiting_list, appDur_sorted_dd):
+
+# [appDur, cpuTime, gpuTime, threads_max, threads_avg, reg_max, reg_avg, sm_max, sm_avg, trans_max, trans_avg]
+
+def FindNextJob(waiting_list, appDur_sorted_dd, cpuTime_sorted, active_job_list, app2newfeat_dd):
+    activejob = active_job_list[0]
+    activejob_gpuTime = app2newfeat_dd[activejob][2]
+
     #
-    # continue to select app that appDur is the smallest
+    # consider active job is working on GPU section
+    # select the cpuTime is larger than the GPU section
     #
     app2_name= None
 
-    for app in appDur_sorted_dd:
-        appName = app[0]
+
+
+    for (appName, appCpuTime) in reversed(cpuTime_sorted):
+        if appName in waiting_list:
+            if appCpuTime > activejob_gpuTime:
+                app2_name = appName
+                break
+
+    if app2_name is not None:
+        return app2_name
+    
+    #
+    # continue to select app that appDur is the smallest
+    #
+
+    for (appName, _) in appDur_sorted_dd:
         if appName in waiting_list:
             app2_name = appName 
             break
@@ -227,13 +248,13 @@ def FindNextJob(waiting_list, appDur_sorted_dd):
     return app2_name 
 
 
-def InitTwoJobs(waiting_list, appDur_sorted_dd, cpuTime_sorted_dd):
+def InitTwoJobs(waiting_list, appDur_sorted_dd, cpuTime_sorted):
     # sorted in increasing order
     app1_name = None
 
     # find the largest cpuTime 
     large_cpuTime_app = [None, None]
-    for app in reversed(cpuTime_sorted_dd):
+    for app in reversed(cpuTime_sorted):
         (appName, appCpuTime) = app
         if appName in waiting_list:
             large_cpuTime_app[0] = appName 
@@ -459,7 +480,8 @@ def main():
                 #job_name = indx2name_dd[pos] 
 
                 #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
-                anotherApp = FindNextJob(waiting_list, appDur_sorted)
+                anotherApp = FindNextJob(waiting_list, appDur_sorted, cpuTime_sorted,
+                        active_job_list, app2newfeat_dd)
 
                 if anotherApp is None:
                     logger.debug("[Warning] anotherApp is None!")
@@ -522,7 +544,8 @@ def main():
                 anotherApp = waiting_list[0]
             else:
                 #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
-                anotherApp = FindNextJob(waiting_list, appDur_sorted)
+                anotherApp = FindNextJob(waiting_list, appDur_sorted, cpuTime_sorted,
+                        active_job_list, app2newfeat_dd)
 
             activeJobs += 1
             jobID += 1
