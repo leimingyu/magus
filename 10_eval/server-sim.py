@@ -326,7 +326,17 @@ def main():
     #        'poly_3mm'] 
 
 
-    launch_list = copy.deepcopy(app_seq_list)
+    #launch_list = copy.deepcopy(app_seq_list)
+
+
+
+    #
+    # sensitive cases:
+    #
+
+    launch_list = ['rodinia_pathfinder', 'lonestar_mst', 'cudasdk_MCEstimatePiQ']
+
+
 
     apps_num = len(launch_list)
     logger.debug("Total GPU Applications = {}.".format(apps_num))
