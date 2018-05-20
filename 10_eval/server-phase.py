@@ -213,13 +213,22 @@ def PrintGpuJobTable(GpuJobTable, total_jobs):
 #-----------------------------------------------------------------------------#
 # GPU Job Table 
 #-----------------------------------------------------------------------------#
-def FindNextJob(waiting_list, appDur_sorted_dd):
+def FindNextJob(active_job_list, waiting_list, app2app_contention_dd):
+    job_name = active_job_list[0]
+
+    #--------------------------# 
+    # 
+    #--------------------------# 
+    contention_dd = app2app_contention_dd[job_name]
+    contention_sorted = sorted(contention_dd.items(), key=operator.itemgetter(1))
+
+
     #
     # continue to select app that appDur is the smallest
     #
     app2_name= None
 
-    for app in appDur_sorted_dd:
+    for app in contention_sorted: 
         appName = app[0]
         if appName in waiting_list:
             app2_name = appName 
@@ -305,6 +314,8 @@ def main():
 
     appsList = get_appinfo('./prepare/app_info_79.bin')
     #print appsList[0]
+
+    app2app_contention_dd = np.load('./case_studies/app2app_contention_dd.npy').item()
 
 
     app2dir_dd = {}
@@ -460,7 +471,7 @@ def main():
                 #job_name = indx2name_dd[pos] 
 
                 #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
-                anotherApp = FindNextJob(waiting_list, appDur_sorted)
+                anotherApp = FindNextJob(active_job_list, waiting_list, app2app_contention_dd)
 
                 if anotherApp is None:
                     logger.debug("[Warning] anotherApp is None!")
@@ -523,7 +534,7 @@ def main():
                 anotherApp = waiting_list[0]
             else:
                 #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
-                anotherApp = FindNextJob(waiting_list, appDur_sorted)
+                anotherApp = FindNextJob(active_job_list, waiting_list, app2app_contention_dd)
 
             activeJobs += 1
             jobID += 1
