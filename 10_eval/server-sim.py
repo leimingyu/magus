@@ -335,6 +335,16 @@ def main():
     #
 
     launch_list = ['rodinia_pathfinder', 'lonestar_mst', 'cudasdk_MCEstimatePiQ']
+    #launch_list = ['cudasdk_transpose', 'cudasdk_MCEstimatePiInlineQ', 'cudasdk_reduction']
+    #launch_list = ['cudasdk_boxFilterNPP', 'cudasdk_simpleCUBLAS', 'cudasdk_shflscan']
+    #launch_list = ['poly_bicg', 'cudasdk_MCEstimatePiP', 'rodinia_lud']
+    #launch_list = ['cudasdk_dxtc', 'rodinia_needle', 'cudasdk_matrixMul']
+    #launch_list = ['cudasdk_MCEstimatePiInlineP', 'poly_atax', 'parboil_mriq']
+    #launch_list = ['shoc_lev1reduction', 'poly_gemm', 'cudasdk_simpleCUFFTcallback']
+    #launch_list = ['rodinia_hotspot', 'shoc_lev1sort', 'cudasdk_scalarProd']
+    #launch_list = ['parboil_stencil', 'cudasdk_MCSingleAsianOptionP', 'rodinia_lavaMD']
+    #launch_list = ['rodinia_gaussian', 'rodinia_backprop', 'cudasdk_vectorAdd']
+    #launch_list = ['parboil_sgemm', 'cudasdk_concurrentKernels', 'cudasdk_lineOfSight']
 
 
 
