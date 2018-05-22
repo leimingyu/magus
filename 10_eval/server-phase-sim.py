@@ -28,6 +28,94 @@ manager = Manager()
 
 
 #------------------------------------------------------------------------------
+# 
+#------------------------------------------------------------------------------
+def concantenate_trace(trace1, trace2):
+    trc1 = copy.deepcopy(trace1)
+    trc2 = copy.deepcopy(trace2)
+    
+    prev_end = trc1[-1][2]
+    
+    offset = prev_end - trc2[0][1]
+    
+    for api in trc2:
+        api[1] += offset
+        api[2] += offset
+        # append current (updated) api to prev trace
+        trc1.append(api)
+        
+    #for i in trc1:
+    #    print i
+    
+    return trc1
+
+#------------------------------------------------------------------------------
+# phase contention 
+#------------------------------------------------------------------------------
+def detect_phase_contention_timing(app1_trace, app2_trace):
+	t1 = copy.deepcopy(app1_trace)
+	t2 = copy.deepcopy(app2_trace)
+
+	t1_start = t1[0][1]
+	t2_start = t2[0][1]
+
+	# offset t1 trace
+	for i, api in enumerate(t1):
+		api[1] -= t1_start
+		api[2] -= t1_start
+
+	# offset t2 trace
+	for i, api in enumerate(t2):
+		api[1] -= t2_start
+		api[2] -= t2_start
+
+
+	contention_count = 0
+	contention_time = 0.
+
+	for i, api in enumerate(t1):
+		a1_type, a1_start, a1_end = api[:3]
+
+		for app2 in t2:
+			a2_type, a2_start, a2_end = app2[:3]
+
+			OVLP = False
+			ovlp_time = 0.
+
+			if a2_start < a1_start < a2_end:
+				OVLP = True
+				if a1_end > a2_end:
+					ovlp_time = a2_end - a1_start
+
+				if a1_end < a2_end:
+					ovlp_time = a1_end - a1_start
+
+
+			if a2_start < a1_end < a2_end:
+				OVLP = True
+				if a1_start > a2_start:
+					ovlp_time = a1_end - a1_start
+
+				if a1_start < a2_start:
+					ovlp_time = a1_end - a2_start
+
+
+
+			if (a1_start < a2_start) and (a1_end > a2_end):
+				OVLP = True
+				ovlp_time = a2_end - a2_start
+
+			if OVLP:
+				if a1_type == a2_type:
+					contention_count += 1
+					contention_time += ovlp_time
+
+
+	return contention_count, contention_time
+
+
+
+#------------------------------------------------------------------------------
 # read appinfo from protobuf
 #------------------------------------------------------------------------------
 def get_appinfo(app_info_file):
@@ -192,15 +280,16 @@ def run_work(jobID, GpuJobTable, appName, app2dir_dd):
 #-----------------------------------------------------------------------------#
 # GPU Job Table 
 #-----------------------------------------------------------------------------#
-def PrintGpuJobTable(GpuJobTable, total_jobs):
+def PrintGpuJobTable(GpuJobTable, total_jobs, jobid2name):
     print("JobID\tStart\tEnd\tDuration")
     start_list = []
     end_list = []
     for row in xrange(total_jobs):
-        print("{}\t{}\t{}\t{}".format(GpuJobTable[row, 0],
+        print("{}\t{}\t{}\t{}\t{}".format(GpuJobTable[row, 0],
             GpuJobTable[row, 1],
             GpuJobTable[row, 2],
-            GpuJobTable[row, 2] - GpuJobTable[row, 1]))
+            GpuJobTable[row, 2] - GpuJobTable[row, 1],
+            jobid2name[row]))
 
         start_list.append(GpuJobTable[row, 1])
         end_list.append(GpuJobTable[row, 2])
@@ -209,25 +298,65 @@ def PrintGpuJobTable(GpuJobTable, total_jobs):
     total_runtime = max(end_list) - min(start_list) 
     print("total runtime = {} (s)".format(total_runtime))
 
+
 #-----------------------------------------------------------------------------#
 # GPU Job Table 
 #-----------------------------------------------------------------------------#
-def FindNextJob(waiting_list, appDur_sorted_dd):
-    #
-    # continue to select app that appDur is the smallest
-    #
-    app2_name= None
+def FindNextJob(active_job_list, app2app_dist, waiting_list, app2trace_simplify_dd):
+    ###
+    ### continue to select app that appDur is the smallest
+    ###
+    ##app2_name= None
 
-    for app in appDur_sorted_dd:
-        appName = app[0]
-        if appName in waiting_list:
-            app2_name = appName 
-            break
+    ##for app in appDur_sorted_dd:
+    ##    appName = app[0]
+    ##    if appName in waiting_list:
+    ##        app2_name = appName 
+    ##        break
 
-    return app2_name 
+    job_name = active_job_list[0]
+	
+    if len(waiting_list) >= 2:
+		curr_trace = app2trace_simplify_dd[job_name]
+		a1, a2 = waiting_list[:2]
+
+		trace1 = app2trace_simplify_dd[a1]
+		trace2 = app2trace_simplify_dd[a2]
+
+		new12 = concantenate_trace(trace1, trace2)
+		new21 = concantenate_trace(trace2, trace1)
+
+		(_, t12) = detect_phase_contention_timing(curr_trace, new12)
+		(_, t21) = detect_phase_contention_timing(curr_trace, new21)
+
+		if t12 > t21:
+			return a2
+		else:
+			return a1
+
+    else:
+		#--------------------------# 
+		# run similarity analysis
+		#--------------------------# 
+		dist_dd = app2app_dist[job_name] # get the distance dict
+		dist_sorted = sorted(dist_dd.items(), key=operator.itemgetter(1))
+
+		leastsim_app = None
+		# the sorted in non-decreasing order, use reversed()
+		for appname_and_dist in reversed(dist_sorted):
+			sel_appname = appname_and_dist[0]
+			if sel_appname in waiting_list: # find 1st app in the list, and exit
+				leastsim_app = sel_appname
+				break
+
+		##print("\n{} <<select>> {}\n".format(job_name, leastsim_app))
+
+		return leastsim_app
 
 
-def InitTwoJobs(waiting_list, appDur_sorted_dd, cpuTime_sorted_dd):
+
+
+def InitTwoJobs(waiting_list, appDur_sorted_dd, cpuTime_sorted_dd, app2app_dist, app2newfeat_dd, DEVLMT = 57344):
     # sorted in increasing order
     app1_name = None
 
@@ -241,6 +370,29 @@ def InitTwoJobs(waiting_list, appDur_sorted_dd, cpuTime_sorted_dd):
             break
 
     app1_name = large_cpuTime_app[0]
+
+    #print len(waiting_list)
+
+    # there are 3 apps in the queue
+    # [appDur, cpuTime, gpuTime, threads_max, threads_avg, reg_max, reg_avg, sm_max, sm_avg, trans_max, trans_avg]
+    if len(waiting_list) == 3:
+		#app1_avg_threads = app2newfeat_dd[app1_name][4]  # avg threads
+		#print app1_avg_threads
+		[c1, c2] = [i for i in waiting_list if i <> app1_name]
+		c1_threads = app2newfeat_dd[c1][4]  # avg threads
+		c2_threads = app2newfeat_dd[c2][4]  # avg threads
+
+		if c1_threads>DEVLMT and c2_threads > DEVLMT:
+			ratio = float(c1_threads/c2_threads)
+			if ratio > 1.5:
+				return [app1_name, c2]  # select app with less threads
+			if ratio < 0.67:
+				return [app1_name, c1]  # select app with less threads
+
+
+
+
+
 
     # check whether appDur is smaller than the cpuTime 
     HAS_SMALL = False
@@ -256,8 +408,24 @@ def InitTwoJobs(waiting_list, appDur_sorted_dd, cpuTime_sorted_dd):
         return [app1_name, app2_name]
 
 
-    # if there is no smaller choice, select the shorted appDur to corun
-    app2_name = appDur_sorted_dd[0][0]
+    ## if there is no smaller choice, select the shortest appDur to corun
+    #app2_name = appDur_sorted_dd[0][0]
+
+
+	# if there is no smaller choice, run with similarity
+
+    #--------------------------# 
+    # run similarity analysis
+    #--------------------------# 
+    dist_dd = app2app_dist[app1_name] # get the distance dict
+    dist_sorted = sorted(dist_dd.items(), key=operator.itemgetter(1))
+
+    # the sorted in non-decreasing order, use reversed()
+    for appname_and_dist in reversed(dist_sorted):
+        sel_appname = appname_and_dist[0]
+        if sel_appname in waiting_list: # find 1st app in the list, and exit
+            app2_name = sel_appname
+            break
 
     return [app1_name, app2_name]
         
@@ -335,6 +503,16 @@ def main():
     #=========================================================================#
     # 
     #=========================================================================#
+    app2trace_simplify_dd = np.load('./case_studies/app2trace_simplify_dd.npy').item()
+
+
+
+
+
+
+    #=========================================================================#
+    # 
+    #=========================================================================#
     
     ##launch_list = ['shoc_lev1reduction', 
     ##        'poly_correlation', 
@@ -354,7 +532,65 @@ def main():
     ##        'cudasdk_MCEstimatePiInlineQ' 
     ##        ] 
 
-    launch_list = copy.deepcopy(app_seq_list)
+    ##launch_list = copy.deepcopy(app_seq_list)
+
+
+    #=========================================================================#
+    # sensitive cases:
+    #=========================================================================#
+
+    #launch_list = ['rodinia_pathfinder', 'lonestar_mst', 'cudasdk_MCEstimatePiQ']
+    #launch_list = ['cudasdk_transpose', 'cudasdk_MCEstimatePiInlineQ', 'cudasdk_reduction']
+    #launch_list = ['cudasdk_boxFilterNPP', 'cudasdk_simpleCUBLAS', 'cudasdk_shflscan']
+    #launch_list = ['poly_bicg', 'cudasdk_MCEstimatePiP', 'rodinia_lud']
+    #launch_list = ['cudasdk_dxtc', 'rodinia_needle', 'cudasdk_matrixMul']
+    #launch_list = ['cudasdk_MCEstimatePiInlineP', 'poly_atax', 'parboil_mriq']
+    #launch_list = ['shoc_lev1reduction', 'poly_gemm', 'cudasdk_simpleCUFFTcallback']
+    #launch_list = ['rodinia_hotspot', 'shoc_lev1sort', 'cudasdk_scalarProd']
+    #launch_list = ['parboil_stencil', 'cudasdk_MCSingleAsianOptionP', 'rodinia_lavaMD']
+    #launch_list = ['rodinia_gaussian', 'rodinia_backprop', 'cudasdk_vectorAdd']
+    #launch_list = ['parboil_sgemm', 'cudasdk_concurrentKernels', 'cudasdk_lineOfSight']
+
+    #-------------
+    # run4
+    #-------------
+
+    #launch_list = ['shoc_lev1sort', 'parboil_stencil', 'cudasdk_MCEstimatePiP', 'poly_atax']
+    #launch_list = ['rodinia_lavaMD', 'cudasdk_matrixMul', 'cudasdk_MCEstimatePiQ', 'cudasdk_shflscan']
+    #launch_list = ['cudasdk_boxFilterNPP', 'cudasdk_vectorAdd', 'parboil_sgemm', 'rodinia_pathfinder']
+    #launch_list = ['cudasdk_reduction', 'rodinia_lud', 'lonestar_mst', 'rodinia_hotspot']
+    #launch_list = ['cudasdk_lineOfSight', 'rodinia_gaussian', 'parboil_mriq', 'cudasdk_MCEstimatePiInlineP']
+    #launch_list = ['shoc_lev1reduction', 'poly_bicg', 'rodinia_needle', 'cudasdk_simpleCUBLAS']
+    #launch_list = ['cudasdk_dxtc', 'cudasdk_MCEstimatePiInlineQ', 'rodinia_backprop', 'cudasdk_transpose']
+    launch_list = ['cudasdk_scalarProd', 'cudasdk_concurrentKernels', 'cudasdk_MCSingleAsianOptionP', 'poly_gemm']
+
+    #-------------
+    # run5
+    #-------------
+    #launch_list = ['poly_bicg', 'cudasdk_dxtc', 'parboil_sgemm', 'cudasdk_MCSingleAsianOptionP', 'cudasdk_MCEstimatePiInlineP']
+    #launch_list = ['cudasdk_reduction', 'rodinia_lavaMD', 'shoc_lev1sort', 'poly_gemm', 'cudasdk_MCEstimatePiInlineQ']
+    #launch_list = ['rodinia_gaussian', 'cudasdk_lineOfSight', 'cudasdk_boxFilterNPP', 'cudasdk_shflscan', 'cudasdk_scalarProd']
+    #launch_list = ['cudasdk_concurrentKernels', 'rodinia_backprop', 'lonestar_mst', 'cudasdk_vectorAdd', 'rodinia_pathfinder']
+    #launch_list = ['cudasdk_transpose', 'rodinia_lud', 'cudasdk_MCEstimatePiP', 'parboil_mriq', 'rodinia_needle']
+    #launch_list = ['cudasdk_simpleCUFFTcallback', 'parboil_stencil', 'poly_atax', 'cudasdk_simpleCUBLAS', 'rodinia_hotspot']
+
+
+
+
+
+    #
+    # robust cases:
+    #
+    #launch_list = ['cudasdk_BlackScholes', 'poly_covariance', 'shoc_lev1fft']
+    #launch_list = ['shoc_lev1md5hash', 'shoc_lev1BFS','cudasdk_stereoDisparity'] 
+    #launch_list = ['cudasdk_convolutionFFT2D', 'cudasdk_convolutionSeparable', 'cudasdk_sortingNetworks']
+    #launch_list = ['cudasdk_dwtHaar1D', 'cudasdk_binomialOptions', 'poly_correlation']
+    #launch_list = ['poly_fdtd2d', 'poly_syr2k', 'cudasdk_dct8x8'] 
+    #launch_list = ['cudasdk_fastWalshTransform', 'cudasdk_convolutionTexture','cudasdk_FDTD3d']
+
+
+
+
 
     apps_num = len(launch_list)
     logger.debug("Total GPU Applications = {}.".format(apps_num))
@@ -416,7 +652,7 @@ def main():
     #========================#
     # start with the 1st job
     #========================#
-    firsttwojobs = InitTwoJobs(waiting_list, appDur_sorted, cpuTime_sorted)
+    firsttwojobs = InitTwoJobs(waiting_list, appDur_sorted, cpuTime_sorted, app2app_dist, app2newfeat_dd)
     #print firsttwojobs 
     #appName = waiting_list[0]
 
@@ -458,8 +694,9 @@ def main():
                 #pos = active_job_list[0]
                 #job_name = indx2name_dd[pos] 
 
-                #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
-                anotherApp = FindNextJob(waiting_list, appDur_sorted)
+                anotherApp = FindNextJob(active_job_list, app2app_dist, waiting_list, app2trace_simplify_dd)
+                #anotherApp = FindNextJob(waiting_list, appDur_sorted)
+
 
                 if anotherApp is None:
                     logger.debug("[Warning] anotherApp is None!")
@@ -521,8 +758,8 @@ def main():
             if i == apps_num_minus_one:
                 anotherApp = waiting_list[0]
             else:
-                #leastsim_app = find_least_sim(active_job_list, app2app_dist, waiting_list)
-                anotherApp = FindNextJob(waiting_list, appDur_sorted)
+                anotherApp = FindNextJob(active_job_list, app2app_dist, waiting_list, app2trace_simplify_dd)
+                #anotherApp = FindNextJob(waiting_list, appDur_sorted)
 
             activeJobs += 1
             jobID += 1
@@ -556,7 +793,7 @@ def main():
 
 
     total_jobs = jobID + 1
-    PrintGpuJobTable(GpuJobTable, total_jobs)
+    PrintGpuJobTable(GpuJobTable, total_jobs, jobid2name)
 
     if total_jobs <> apps_num:
         logger.debug("[Warning] job number doesn't match.")
